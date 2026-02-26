@@ -983,6 +983,10 @@ function checkWin() {
     document.getElementById('trophy-emoji').textContent  = emoji;
     document.getElementById('winner-text').textContent   = winner;
     document.getElementById('winner-scores').textContent = `${myName}: ${ms}  •  ${oppName}: ${os}`;
+    document.getElementById('rematch-btn-opp').style.display = 'none';
+    document.getElementById('rematch-status').textContent = '';
+    rematchRequestedByMe = false;
+    document.getElementById('winner-overlay').classList.add('active');
     document.getElementById('winner-overlay').classList.add('active');
     if (ms !== os) playSound(ms > os ? 'win' : 'lose');
   }, 600);
@@ -1077,6 +1081,8 @@ function requestRematch() {
 function acceptRematch() {
   send({type: 'rematch-accept'});
   document.getElementById('winner-overlay').classList.remove('active');
+  document.getElementById('rematch-btn-opp').style.display = 'none';  
+  document.getElementById('rematch-status').textContent = '';          
   rematchRequestedByMe = false;
   startGame(false);
 }
