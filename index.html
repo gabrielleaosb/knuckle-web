@@ -53,7 +53,6 @@
         pointer-events: none;
         z-index: 0;
       }
-
       .screen {
         display: none;
         flex-direction: column;
@@ -90,8 +89,6 @@
           transform: translateY(0);
         }
       }
-
-      /* ── TIPOGRAFIA PADRONIZADA 0.75rem / opacidade 0.75 ── */
       .cinzel {
         font-family: "Cinzel Decorative", cursive;
       }
@@ -143,8 +140,6 @@
         text-align: center;
         max-width: 360px;
       }
-
-      /* ── PAINÉIS / CARDS ── */
       .panel {
         border: 1px solid var(--gold);
         box-shadow:
@@ -165,27 +160,29 @@
       }
       .lobby-name-section {
         width: 100%;
-        max-width: 580px;
+        max-width: 280px;
         display: flex;
         flex-direction: column;
         gap: 8px;
       }
 
-      /* ── LOBBY: 3 cards lado a lado ── */
+      /* ── LOBBY 5-col grid ── */
       .lobby-modes {
         width: 100%;
-        max-width: 800px;
+        max-width: 720px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto; 
+        gap: 12px;
       }
+      
       .mode-card {
         border: 1px solid rgba(201, 168, 76, 0.3);
         background: rgba(0, 0, 0, 0.35);
-        padding: 24px 20px;
+        padding: 22px 14px;
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        gap: 14px;
         transition:
           border-color 0.2s,
           box-shadow 0.2s;
@@ -208,6 +205,25 @@
         border-color: rgba(201, 168, 76, 0.45);
         box-shadow: 0 0 16px rgba(201, 168, 76, 0.06);
       }
+      /* Coming Soon */
+      .mode-card.coming-soon {
+        border-color: rgba(201, 168, 76, 0.1);
+        opacity: 0.55;
+        position: relative;
+        pointer-events: none;
+      }
+      .coming-soon-badge {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.55rem;
+        letter-spacing: 0.18em;
+        color: #0a0806;
+        background: linear-gradient(135deg, #c9a84c, #a07830);
+        padding: 4px 10px;
+        text-align: center;
+        width: fit-content;
+        margin: 0 auto;
+        white-space: nowrap;
+      }
       .mode-card-icon {
         font-size: 2rem;
         text-align: center;
@@ -215,8 +231,8 @@
       }
       .mode-card-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.84rem;
-        letter-spacing: 0.15em;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
         color: rgba(201, 168, 76, 1);
         text-align: center;
       }
@@ -226,16 +242,18 @@
       .mode-card.join .mode-card-title {
         color: rgba(201, 168, 76, 0.7);
       }
+      .mode-card.coming-soon .mode-card-title {
+        color: rgba(201, 168, 76, 0.5);
+      }
       .mode-card-desc {
         font-family: "Cinzel Decorative", cursive;
         font-size: 0.62rem;
-        letter-spacing: 0.08em;
-        color: rgba(201, 168, 76, 0.6);
+        letter-spacing: 0.06em;
+        color: rgba(201, 168, 76, 0.5);
         text-align: center;
         line-height: 1.6;
       }
 
-      /* ── INPUTS ── */
       .field {
         display: flex;
         flex-direction: column;
@@ -274,7 +292,6 @@
         font-size: 1.1rem;
       }
 
-      /* ── BOTÕES ── */
       .btn-gold {
         background: linear-gradient(135deg, #c9a84c, #a07830);
         color: #0a0806;
@@ -322,7 +339,6 @@
         cursor: not-allowed;
         transform: none;
       }
-
       .btn-outline {
         background: transparent;
         color: var(--gold);
@@ -351,8 +367,6 @@
         opacity: 0.3;
         cursor: not-allowed;
       }
-
-      /* btn-king com shimmer igual ao btn-gold */
       .btn-king {
         background: linear-gradient(135deg, #8b2fc9, #5a1a8a);
         color: #f5e6ff;
@@ -395,8 +409,6 @@
       .btn-king:active {
         transform: translateY(0);
       }
-
-      /* botões de fila: tamanho compacto, sem ocupar 100% */
       .btn-king.queue-btn,
       .btn-outline.queue-btn {
         width: auto;
@@ -404,7 +416,6 @@
         padding: 8px 20px;
       }
 
-      /* ── WAITING / STATUS ── */
       .room-code-display {
         font-family: "Cinzel Decorative", cursive;
         font-size: 3.5rem;
@@ -461,7 +472,6 @@
         }
       }
 
-      /* ── GAME HEADER / BOARD ── */
       .game-header {
         width: 100%;
         max-width: 520px;
@@ -553,7 +563,6 @@
         margin-top: 4px;
       }
 
-      /* ── DADOS ── */
       .board-col {
         display: flex;
         flex-direction: column;
@@ -609,8 +618,6 @@
       .die.val-low {
         background: linear-gradient(135deg, #e8e0d0, #c8bfaa);
       }
-
-      /* ── DADO ROLANDO ── */
       .rolling-die {
         width: 56px;
         height: 56px;
@@ -670,7 +677,6 @@
         }
       }
 
-      /* ── TOAST / OVERLAY ── */
       #toast {
         position: fixed;
         top: 20px;
@@ -691,6 +697,8 @@
       #toast.show {
         transform: translateX(-50%) translateY(0);
       }
+
+      /* FIX: winner overlay fully centered */
       #winner-overlay {
         position: fixed;
         inset: 0;
@@ -700,7 +708,9 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        gap: 24px;
+        gap: 20px;
+        text-align: center;
+        padding: 24px;
       }
       #winner-overlay.active {
         display: flex;
@@ -727,13 +737,41 @@
         font-family: "Cinzel Decorative", cursive;
         font-size: 1.6rem;
         color: #fef08a;
-        text-align: center;
       }
       .winner-scores {
         font-size: 1.1rem;
         color: #fef9e7;
+      }
+      /* FIX: winner actions wrapper — everything centered */
+      .winner-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        width: 100%;
+      }
+      #winner-1v1-btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      #winner-king-btns {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .rematch-status-text {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: #e8c97a;
+        min-height: 1.2em;
         text-align: center;
       }
+
       #peerjs-error {
         display: none;
         position: fixed;
@@ -754,7 +792,7 @@
         display: block;
       }
 
-      /* ══ KING ══ */
+      /* KING */
       .king-header {
         width: 100%;
         max-width: 860px;
@@ -965,8 +1003,6 @@
         padding: 6px;
         border: 1px dashed rgba(107, 114, 128, 0.3);
       }
-
-      /* ── KING GAME side layout ── */
       #screen-king-game {
         align-items: center;
       }
@@ -1001,7 +1037,6 @@
         padding-top: 8px;
         border-top: 1px solid rgba(201, 168, 76, 0.1);
       }
-
       #king-join-modal {
         display: none;
         position: fixed;
@@ -1017,7 +1052,6 @@
         display: flex;
         animation: fadeIn 0.3s ease;
       }
-
       ::-webkit-scrollbar {
         width: 4px;
       }
@@ -1028,10 +1062,16 @@
         background: var(--gold);
       }
 
+      @media (max-width: 960px) {
+        .lobby-modes {
+          grid-template-columns: repeat(3, 1fr);
+          max-width: 600px;
+        }
+      }
       @media (max-width: 820px) {
         .lobby-modes {
           grid-template-columns: 1fr;
-          max-width: 380px;
+          max-width: 360px;
         }
         .king-lobby-body {
           grid-template-columns: 1fr;
@@ -1075,15 +1115,8 @@
       <div class="trophy" id="trophy-emoji">🏆</div>
       <div class="winner-title" id="winner-text"></div>
       <div class="winner-scores" id="winner-scores"></div>
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          margin-top: 8px;
-        "
-      >
+      <!-- FIX: all buttons in a centered flex column wrapper -->
+      <div class="winner-actions">
         <div id="winner-1v1-btns">
           <button
             class="btn-gold"
@@ -1092,18 +1125,7 @@
           >
             ⚔ REVANCHE
           </button>
-          <div
-            id="rematch-status"
-            style="
-              font-family: &quot;Cinzel Decorative&quot;, cursive;
-              font-size: 0.75rem;
-              letter-spacing: 0.1em;
-              color: #e8c97a;
-              min-height: 1.2em;
-              text-align: center;
-              margin-top: 6px;
-            "
-          ></div>
+          <div id="rematch-status" class="rematch-status-text"></div>
           <button
             id="rematch-btn-opp"
             class="btn-outline"
@@ -1113,26 +1135,8 @@
             ✓ ACEITAR REVANCHE
           </button>
         </div>
-        <div
-          id="winner-king-btns"
-          style="
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-          "
-        >
-          <div
-            id="king-next-match-msg"
-            style="
-              font-family: &quot;Cinzel Decorative&quot;, cursive;
-              font-size: 0.75rem;
-              letter-spacing: 0.1em;
-              color: #e8c97a;
-              text-align: center;
-              min-height: 1.2em;
-            "
-          ></div>
+        <div id="winner-king-btns">
+          <div id="king-next-match-msg" class="rematch-status-text"></div>
         </div>
         <button
           class="btn-outline sm"
@@ -1186,7 +1190,7 @@
       </div>
     </div>
 
-    <!-- ══ LOBBY ══ -->
+    <!-- LOBBY -->
     <div id="screen-lobby" class="screen active">
       <div style="text-align: center">
         <div class="title-sub">⚔ JOGO DE DADOS ⚔</div>
@@ -1204,7 +1208,6 @@
         />
       </div>
       <div class="lobby-modes">
-        <!-- Criar 1v1 -->
         <div class="mode-card">
           <div class="mode-card-icon">⚔</div>
           <div class="mode-card-title">1 VS 1 PRIVADO</div>
@@ -1213,12 +1216,11 @@
           </div>
           <button class="btn-gold" onclick="createRoom()">✦ CRIAR SALA</button>
         </div>
-        <!-- Entrar em qualquer sala -->
         <div class="mode-card join">
           <div class="mode-card-icon">🚪</div>
           <div class="mode-card-title">ENTRAR NA SALA</div>
           <div class="mode-card-desc">
-            Cole o código recebido — funciona para qualquer tipo de sala
+            Cole o código recebido — funciona para qualquer modo
           </div>
           <input
             id="join-code"
@@ -1229,19 +1231,34 @@
           />
           <button class="btn-gold" onclick="joinAnyRoom()">→ ENTRAR</button>
         </div>
-        <!-- Criar Rei da Mesa -->
         <div class="mode-card king">
           <div class="mode-card-icon">👑</div>
           <div class="mode-card-title">REI DA MESA</div>
           <div class="mode-card-desc">
-            Até 4 jogadores. Vencedor fica, perdedor vai para o fim da fila
+            Até 8 jogadores. Vencedor fica, perdedor vai para o fim da fila
           </div>
           <button class="btn-king" onclick="createKingRoom()">
             ♛ CRIAR SALA
           </button>
         </div>
+        <!-- 2v2 COMING SOON -->
+        <div class="mode-card coming-soon">
+          <div class="mode-card-icon">🛡</div>
+          <div class="mode-card-title">2 VS 2</div>
+          <div class="mode-card-desc">Forme duplas e vença em equipe</div>
+          <div class="coming-soon-badge">EM BREVE</div>
+        </div>
+        <!-- VS BOT COMING SOON -->
+        <div class="mode-card coming-soon">
+          <div class="mode-card-icon">🤖</div>
+          <div class="mode-card-title">VS BOT</div>
+          <div class="mode-card-desc">
+            Treine contra inteligência artificial
+          </div>
+          <div class="coming-soon-badge">EM BREVE</div>
+        </div>
       </div>
-      <div class="ornament" style="max-width: 520px">✦</div>
+      <div class="ornament" style="max-width: 780px">✦</div>
       <p class="hint-text">Jogo P2P — compartilhe o código com seus amigos.</p>
     </div>
 
@@ -1648,7 +1665,6 @@
         peer.on("error", (e) => showToast("Erro: " + e.type));
       }
 
-      /* ── ENTRADA ÚNICA: detecta tipo de sala pelo peer ── */
       function joinAnyRoom() {
         if (!checkPeer()) return;
         const code = document
@@ -1946,7 +1962,7 @@
           document.getElementById("winner-text").textContent = w;
           document.getElementById("winner-scores").textContent =
             `${myName}: ${ms}  •  ${oppName}: ${os}`;
-          document.getElementById("winner-1v1-btns").style.display = "block";
+          document.getElementById("winner-1v1-btns").style.display = "flex";
           document.getElementById("winner-king-btns").style.display = "none";
           document.getElementById("winner-overlay").classList.add("active");
           if (ms !== os) playSound(ms > os ? "win" : "lose");
@@ -2018,7 +2034,6 @@
       function emptyBoard() {
         return Array.from({ length: COLS }, () => Array(ROWS).fill(null));
       }
-
       function closeKingModal() {
         document.getElementById("king-join-modal").classList.remove("active");
         _pendingKingCode = "";
@@ -2144,8 +2159,8 @@
             const cg = kingState.currentGame;
             if (cg.turn !== data.slot) return;
             const board = data.slot === 0 ? cg.board0 : cg.board1,
-              opBoard = data.slot === 0 ? cg.board1 : cg.board0,
-              col = board[data.col],
+              opBoard = data.slot === 0 ? cg.board1 : cg.board0;
+            const col = board[data.col],
               row = col.findIndex((r) => r === null);
             if (row === -1) return;
             col[row] = data.value;
@@ -2487,7 +2502,7 @@
 
       function kingHandleSync(data) {
         if (data.type === "king-sync") kingState = data.state;
-        if (!kingState) return;
+        if (!kingState || !kingState.players) return; 
         if (kingState.gameRunning && kingState.currentGame) {
           const onGame = document
             .getElementById("screen-king-game")
@@ -2520,7 +2535,7 @@
           document
             .getElementById("screen-king-lobby")
             .classList.contains("active") &&
-          kingState
+          kingState?.players
         )
           renderKingLobby();
       }
@@ -2649,7 +2664,7 @@
       }
 
       function renderKingLobby() {
-        if (!kingState) return;
+        if (!kingState?.players) return; 
         document.getElementById("king-room-label").textContent =
           "Sala: " + kingRoomCode;
         const myId = kingIsHost ? "host" : kingMyId;
@@ -2706,18 +2721,20 @@
         qe.innerHTML = "";
         if (!kingState.queue.length)
           qe.innerHTML = `<div style="font-family:'Cinzel Decorative',cursive;font-size:.68rem;color:rgba(201,168,76,.25)">Fila vazia</div>`;
-        kingState.queue.filter(pid => {
-          const p = kingState.players.find(x => x.id === pid);
-          return p?.status !== "playing";
-        }).forEach((pid, i) => {
-          const p = kingState.players.find((x) => x.id === pid);
-          if (!p) return;
-          const isMe = p.id === myId;
-          const el = document.createElement("div");
-          el.className = "queue-mini-item";
-          el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : "var(--cream)"}"> ${p.status === "playing" ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>`;
-          qe.appendChild(el);
-        });
+        kingState.queue
+          .filter((pid) => {
+            const p = kingState.players.find((x) => x.id === pid);
+            return p?.status !== "playing";
+          })
+          .forEach((pid, i) => {
+            const p = kingState.players.find((x) => x.id === pid);
+            if (!p) return;
+            const isMe = p.id === myId;
+            const el = document.createElement("div");
+            el.className = "queue-mini-item";
+            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : "var(--cream)"}"> ${p.status === "playing" ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>`;
+            qe.appendChild(el);
+          });
         const me = kingState.players.find((x) => x.id === myId),
           inQ = me && kingState.queue.includes(myId);
         document.getElementById("king-join-queue-btn").style.display =
@@ -2814,19 +2831,21 @@
         const qm = document.getElementById("king-queue-mini");
         qm.innerHTML = "";
         const pl = [cg.player0, cg.player1];
-        kingState.queue.filter(pid => {
-          const p = kingState.players.find(x => x.id === pid);
-          return p?.status !== "playing";
-        }).forEach((pid, i) => {
-          const p = kingState.players.find((x) => x.id === pid);
-          if (!p) return;
-          const isMe = p.id === myId,
-            isAct = pl.includes(pid);
-          const el = document.createElement("div");
-          el.className = "queue-mini-item";
-          el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : isAct ? "#fef08a" : "var(--cream)"}"> ${isAct ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:.6rem;color:var(--gold)">🏆${p.wins}</span>` : ""}`;
-          qm.appendChild(el);
-        });
+        kingState.queue
+          .filter((pid) => {
+            const p = kingState.players.find((x) => x.id === pid);
+            return p?.status !== "playing";
+          })
+          .forEach((pid, i) => {
+            const p = kingState.players.find((x) => x.id === pid);
+            if (!p) return;
+            const isMe = p.id === myId,
+              isAct = pl.includes(pid);
+            const el = document.createElement("div");
+            el.className = "queue-mini-item";
+            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : isAct ? "#fef08a" : "var(--cream)"}"> ${isAct ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:.6rem;color:var(--gold)">🏆${p.wins}</span>` : ""}`;
+            qm.appendChild(el);
+          });
         const rm = document.getElementById("king-ranking-mini");
         rm.innerHTML = "";
         [...kingState.players]
