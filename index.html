@@ -2500,10 +2500,9 @@
         }
       }
 
-      // ── BUG FIX: guard against null/undefined kingState before accessing .players ──
       function kingHandleSync(data) {
         if (data.type === "king-sync") kingState = data.state;
-        if (!kingState || !kingState.players) return; // FIXED: null check
+        if (!kingState || !kingState.players) return; 
         if (kingState.gameRunning && kingState.currentGame) {
           const onGame = document
             .getElementById("screen-king-game")
@@ -2536,7 +2535,7 @@
           document
             .getElementById("screen-king-lobby")
             .classList.contains("active") &&
-          kingState
+          kingState?.players
         )
           renderKingLobby();
       }
@@ -2665,7 +2664,7 @@
       }
 
       function renderKingLobby() {
-        if (!kingState || !kingState.players) return; // guard
+        if (!kingState?.players) return; 
         document.getElementById("king-room-label").textContent =
           "Sala: " + kingRoomCode;
         const myId = kingIsHost ? "host" : kingMyId;
