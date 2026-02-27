@@ -16,6 +16,7 @@
       --cream:      #e8dfc8;
       --red:        #c94c4c;
       --green:      #4cad6e;
+      --purple:     #8b2fc9;
     }
 
     body {
@@ -54,6 +55,7 @@
     .screen.active { display: flex; }
     #screen-game { justify-content: flex-start; padding: 16px; gap: 12px; }
     #screen-king-lobby { justify-content: flex-start; padding: 16px 12px; gap: 10px; }
+    #screen-king-game { justify-content: flex-start; padding: 16px; gap: 12px; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -105,30 +107,67 @@
       border: 1px solid var(--gold);
       box-shadow: 0 0 12px rgba(201,168,76,0.15), inset 0 0 12px rgba(0,0,0,0.4);
       background: rgba(0,0,0,0.4);
-      padding: 32px;
+      padding: 28px;
       width: 100%;
-      max-width: 360px;
+      max-width: 420px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
     .panel-center { text-align: center; padding: 40px; gap: 24px; }
 
+    /* ── LOBBY LAYOUT: two-column modes ── */
+    .lobby-modes {
+      width: 100%;
+      max-width: 420px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mode-card {
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(0,0,0,0.35);
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .mode-card:hover { border-color: rgba(201,168,76,0.5); }
+    .mode-card.king { border-color: rgba(139,47,201,0.3); }
+    .mode-card.king:hover { border-color: rgba(139,47,201,0.6); }
+
+    .mode-card-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: rgba(201,168,76,0.6);
+      text-align: center;
+    }
+    .mode-card.king .mode-card-title { color: rgba(192,132,252,0.7); }
+
+    .mode-card-icon {
+      font-size: 1.6rem;
+      text-align: center;
+      line-height: 1;
+    }
+
     /* ── FORM ── */
-    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
     .field-label {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
       color: rgba(201,168,76,0.7);
     }
     .game-input {
       background: rgba(0,0,0,0.4);
       border: 1px solid rgba(201,168,76,0.4);
       color: var(--cream);
-      padding: 10px 16px;
+      padding: 9px 12px;
       font-family: 'Crimson Text', serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
       width: 100%;
@@ -139,7 +178,7 @@
       text-transform: uppercase;
       letter-spacing: 0.2em;
       text-align: center;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
     }
 
     /* ── BUTTONS ── */
@@ -147,12 +186,12 @@
       background: linear-gradient(135deg, #c9a84c, #a07830);
       color: #0a0806;
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 12px 28px;
+      padding: 10px 16px;
       border: none;
       cursor: pointer;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       transition: box-shadow 0.2s, transform 0.2s;
       position: relative;
       overflow: hidden;
@@ -175,29 +214,29 @@
       background: transparent;
       color: var(--gold);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 10px 24px;
+      padding: 9px 16px;
       border: 1px solid var(--gold);
       cursor: pointer;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       transition: background 0.2s, box-shadow 0.2s;
       width: 100%;
     }
     .btn-outline:hover { background: rgba(201,168,76,0.1); box-shadow: 0 0 12px rgba(201,168,76,0.3); }
-    .btn-outline.sm { font-size: 0.6rem; padding: 8px 16px; opacity: 0.8; }
+    .btn-outline.sm { font-size: 0.58rem; padding: 8px 14px; opacity: 0.8; }
     .btn-outline:disabled { opacity: 0.3; cursor: not-allowed; }
 
     .btn-king {
       background: linear-gradient(135deg, #8b2fc9, #5a1a8a);
       color: #f5e6ff;
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 12px 28px;
+      padding: 10px 16px;
       border: none;
       cursor: pointer;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       transition: box-shadow 0.2s, transform 0.2s;
       position: relative;
       overflow: hidden;
@@ -205,6 +244,15 @@
     }
     .btn-king:hover { box-shadow: 0 0 20px rgba(139,47,201,0.5); transform: translateY(-1px); }
     .btn-king:active { transform: translateY(0); }
+
+    /* ── Name section above the two-col layout ── */
+    .lobby-name-section {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
     /* ── WAITING ── */
     .room-code-display {
@@ -438,29 +486,87 @@
       letter-spacing: 0.15em;
     }
 
-    /* Player list */
-    .player-list {
+    /* ── KING LOBBY TWO-PANEL LAYOUT ── */
+    .king-lobby-body {
       width: 100%;
       max-width: 560px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .king-panel {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
-    .player-list-title {
+    .king-panel-title {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       letter-spacing: 0.2em;
       color: rgba(201,168,76,0.4);
       margin-bottom: 4px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding-bottom: 6px;
     }
 
-    .player-card {
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(201,168,76,0.15);
-      padding: 10px 14px;
+    /* Current match display */
+    .current-match-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .match-vs-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+    }
+    .match-player-name {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.65rem;
+      color: var(--cream);
+      text-align: center;
+      flex: 1;
+    }
+    .match-vs {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.55rem;
+      color: rgba(201,168,76,0.4);
+    }
+    .match-score-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+    .match-score-val {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.2rem;
+      color: var(--gold);
+      min-width: 30px;
+      text-align: center;
+    }
+    .match-score-sep {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.7rem;
+      color: rgba(201,168,76,0.3);
+    }
+
+    /* Player list */
+    .player-card {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       transition: border-color 0.2s;
     }
     .player-card.playing {
@@ -471,109 +577,92 @@
       border-color: rgba(139,47,201,0.3);
       background: rgba(139,47,201,0.03);
     }
-    .player-card.spectating {
-      opacity: 0.6;
-    }
+    .player-card.spectating { opacity: 0.6; }
 
     .pc-position {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: rgba(201,168,76,0.3);
-      min-width: 24px;
+      min-width: 20px;
       text-align: center;
     }
     .pc-position.active-pos { color: #fef08a; text-shadow: 0 0 10px rgba(254,240,138,0.5); }
 
     .pc-name {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       color: var(--cream);
       flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .pc-name.is-me { color: var(--gold-light); }
 
     .pc-badge {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.5rem;
-      letter-spacing: 0.1em;
-      padding: 2px 7px;
+      font-size: 0.45rem;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
       border-radius: 2px;
+      white-space: nowrap;
     }
     .badge-playing  { background: rgba(201,168,76,0.2); color: #fef08a; border: 1px solid rgba(201,168,76,0.4); }
     .badge-queued   { background: rgba(139,47,201,0.2); color: #c084fc; border: 1px solid rgba(139,47,201,0.4); }
     .badge-spectating { background: rgba(107,114,128,0.2); color: #9ca3af; border: 1px solid rgba(107,114,128,0.3); }
 
-    .pc-stats {
+    /* Ranking */
+    .ranking-row {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(201,168,76,0.07);
     }
-    .pc-wins {
+    .rank-pos {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.65rem;
+      font-size: 0.8rem;
+      color: rgba(201,168,76,0.4);
+      min-width: 20px;
+      text-align: center;
+    }
+    .rank-pos.gold-rank { color: #fef08a; }
+    .rank-name {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.6rem;
+      color: var(--cream);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rank-name.is-me { color: var(--gold-light); }
+    .rank-wins {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.6rem;
       color: var(--gold);
     }
-    .pc-streak {
+    .rank-streak {
       font-family: 'Cinzel Decorative', cursive;
       font-size: 0.55rem;
       color: #f97316;
     }
 
-    /* Current match display */
-    .current-match {
-      width: 100%;
-      max-width: 560px;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(201,168,76,0.25);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .match-label {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      color: rgba(201,168,76,0.4);
-    }
-    .match-players {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-      justify-content: center;
-    }
-    .match-player-name {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.75rem;
-      color: var(--cream);
-    }
-    .match-vs {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.6rem;
-      color: rgba(201,168,76,0.4);
-    }
-    .match-score {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.65rem;
-      color: var(--gold);
-    }
-
-    /* Queue join btn */
-    .king-actions {
+    /* King actions bar */
+    .king-actions-bar {
       width: 100%;
       max-width: 560px;
       display: flex;
       gap: 8px;
     }
 
-    /* Spectator view of game */
-    #screen-king-game {
-      justify-content: flex-start;
-      padding: 16px;
-      gap: 12px;
+    /* Queue mini in game */
+    .queue-mini-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
     }
 
     .spectator-banner {
@@ -581,9 +670,9 @@
       max-width: 520px;
       text-align: center;
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: rgba(107,114,128,0.7);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      color: rgba(107,114,128,0.8);
       padding: 6px;
       border: 1px dashed rgba(107,114,128,0.3);
     }
@@ -598,18 +687,9 @@
       .die, .rolling-die { width: 44px; height: 44px; font-size: 1.1rem; }
       .col-score { min-width: 44px; font-size: 0.6rem; }
       .title-main { font-size: 2.8rem; }
-      .panel { padding: 24px; }
-    }
-
-    /* Mode select buttons on lobby */
-    .mode-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-    .mode-sep {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: rgba(201,168,76,0.3);
-      text-align: center;
-      padding: 4px 0;
+      .panel { padding: 20px; }
+      .lobby-modes { grid-template-columns: 1fr; }
+      .king-lobby-body { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -618,7 +698,7 @@
 <div id="toast"></div>
 <div id="peerjs-error">⚠ Erro ao carregar biblioteca P2P. Verifique sua conexão e recarregue a página.</div>
 
-<!-- Winner Overlay (usado tanto no 1v1 quanto no Rei da Mesa) -->
+<!-- Winner Overlay -->
 <div id="winner-overlay">
   <div class="trophy" id="trophy-emoji">🏆</div>
   <div class="winner-title" id="winner-text"></div>
@@ -632,7 +712,7 @@
       <button id="rematch-btn-opp" class="btn-outline" style="width:auto;display:none;margin-top:4px" onclick="acceptRematch()">✓ ACEITAR REVANCHE</button>
     </div>
 
-    <!-- King mode: no rematch, just dismiss -->
+    <!-- King mode -->
     <div id="winner-king-btns" style="display:none;flex-direction:column;align-items:center;gap:8px">
       <div id="king-next-match-msg" style="font-family:'Cinzel Decorative',cursive;font-size:0.65rem;letter-spacing:0.1em;color:#e8c97a;text-align:center;min-height:1.2em"></div>
     </div>
@@ -652,35 +732,35 @@
     <div class="ornament" style="margin-top:16px">✦</div>
   </div>
 
-  <div class="panel">
+  <!-- Name field -->
+  <div class="lobby-name-section">
+    <div class="field-label" style="font-family:'Cinzel Decorative',cursive;font-size:0.62rem;letter-spacing:0.2em;color:rgba(201,168,76,0.7)">SEU NOME</div>
+    <input id="player-name" type="text" maxlength="16" placeholder="Como você se chama?" class="game-input" />
+  </div>
 
-    <div class="field">
-      <label for="player-name" class="field-label">SEU NOME</label>
-      <input id="player-name" type="text" maxlength="16" placeholder="Como você se chama?" class="game-input" />
+  <!-- Two-column modes -->
+  <div class="lobby-modes">
+
+    <!-- 1v1 card -->
+    <div class="mode-card">
+      <div class="mode-card-icon">⚔</div>
+      <div class="mode-card-title">1 VS 1 PRIVADO</div>
+      <button class="btn-gold" onclick="createRoom()">✦ CRIAR SALA</button>
+      <div class="field" style="margin-top:4px">
+        <input id="room-code" type="text" maxlength="8" placeholder="CÓDIGO" class="game-input code-style" />
+        <button class="btn-outline" onclick="joinRoom()">ENTRAR →</button>
+      </div>
     </div>
 
-    <div class="ornament">-</div>
-
-    <div class="mode-btns">
-      <div class="mode-sep">⚔ 1 VS 1</div>
-      <button class="btn-gold" onclick="createRoom()">✦ CRIAR SALA PRIVADA</button>
-
+    <!-- King card -->
+    <div class="mode-card king">
+      <div class="mode-card-icon">👑</div>
+      <div class="mode-card-title" style="color:rgba(192,132,252,0.7)">REI DA MESA</div>
+      <button class="btn-king" onclick="createKingRoom()">♛ CRIAR SALA</button>
       <div class="field" style="margin-top:4px">
-        <label for="room-code" class="field-label">CÓDIGO DA SALA (1v1)</label>
-        <input id="room-code" type="text" maxlength="8" placeholder="Ex: AB3X" class="game-input code-style" />
-        <button class="btn-outline" onclick="joinRoom()">ENTRAR NA SALA →</button>
-      </div>
-
-      <div class="ornament" style="margin-top:8px">-</div>
-      <div class="mode-sep">👑 REI DA MESA (até 4 na fila)</div>
-
-      <button class="btn-king" onclick="createKingRoom()">♛ CRIAR SALA REI DA MESA</button>
-
-      <div class="field" style="margin-top:4px">
-        <label for="king-code" class="field-label">CÓDIGO DA SALA (REI)</label>
-        <input id="king-code" type="text" maxlength="8" placeholder="Ex: KG7R" class="game-input code-style" />
-        <button class="btn-outline" onclick="joinKingRoom()">ENTRAR COMO ESPECTADOR →</button>
-        <button class="btn-king" style="margin-top:4px" onclick="joinKingQueue()">♛ ENTRAR NA FILA →</button>
+        <input id="king-code" type="text" maxlength="8" placeholder="CÓDIGO" class="game-input code-style" />
+        <button class="btn-king" style="font-size:0.62rem;padding:8px" onclick="joinKingQueue()">♛ ENTRAR NA FILA</button>
+        <button class="btn-outline" style="font-size:0.6rem;padding:7px;opacity:0.7" onclick="joinKingRoom()">👁 SÓ ASSISTIR</button>
       </div>
     </div>
 
@@ -759,35 +839,53 @@
 
   <div class="king-header">
     <div class="king-title">👑 REI DA MESA</div>
-    <div class="king-room-code" id="king-room-label"></div>
-  </div>
-
-  <!-- Current match -->
-  <div class="current-match" id="king-current-match">
-    <div class="match-label">PARTIDA ATUAL</div>
-    <div class="match-players" id="king-match-players">
-      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.65rem;color:rgba(201,168,76,0.3)">Aguardando jogadores...</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="king-room-code" id="king-room-label"></div>
+      <button class="btn-outline sm" style="width:auto" onclick="copyKingCode()">📋</button>
     </div>
   </div>
 
-  <!-- Player list -->
-  <div class="player-list">
-    <div class="player-list-title">JOGADORES NA SALA</div>
-    <div id="king-player-list"></div>
+  <!-- Two-panel layout -->
+  <div class="king-lobby-body">
+
+    <!-- Left: Players + Queue -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="king-panel">
+        <div class="king-panel-title">JOGADORES NA SALA</div>
+        <div id="king-player-list"></div>
+      </div>
+
+      <!-- Current match -->
+      <div class="king-panel">
+        <div class="king-panel-title">PARTIDA ATUAL</div>
+        <div class="current-match-info" id="king-current-match-info">
+          <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:rgba(201,168,76,0.3)">Aguardando...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Ranking -->
+    <div class="king-panel">
+      <div class="king-panel-title">🏆 RANKING</div>
+      <div id="king-ranking-list"></div>
+      <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(201,168,76,0.1)">
+        <div style="font-family:'Cinzel Decorative',cursive;font-size:0.5rem;color:rgba(201,168,76,0.3);margin-bottom:6px">FILA DE ESPERA</div>
+        <div id="king-queue-display"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Actions -->
-  <div class="king-actions">
+  <div class="king-actions-bar">
     <button class="btn-king" id="king-join-queue-btn" onclick="kingJoinQueue()" style="display:none">♛ ENTRAR NA FILA</button>
     <button class="btn-outline sm" id="king-leave-queue-btn" onclick="kingLeaveQueue()" style="display:none">✕ SAIR DA FILA</button>
-    <button class="btn-outline sm" onclick="copyKingCode()">📋 COPIAR CÓDIGO</button>
   </div>
 
   <button class="btn-outline sm" style="width:auto" onclick="backToLobby()">← SAIR DA SALA</button>
 </div>
 
 <!-- ══════════════════════════════════
-     KING GAME SCREEN (spectator view embedded)
+     KING GAME SCREEN
 ══════════════════════════════════ -->
 <div id="screen-king-game" class="screen">
 
@@ -796,9 +894,7 @@
     <span class="game-header-label" id="king-room-label-game"></span>
   </div>
 
-  <div id="king-spectator-banner" class="spectator-banner" style="display:none">
-    👁 ASSISTINDO — Você está na fila como espectador
-  </div>
+  <div id="king-spectator-banner" class="spectator-banner" style="display:none"></div>
 
   <div class="board-section">
     <div class="player-row">
@@ -832,10 +928,16 @@
     </div>
   </div>
 
-  <!-- Spectator sidebar queue -->
-  <div style="width:100%;max-width:520px">
-    <div style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;letter-spacing:0.15em;color:rgba(201,168,76,0.3);margin-bottom:6px">FILA</div>
-    <div id="king-queue-mini"></div>
+  <!-- Queue sidebar + ranking -->
+  <div style="width:100%;max-width:520px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="king-panel" style="padding:10px">
+      <div class="king-panel-title">FILA DE ESPERA</div>
+      <div id="king-queue-mini"></div>
+    </div>
+    <div class="king-panel" style="padding:10px">
+      <div class="king-panel-title">🏆 RANKING</div>
+      <div id="king-ranking-mini"></div>
+    </div>
   </div>
 
   <div style="width:100%;max-width:520px;display:flex;gap:8px;margin-top:4px">
@@ -881,37 +983,15 @@ let rematchRequestedByMe = false;
 // ══════════════════════════════════════════════
 //  KING MODE STATE
 // ══════════════════════════════════════════════
-/*
-  Architecture: host-relay P2P
-  - Host holds the authoritative state and relays to all peers.
-  - Each non-host peer connects directly to host.
-  - Messages host→all: broadcast; peer→host: unicast; host→specific: targeted send.
-
-  Room state (host maintains):
-  {
-    players: [{ id, name, wins, streak, status: 'playing'|'queued'|'spectating' }],
-    queue: [id, id, ...],   // ordered queue (playing = first two slots)
-    currentGame: { board0, board1, turn, currentDie } | null,
-    gameRunning: bool
-  }
-*/
-
-let kingMode = false;         // are we in king mode?
-let kingIsHost = false;       // am I the host of this king room?
+let kingMode = false;
+let kingIsHost = false;
 let kingRoomCode = '';
-let kingMyId = '';            // my peer ID (short)
+let kingMyId = '';
 let kingMyName = '';
 let kingPeer = null;
-let kingHostConn = null;      // my connection to the host (if I'm not host)
-let kingPeerConns = {};       // host only: map peerId → conn
-
-// Room state (everyone gets synced copy)
+let kingHostConn = null;
+let kingPeerConns = {};
 let kingState = null;
-
-// Active game state (used if I'm playing)
-let kgMyBoard = [], kgOppBoard = [];
-let kgMyTurn = false, kgCurrentDie = null;
-let kgMySlot = -1;   // 0 or 1 — my slot in currentGame
 
 // ══════════════════════════════════════════════
 //  AUDIO
@@ -941,8 +1021,7 @@ function playSound(type) {
     o.frequency.exponentialRampToValueAtTime(80, AC.currentTime + 0.08);
     og.gain.setValueAtTime(0.3, AC.currentTime);
     og.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + 0.12);
-    o.start(AC.currentTime);
-    o.stop(AC.currentTime + 0.13);
+    o.start(AC.currentTime); o.stop(AC.currentTime + 0.13);
   }
   if (type === 'cancel') {
     const bufSize = AC.sampleRate * 0.12;
@@ -964,8 +1043,7 @@ function playSound(type) {
       og.gain.setValueAtTime(0, AC.currentTime + i*0.12);
       og.gain.linearRampToValueAtTime(0.25, AC.currentTime + i*0.12 + 0.04);
       og.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + i*0.12 + 0.3);
-      o.start(AC.currentTime + i*0.12);
-      o.stop(AC.currentTime + i*0.12 + 0.32);
+      o.start(AC.currentTime + i*0.12); o.stop(AC.currentTime + i*0.12 + 0.32);
     });
   }
   if (type === 'lose') {
@@ -976,8 +1054,7 @@ function playSound(type) {
       og.gain.setValueAtTime(0, AC.currentTime + i*0.18);
       og.gain.linearRampToValueAtTime(0.15, AC.currentTime + i*0.18 + 0.05);
       og.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + i*0.18 + 0.35);
-      o.start(AC.currentTime + i*0.18);
-      o.stop(AC.currentTime + i*0.18 + 0.37);
+      o.start(AC.currentTime + i*0.18); o.stop(AC.currentTime + i*0.18 + 0.37);
     });
   }
 }
@@ -1270,10 +1347,23 @@ function makeDie(val) {
 }
 
 // ══════════════════════════════════════════════
+//  KING MODE — HELPERS
+// ══════════════════════════════════════════════
+function mkKingPeerID(code) { return 'knuckle-king-' + code.toUpperCase(); }
+
+function shortIdFromFull(fullPeerId) {
+  return fullPeerId.replace('knuckle-king-peer-', '');
+}
+
+function emptyBoard() {
+  return Array.from({length:COLS}, () => Array(ROWS).fill(null));
+}
+
+// ══════════════════════════════════════════════
 //  KING MODE — HOST LOGIC
 // ══════════════════════════════════════════════
-
-function mkKingPeerID(code) { return 'knuckle-king-' + code.toUpperCase(); }
+let kingHostSlot = -1;
+let kingHostDie = null;
 
 function createKingRoom() {
   if (!checkPeer()) return;
@@ -1284,7 +1374,6 @@ function createKingRoom() {
   kingRoomCode = Math.random().toString(36).substring(2,6).toUpperCase();
   kingMyId = 'host';
 
-  // Init state
   kingState = {
     players: [{ id: 'host', name: kingMyName, wins: 0, streak: 0, status: 'queued' }],
     queue: ['host'],
@@ -1298,10 +1387,9 @@ function createKingRoom() {
     document.getElementById('king-room-label').textContent = 'Sala: ' + kingRoomCode;
     renderKingLobby();
     kingPeer.on('connection', c => {
-      const pid = c.peer; // full peer ID
+      const pid = c.peer;
       kingPeerConns[pid] = c;
       c.on('open', () => {
-        // send current state
         c.send({ type:'king-sync', state: kingState });
       });
       c.on('data', d => kingHostHandleMessage(pid, d));
@@ -1311,14 +1399,10 @@ function createKingRoom() {
   kingPeer.on('error', e => showToast('Erro King: ' + e.type));
 }
 
-// extract short ID from full peer ID (for non-host peers)
-function shortId(fullPeerId) { return fullPeerId.replace('knuckle-king-peer-', ''); }
-
 function kingHostHandleMessage(peerId, data) {
   switch(data.type) {
     case 'king-hello': {
       const pid = data.shortId;
-      // Add to state
       const p = { id: pid, name: data.name, wins: 0, streak: 0, status: data.wantsQueue ? 'queued' : 'spectating' };
       kingState.players.push(p);
       if (data.wantsQueue) {
@@ -1329,8 +1413,8 @@ function kingHostHandleMessage(peerId, data) {
           showToast(data.name + ' entrou como espectador (fila cheia)');
         }
       }
-      kingBroadcast({ type:'king-sync', state: kingState });
-      kingMaybeStartGame();
+      kingBroadcastSync();
+      if (!kingState.gameRunning) kingMaybeStartGame();
       break;
     }
     case 'king-join-queue': {
@@ -1341,8 +1425,8 @@ function kingHostHandleMessage(peerId, data) {
       if (kingState.queue.includes(pid)) return;
       p.status = 'queued';
       kingState.queue.push(pid);
-      kingBroadcast({ type:'king-sync', state: kingState });
-      kingMaybeStartGame();
+      kingBroadcastSync();
+      if (!kingState.gameRunning) kingMaybeStartGame();
       break;
     }
     case 'king-leave-queue': {
@@ -1351,95 +1435,95 @@ function kingHostHandleMessage(peerId, data) {
       if (!p) return;
       kingState.queue = kingState.queue.filter(x=>x!==pid);
       if (p.status !== 'playing') p.status = 'spectating';
-      kingBroadcast({ type:'king-sync', state: kingState });
+      kingBroadcastSync();
       break;
     }
-    case 'king-game-rolled': {
-      // A playing peer rolled — broadcast to all for spectators
+    case 'king-roll-notify': {
       if (kingState.currentGame) {
         kingState.currentGame.pendingDie = { slot: data.slot, value: data.value };
       }
-      kingBroadcastExcept(peerId, { type:'king-game-rolled', slot: data.slot, value: data.value });
+      const rollMsg = { type:'king-peer-rolled', slot: data.slot, value: data.value };
+      Object.entries(kingPeerConns).forEach(([pid, c]) => {
+        if (pid !== peerId && c && c.open) c.send(rollMsg);
+      });
+      kingHandleSync({ type:'king-sync', state: kingState });
       break;
     }
     case 'king-game-placed': {
-      // A playing peer placed — update authoritative boards, check win
-      if (!kingState.currentGame) return;
+      if (!kingState.currentGame || !kingState.gameRunning) return;
       const cg = kingState.currentGame;
-      const board = data.slot === 0 ? cg.board0 : cg.board1;
-      const opBoard = data.slot === 0 ? cg.board1 : cg.board0;
+      const placingSlot = data.slot;
+      // validate it's that player's turn
+      if (cg.turn !== placingSlot) return;
+
+      const board   = placingSlot === 0 ? cg.board0 : cg.board1;
+      const opBoard = placingSlot === 0 ? cg.board1 : cg.board0;
       const col = board[data.col];
       const row = col.findIndex(r=>r===null);
-      if (row !== -1) col[row] = data.value;
-      // cancel opp
-      const removed = opBoard[data.col].some(d=>d===data.value);
-      opBoard[data.col] = opBoard[data.col].map(d=>d===data.value?null:d);
+      if (row === -1) return;
+
+      col[row] = data.value;
+      // cancel opponent's matching dice in that column
+      opBoard[data.col] = opBoard[data.col].map(d => d===data.value ? null : d);
       compactCol(opBoard[data.col]);
-      // whose turn
+      // advance turn
       cg.turn = 1 - cg.turn;
       cg.pendingDie = null;
-      kingBroadcast({ type:'king-sync', state: kingState });
-      // check game over
+
       const over0 = cg.board0.every(c=>c.every(r=>r!==null));
       const over1 = cg.board1.every(c=>c.every(r=>r!==null));
+
       if (over0 || over1) {
+        kingBroadcastSync();
         kingResolveGame();
       } else {
-        // signal next player to roll
-        const nextPid = cg.turn === 0 ? cg.player0 : cg.player1;
-        if (nextPid !== 'host') {
-          const fullPid = Object.keys(kingPeerConns).find(k => kingPeerConns[k] && shortIdFromFull(k) === nextPid);
-          if (fullPid) kingSendTo(fullPid, { type:'king-your-turn' });
-        } else {
-          // host is next
-          setTimeout(kingHostRoll, 500);
-        }
+        kingBroadcastSync();
+        kingSignalNextPlayer();
       }
       break;
     }
   }
-}
-
-function shortIdFromFull(fullPeerId) {
-  // our guest peers have IDs like "knuckle-king-peer-XXXXX"
-  return fullPeerId.replace('knuckle-king-peer-', '');
 }
 
 function kingPeerDisconnected(peerId) {
   const pid = shortIdFromFull(peerId);
+  const wasPlaying = kingState.currentGame &&
+    (kingState.currentGame.player0 === pid || kingState.currentGame.player1 === pid);
+
   kingState.players = kingState.players.filter(x=>x.id!==pid);
   kingState.queue   = kingState.queue.filter(x=>x!==pid);
-  if (kingState.currentGame && (kingState.currentGame.player0 === pid || kingState.currentGame.player1 === pid)) {
-    // forfeit — other player wins
-    const winner = kingState.currentGame.player0 === pid ? kingState.currentGame.player1 : kingState.currentGame.player0;
-    kingAwardWin(winner, pid);
+
+  if (wasPlaying && kingState.gameRunning) {
+    const winner = kingState.currentGame.player0 === pid
+      ? kingState.currentGame.player1
+      : kingState.currentGame.player0;
+    kingResolveGameWithWinner(winner, pid);
+  } else {
+    delete kingPeerConns[peerId];
+    kingBroadcastSync();
   }
-  delete kingPeerConns[peerId];
-  kingBroadcast({ type:'king-sync', state: kingState });
 }
 
-function kingBroadcast(msg) {
+function kingBroadcastSync() {
+  const msg = { type:'king-sync', state: kingState };
   Object.values(kingPeerConns).forEach(c => { if(c && c.open) c.send(msg); });
-  // if host is playing, also update own UI
-  if (kingIsHost) kingHandleSync(msg);
-}
-
-function kingBroadcastExcept(exceptPeerId, msg) {
-  Object.entries(kingPeerConns).forEach(([pid, c]) => {
-    if (pid !== exceptPeerId && c && c.open) c.send(msg);
-  });
-  if (kingIsHost) kingHandleSync(msg);
-}
-
-function kingHostSendToPlayer(pid, msg) {
-  if (pid === 'host') { kingHandleSync(msg); return; }
-  const fullPid = Object.keys(kingPeerConns).find(k => shortIdFromFull(k) === pid);
-  if (fullPid) kingSendTo(fullPid, msg);
+  // host updates its own UI
+  kingHandleSync(msg);
 }
 
 function kingSendTo(fullPeerId, msg) {
   const c = kingPeerConns[fullPeerId];
   if (c && c.open) c.send(msg);
+}
+
+function kingHostSendToPlayer(pid, msg) {
+  if (pid === 'host') {
+    // host receives message locally
+    if (msg.type === 'king-your-turn') kingHostTakeTurn();
+    return;
+  }
+  const fullPid = Object.keys(kingPeerConns).find(k => shortIdFromFull(k) === pid);
+  if (fullPid) kingSendTo(fullPid, msg);
 }
 
 function kingMaybeStartGame() {
@@ -1452,165 +1536,207 @@ function kingStartNextGame() {
   const p0 = kingState.queue[0];
   const p1 = kingState.queue[1];
 
-  const emptyBoard = () => Array.from({length:COLS}, () => Array(ROWS).fill(null));
   kingState.currentGame = {
     player0: p0,
     player1: p1,
     board0: emptyBoard(),
     board1: emptyBoard(),
-    turn: 0,  // 0 = player0, 1 = player1
+    turn: 0,
     pendingDie: null
   };
   kingState.gameRunning = true;
 
-  // update statuses
   kingState.players.forEach(p => {
     if (p.id === p0 || p.id === p1) p.status = 'playing';
     else if (kingState.queue.includes(p.id)) p.status = 'queued';
+    else p.status = 'spectating';
   });
 
-  kingBroadcast({ type:'king-sync', state: kingState });
+  kingBroadcastSync();
 
-  // Tell player0 it's their turn
-  const goFirst = p0;
-  if (goFirst === 'host') {
-    setTimeout(kingHostRoll, 800);
-  } else {
-    kingHostSendToPlayer(goFirst, { type:'king-your-turn' });
-  }
+  // Notify player0 it's their turn first
+  setTimeout(() => kingHostSendToPlayer(p0, { type:'king-your-turn' }), 800);
+}
+
+function kingSignalNextPlayer() {
+  const cg = kingState.currentGame;
+  const nextPid = cg.turn === 0 ? cg.player0 : cg.player1;
+  kingHostSendToPlayer(nextPid, { type:'king-your-turn' });
 }
 
 function kingResolveGame() {
   const cg = kingState.currentGame;
   const s0 = calcTotalScore(cg.board0), s1 = calcTotalScore(cg.board1);
   let winnerId, loserId;
-  if (s0 >= s1) { winnerId = cg.player0; loserId = cg.player1; }
-  else          { winnerId = cg.player1; loserId = cg.player0; }
-  if (s0 === s1) { winnerId = null; loserId = null; } // tie: both go to end
-  kingAwardWin(winnerId, loserId, s0, s1, cg.player0, cg.player1);
+  if (s0 > s1)       { winnerId = cg.player0; loserId = cg.player1; }
+  else if (s1 > s0)  { winnerId = cg.player1; loserId = cg.player0; }
+  else               { winnerId = null; loserId = null; }
+  _kingFinish(winnerId, loserId, s0, s1, cg.player0, cg.player1);
 }
 
-function kingAwardWin(winnerId, loserId, s0, s1, p0id, p1id) {
+function kingResolveGameWithWinner(winnerId, loserId) {
   const cg = kingState.currentGame;
-  const actualS0 = s0 !== undefined ? s0 : calcTotalScore(cg.board0);
-  const actualS1 = s1 !== undefined ? s1 : calcTotalScore(cg.board1);
-  const actualP0 = p0id || cg.player0;
-  const actualP1 = p1id || cg.player1;
+  const s0 = calcTotalScore(cg.board0), s1 = calcTotalScore(cg.board1);
+  _kingFinish(winnerId, loserId, s0, s1, cg.player0, cg.player1);
+}
 
-  // update wins/streaks
+function _kingFinish(winnerId, loserId, s0, s1, p0id, p1id) {
   kingState.players.forEach(p => {
     if (p.id === winnerId) { p.wins++; p.streak++; }
-    else if (p.id === loserId) { p.streak = 0; }
+    else if (p.id === loserId || p.id === p0id || p.id === p1id) {
+      if (p.id !== winnerId) p.streak = 0;
+    }
   });
 
-  // queue update: winner stays front, loser goes to end
-  kingState.queue = kingState.queue.filter(x=>x!==actualP0 && x!==actualP1);
+  // queue: winner stays front, loser goes to back
+  kingState.queue = kingState.queue.filter(x => x !== p0id && x !== p1id);
   if (winnerId) {
-    kingState.queue.unshift(winnerId);  // winner at front
-    kingState.queue.push(loserId);      // loser at end
+    kingState.queue.unshift(winnerId);
+    if (loserId && kingState.players.find(x=>x.id===loserId)) {
+      kingState.queue.push(loserId);
+    }
   } else {
-    // tie: both go to end
-    kingState.queue.push(actualP0, actualP1);
+    if (kingState.players.find(x=>x.id===p0id)) kingState.queue.push(p0id);
+    if (kingState.players.find(x=>x.id===p1id)) kingState.queue.push(p1id);
   }
-  // cap queue at 4
   kingState.queue = kingState.queue.slice(0, 4);
 
-  // Find names
-  const wp = kingState.players.find(x=>x.id===winnerId);
-  const lp = kingState.players.find(x=>x.id===loserId);
-  const p0p = kingState.players.find(x=>x.id===actualP0);
-  const p1p = kingState.players.find(x=>x.id===actualP1);
+  const wp  = kingState.players.find(x=>x.id===winnerId);
+  const p0p = kingState.players.find(x=>x.id===p0id);
+  const p1p = kingState.players.find(x=>x.id===p1id);
 
-  const winnerName = wp ? wp.name : '?';
-  const p0name = p0p ? p0p.name : '?';
-  const p1name = p1p ? p1p.name : '?';
+  const gameOverMsg = {
+    type: 'king-game-over',
+    winnerId,
+    winnerName: wp ? wp.name : '?',
+    p0name: p0p ? p0p.name : '?',
+    p1name: p1p ? p1p.name : '?',
+    s0, s1
+  };
 
   kingState.currentGame = null;
   kingState.gameRunning = false;
 
-  kingBroadcast({
-    type: 'king-game-over',
-    winnerId,
-    winnerName,
-    p0name, p1name,
-    s0: actualS0, s1: actualS1
+  // Broadcast game-over separately so winner overlay shows
+  const syncMsg = { type:'king-sync', state: kingState };
+  Object.values(kingPeerConns).forEach(c => {
+    if(c && c.open) {
+      c.send(syncMsg);
+      c.send(gameOverMsg);
+    }
   });
+  // Host handles both
+  kingHandleSync(syncMsg);
+  kingShowGameOver(gameOverMsg);
 
-  // wait a bit then start next
+  // After delay, start next
   setTimeout(() => {
     kingState.players.forEach(p => {
       if (kingState.queue.includes(p.id)) p.status = 'queued';
       else p.status = 'spectating';
     });
-    kingBroadcast({ type:'king-sync', state: kingState });
+    kingBroadcastSync();
     kingMaybeStartGame();
   }, 5000);
 }
 
-// ── Host is a player ──
-let kingHostBoard = null, kingHostOppBoard = null, kingHostSlot = -1, kingHostDie = null;
-
-function kingHostRoll() {
+// ── Host plays as a player ──
+function kingHostTakeTurn() {
   if (!kingState.gameRunning || !kingState.currentGame) return;
   const cg = kingState.currentGame;
   if (cg.player0 !== 'host' && cg.player1 !== 'host') return;
   kingHostSlot = cg.player0 === 'host' ? 0 : 1;
   if (cg.turn !== kingHostSlot) return;
 
-  kingHostDie = Math.ceil(Math.random() * 6);
-  cg.pendingDie = { slot: kingHostSlot, value: kingHostDie };
-  kingBroadcast({ type:'king-game-rolled', slot: kingHostSlot, value: kingHostDie });
-  // update game screen
-  renderKingGame();
-  setTimeout(kingHighlightCols, 0);
+  // animate the roll
+  kingHostDie = null;
+  const finalVal = Math.ceil(Math.random() * 6);
+
+  const container = document.getElementById('king-rolling-die');
+  if (container) {
+    container.innerHTML = '<div class="rolling-die">?</div>';
+    playSound('roll');
+    let n = 0;
+    const t = setInterval(() => {
+      const el = container.querySelector('.rolling-die');
+      if (el) el.textContent = Math.ceil(Math.random()*6);
+      if (++n > 8) {
+        clearInterval(t);
+        kingHostDie = finalVal;
+        cg.pendingDie = { slot: kingHostSlot, value: kingHostDie };
+        // broadcast that this player rolled so spectators see it
+        const rollMsg = { type:'king-peer-rolled', slot: kingHostSlot, value: kingHostDie };
+        Object.values(kingPeerConns).forEach(c => { if(c && c.open) c.send(rollMsg); });
+        showRollingDie(kingHostDie, 'king-rolling-die', false);
+        document.getElementById('king-turn-status').textContent = '▼ Escolha uma coluna';
+        document.getElementById('king-turn-status').style.color = '#e8c97a';
+        setTimeout(kingHighlightCols, 0);
+      }
+    }, 60);
+  } else {
+    kingHostDie = finalVal;
+    cg.pendingDie = { slot: kingHostSlot, value: kingHostDie };
+    renderKingGame();
+    setTimeout(kingHighlightCols, 0);
+  }
 }
 
 function kingHostPlace(colIdx) {
   if (!kingState.gameRunning || !kingState.currentGame || kingHostDie === null) return;
   const cg = kingState.currentGame;
   if (cg.turn !== kingHostSlot) return;
-  const board = kingHostSlot === 0 ? cg.board0 : cg.board1;
+
+  const board   = kingHostSlot === 0 ? cg.board0 : cg.board1;
   const opBoard = kingHostSlot === 0 ? cg.board1 : cg.board0;
   const col = board[colIdx];
   const row = col.findIndex(r=>r===null);
   if (row === -1) { showToast('Coluna cheia!'); return; }
 
+  // remove highlights
+  document.getElementById('king-my-board').querySelectorAll('.board-col').forEach(c => {
+    c.classList.remove('selectable'); c.onclick = null;
+  });
+
   col[row] = kingHostDie;
   const val = kingHostDie;
   kingHostDie = null;
-  // cancel opp
-  opBoard[colIdx] = opBoard[colIdx].map(d=>d===val?null:d);
+  opBoard[colIdx] = opBoard[colIdx].map(d => d===val ? null : d);
   compactCol(opBoard[colIdx]);
-  // turn
   cg.turn = 1 - cg.turn;
   cg.pendingDie = null;
   playSound('place');
+  clearRollingDie('king-rolling-die');
 
-  // check over
   const over0 = cg.board0.every(c=>c.every(r=>r!==null));
   const over1 = cg.board1.every(c=>c.every(r=>r!==null));
 
-  kingBroadcast({ type:'king-sync', state: kingState });
-
   if (over0 || over1) {
+    kingBroadcastSync();
     kingResolveGame();
   } else {
-    const nextPid = cg.turn === 0 ? cg.player0 : cg.player1;
-    if (nextPid === 'host') {
-      setTimeout(kingHostRoll, 500);
-    } else {
-      kingHostSendToPlayer(nextPid, { type:'king-your-turn' });
-    }
+    kingBroadcastSync();
+    kingSignalNextPlayer();
   }
+}
+
+function kingHighlightCols() {
+  const cg = kingState.currentGame;
+  if (!cg || !kingIsHost || kingHostDie === null) return;
+  const myBoard = kingHostSlot === 0 ? cg.board0 : cg.board1;
+  document.getElementById('king-my-board').querySelectorAll('.board-col').forEach((col, i) => {
+    if (myBoard[i].some(r=>r===null)) {
+      col.classList.add('selectable');
+      col.onclick = () => kingHostPlace(i);
+    }
+  });
 }
 
 // ══════════════════════════════════════════════
 //  KING MODE — GUEST LOGIC
 // ══════════════════════════════════════════════
-
-function getKingName() {
-  return document.getElementById('player-name').value.trim() || '';
-}
+let kgGuestMySlot = -1;
+let kgGuestDie = null;
+let kgGuestMyTurnFlag = false;
 
 function joinKingRoom() {
   if (!checkPeer()) return;
@@ -1660,14 +1786,18 @@ function kingGuestHandleMessage(data) {
       kingShowGameOver(data);
       break;
     case 'king-your-turn':
-      kingGuestMyTurn();
+      kingGuestStartTurn();
       break;
-    case 'king-game-rolled':
+    case 'king-peer-rolled':
+      // another player rolled — show their die as greyed out to us
       kingHandleOppRolled(data);
       break;
     case 'king-toast':
       showToast(data.msg);
       break;
+    case 'king-roll-notify':
+    // host repassa para espectadores
+    break;
   }
 }
 
@@ -1675,71 +1805,71 @@ function kingHandleSync(data) {
   if (data.type === 'king-sync') {
     kingState = data.state;
   }
-  const screen = document.getElementById('screen-king-game').classList.contains('active') ? 'game' : 'lobby';
-  if (screen === 'lobby') renderKingLobby();
-  else renderKingGame();
 
-  // If I'm now playing and wasn't, switch to game screen
-  const me = kingState.players.find(p=>p.id===kingMyId || (kingIsHost && p.id==='host'));
-  if (me && (me.status === 'playing' || me.status === 'queued') && kingState.currentGame && kingState.gameRunning) {
+  // Determine which screen to show
+  if (!kingState) return;
+
+  const myId = kingIsHost ? 'host' : kingMyId;
+  const me = kingState.players.find(p => p.id === myId);
+
+  // If game is running and I'm involved (playing or queued), show game screen
+  if (kingState.gameRunning && kingState.currentGame) {
     if (!document.getElementById('screen-king-game').classList.contains('active')) {
-      showScreen('king-game');
-      renderKingGame();
-    }
-  }
-  // If game ended and we're watching lobby
-  if (!kingState.gameRunning && document.getElementById('screen-king-game').classList.contains('active')) {
-    // Only switch back if not currently in winner overlay
-    if (!document.getElementById('winner-overlay').classList.contains('active')) {
-      const myId = kingIsHost ? 'host' : kingMyId;
-      const me2 = kingState.players.find(p=>p.id===myId);
-      if (!me2 || me2.status !== 'playing') {
-        showScreen('king-lobby');
-        renderKingLobby();
+      // Only auto-switch if I'm playing
+      if (me && me.status === 'playing') {
+        showScreen('king-game');
+      } else if (me && me.status === 'queued') {
+        // Show game screen for queue members so they can watch
+        showScreen('king-game');
       }
     }
+    renderKingGame();
+  } else {
+    // Game not running, show lobby if on game screen
+    if (document.getElementById('screen-king-game').classList.contains('active') &&
+        !document.getElementById('winner-overlay').classList.contains('active')) {
+      showScreen('king-lobby');
+    }
+    renderKingLobby();
+  }
+
+  if (document.getElementById('screen-king-lobby').classList.contains('active')) {
+    renderKingLobby();
   }
 }
 
-let kgGuestMySlot = -1;
-let kgGuestDie = null;
-let kgGuestMyTurnFlag = false;
-
-function kingGuestMyTurn() {
+function kingGuestStartTurn() {
   kgGuestMyTurnFlag = true;
   const cg = kingState.currentGame;
   if (!cg) return;
   kgGuestMySlot = cg.player0 === kingMyId ? 0 : 1;
-  kgGuestDie = Math.ceil(Math.random() * 6);
-  cg.pendingDie = { slot: kgGuestMySlot, value: kgGuestDie };
-  kingHostConn.send({ type:'king-game-rolled', slot: kgGuestMySlot, value: kgGuestDie });
-  renderKingGame();
-  setTimeout(kingHighlightGuestCols, 0);
-}
 
-function kingHandleOppRolled(data) {
-  // update spectator view / opponent die
-  renderKingGame();
-  if (document.getElementById('screen-king-game').classList.contains('active')) {
-    const cg = kingState.currentGame;
-    if (!cg) return;
-    const myId = kingIsHost ? 'host' : kingMyId;
-    const oppSlot = data.slot;
-    const mySlot = cg.player0 === myId ? 0 : (cg.player1 === myId ? 1 : -1);
-    if (mySlot !== -1 && oppSlot !== mySlot) {
-      showRollingDie(data.value, 'king-rolling-die', true);
-      document.getElementById('king-sub-status').textContent = 'Oponente está escolhendo...';
-    } else if (mySlot === -1) {
-      // spectating
-      const slot0name = kingState.players.find(p=>p.id===cg.player0)?.name || '?';
-      const slot1name = kingState.players.find(p=>p.id===cg.player1)?.name || '?';
-      const rollerName = data.slot === 0 ? slot0name : slot1name;
-      showRollingDie(data.value, 'king-rolling-die', true);
-      document.getElementById('king-sub-status').textContent = rollerName + ' rolou ' + data.value;
-    }
+  const finalVal = Math.ceil(Math.random() * 6);
+
+  const container = document.getElementById('king-rolling-die');
+  if (container) {
+    container.innerHTML = '<div class="rolling-die">?</div>';
+    playSound('roll');
+    let n = 0;
+    const t = setInterval(() => {
+      const el = container.querySelector('.rolling-die');
+      if (el) el.textContent = Math.ceil(Math.random()*6);
+      if (++n > 8) {
+        clearInterval(t);
+        kgGuestDie = finalVal;
+        cg.pendingDie = { slot: kgGuestMySlot, value: kgGuestDie };
+        // tell host we rolled
+        kingHostConn.send({ type:'king-roll-notify', slot: kgGuestMySlot, value: kgGuestDie });
+        showRollingDie(kgGuestDie, 'king-rolling-die', false);
+        document.getElementById('king-turn-status').textContent = '▼ Escolha uma coluna';
+        document.getElementById('king-turn-status').style.color = '#e8c97a';
+        setTimeout(kingHighlightGuestCols, 0);
+      }
+    }, 60);
   }
 }
 
+// Override: guest sends place (not roll-notify) to host
 function kingGuestPlace(colIdx) {
   if (!kgGuestMyTurnFlag || kgGuestDie === null) return;
   const cg = kingState.currentGame;
@@ -1752,7 +1882,7 @@ function kingGuestPlace(colIdx) {
   kgGuestMyTurnFlag = false;
   playSound('place');
   clearRollingDie('king-rolling-die');
-  // Remove highlights
+
   document.getElementById('king-my-board').querySelectorAll('.board-col').forEach(c => {
     c.classList.remove('selectable'); c.onclick = null;
   });
@@ -1761,26 +1891,38 @@ function kingGuestPlace(colIdx) {
   kgGuestDie = null;
 }
 
-function kingHighlightGuestCols() {
+// Fix: handle roll notify from host about guest
+function kingHandleOppRolled(data) {
+  if (!kingState.currentGame) return;
+  const myId = kingIsHost ? 'host' : kingMyId;
   const cg = kingState.currentGame;
-  if (!cg) return;
+  const mySlot = cg.player0 === myId ? 0 : (cg.player1 === myId ? 1 : -1);
+
+  if (mySlot !== -1 && data.slot !== mySlot) {
+    // Opp rolled
+    showRollingDie(data.value, 'king-rolling-die', true);
+    const oppPid = data.slot === 0 ? cg.player0 : cg.player1;
+    const oppP = kingState.players.find(p=>p.id===oppPid);
+    document.getElementById('king-sub-status').textContent = (oppP?.name || 'Oponente') + ' está escolhendo...';
+    document.getElementById('king-turn-status').textContent = 'Vez de ' + (oppP?.name || 'Oponente');
+    document.getElementById('king-turn-status').style.color = '#888';
+  } else if (mySlot === -1) {
+    // spectator
+    showRollingDie(data.value, 'king-rolling-die', true);
+    const rollerPid = data.slot === 0 ? cg.player0 : cg.player1;
+    const rollerP = kingState.players.find(p=>p.id===rollerPid);
+    document.getElementById('king-sub-status').textContent = (rollerP?.name || '?') + ' rolou ' + data.value;
+  }
+}
+
+function kingHighlightGuestCols() {
+  if (!kingState.currentGame || !kgGuestMyTurnFlag || kgGuestDie === null) return;
+  const cg = kingState.currentGame;
   const myBoard = kgGuestMySlot === 0 ? cg.board0 : cg.board1;
   document.getElementById('king-my-board').querySelectorAll('.board-col').forEach((col, i) => {
     if (myBoard[i].some(r=>r===null)) {
       col.classList.add('selectable');
       col.onclick = () => kingGuestPlace(i);
-    }
-  });
-}
-
-function kingHighlightCols() {
-  const cg = kingState.currentGame;
-  if (!cg || !kingIsHost) return;
-  const myBoard = kingHostSlot === 0 ? cg.board0 : cg.board1;
-  document.getElementById('king-my-board').querySelectorAll('.board-col').forEach((col, i) => {
-    if (myBoard[i].some(r=>r===null)) {
-      col.classList.add('selectable');
-      col.onclick = () => kingHostPlace(i);
     }
   });
 }
@@ -1793,22 +1935,27 @@ function renderKingLobby() {
   if (!kingState) return;
   document.getElementById('king-room-label').textContent = 'Sala: ' + kingRoomCode;
 
-  // Current match display
-  const matchDiv = document.getElementById('king-match-players');
+  // Current match
+  const matchInfo = document.getElementById('king-current-match-info');
   if (kingState.gameRunning && kingState.currentGame) {
     const cg = kingState.currentGame;
     const p0 = kingState.players.find(x=>x.id===cg.player0);
     const p1 = kingState.players.find(x=>x.id===cg.player1);
     const s0 = calcTotalScore(cg.board0), s1 = calcTotalScore(cg.board1);
-    matchDiv.innerHTML = `
-      <span class="match-player-name">${p0?.name||'?'}</span>
-      <span class="match-score">${s0}</span>
-      <span class="match-vs">VS</span>
-      <span class="match-score">${s1}</span>
-      <span class="match-player-name">${p1?.name||'?'}</span>
+    matchInfo.innerHTML = `
+      <div class="match-vs-row">
+        <span class="match-player-name">${p0?.name||'?'}</span>
+        <span class="match-vs">VS</span>
+        <span class="match-player-name">${p1?.name||'?'}</span>
+      </div>
+      <div class="match-score-row">
+        <span class="match-score-val">${s0}</span>
+        <span class="match-score-sep">•</span>
+        <span class="match-score-val">${s1}</span>
+      </div>
     `;
   } else {
-    matchDiv.innerHTML = '<span style="font-family:\'Cinzel Decorative\',cursive;font-size:0.65rem;color:rgba(201,168,76,0.3)">Aguardando jogadores...</span>';
+    matchInfo.innerHTML = '<span style="font-family:\'Cinzel Decorative\',cursive;font-size:0.6rem;color:rgba(201,168,76,0.3)">Aguardando jogadores...</span>';
   }
 
   // Player list
@@ -1816,12 +1963,10 @@ function renderKingLobby() {
   listEl.innerHTML = '';
   const myId = kingIsHost ? 'host' : kingMyId;
 
-  // Sort: playing first, then queue order, then spectators
   const sorted = [...kingState.players].sort((a, b) => {
     const order = {playing: 0, queued: 1, spectating: 2};
     if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
-    const ai = kingState.queue.indexOf(a.id);
-    const bi = kingState.queue.indexOf(b.id);
+    const ai = kingState.queue.indexOf(a.id), bi = kingState.queue.indexOf(b.id);
     if (ai !== -1 && bi !== -1) return ai - bi;
     return 0;
   });
@@ -1829,26 +1974,59 @@ function renderKingLobby() {
   sorted.forEach(p => {
     const isMe = p.id === myId;
     const queuePos = kingState.queue.indexOf(p.id);
-    const posLabel = queuePos === 0 ? '♛' : queuePos > 0 ? String(queuePos + 1) : '👁';
+    const posLabel = queuePos === 0 ? '♛' : queuePos > 0 ? (queuePos + 1) + '' : '👁';
     const card = document.createElement('div');
     card.className = 'player-card ' + p.status;
 
     let badgeClass = 'badge-spectating', badgeText = 'ASSISTINDO';
     if (p.status === 'playing') { badgeClass = 'badge-playing'; badgeText = 'JOGANDO'; }
-    else if (p.status === 'queued') { badgeClass = 'badge-queued'; badgeText = 'NA FILA'; }
-
-    const streakText = p.streak >= 2 ? `🔥 ${p.streak}` : '';
+    else if (p.status === 'queued') { badgeClass = 'badge-queued'; badgeText = 'FILA'; }
 
     card.innerHTML = `
       <div class="pc-position ${queuePos <= 1 && p.status!=='spectating' ? 'active-pos' : ''}">${posLabel}</div>
-      <div class="pc-name ${isMe ? 'is-me' : ''}">${p.name}${isMe ? ' (você)' : ''}</div>
+      <div class="pc-name ${isMe ? 'is-me' : ''}">${p.name}${isMe ? ' ✦' : ''}</div>
       <div class="pc-badge ${badgeClass}">${badgeText}</div>
-      <div class="pc-stats">
-        <div class="pc-wins">${p.wins > 0 ? '🏆 ' + p.wins : ''}</div>
-        <div class="pc-streak">${streakText}</div>
-      </div>
     `;
     listEl.appendChild(card);
+  });
+
+  // Ranking
+  const rankEl = document.getElementById('king-ranking-list');
+  rankEl.innerHTML = '';
+  const byWins = [...kingState.players].sort((a,b) => b.wins - a.wins || b.streak - a.streak);
+  byWins.forEach((p, i) => {
+    const isMe = p.id === myId;
+    const row = document.createElement('div');
+    row.className = 'ranking-row';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)+'';
+    row.innerHTML = `
+      <span class="rank-pos ${i===0?'gold-rank':''}">${medal}</span>
+      <span class="rank-name ${isMe?'is-me':''}">${p.name}${isMe?' ✦':''}</span>
+      <span class="rank-wins">${p.wins > 0 ? '🏆'+p.wins : ''}</span>
+      <span class="rank-streak">${p.streak >= 2 ? '🔥'+p.streak : ''}</span>
+    `;
+    rankEl.appendChild(row);
+  });
+
+  // Queue display
+  const queueEl = document.getElementById('king-queue-display');
+  queueEl.innerHTML = '';
+  if (kingState.queue.length === 0) {
+    queueEl.innerHTML = '<div style="font-family:\'Cinzel Decorative\',cursive;font-size:0.55rem;color:rgba(201,168,76,0.25)">Fila vazia</div>';
+  }
+  kingState.queue.forEach((pid, i) => {
+    const p = kingState.players.find(x=>x.id===pid);
+    if (!p) return;
+    const isMe = p.id === myId;
+    const el = document.createElement('div');
+    el.className = 'queue-mini-item';
+    el.innerHTML = `
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;color:rgba(201,168,76,0.4)">${i+1}.</span>
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:${isMe?'#e8c97a':'var(--cream)'}">
+        ${p.status === 'playing' ? '⚔ ' : ''}${p.name}${isMe?' ✦':''}
+      </span>
+    `;
+    queueEl.appendChild(el);
   });
 
   // Action buttons
@@ -1867,93 +2045,123 @@ function renderKingGame() {
   const mySlot = cg.player0 === myId ? 0 : (cg.player1 === myId ? 1 : -1);
   const isPlaying = mySlot !== -1;
 
-  const myBoard = mySlot === 0 ? cg.board0 : (mySlot === 1 ? cg.board1 : null);
-  const oppBoard2 = mySlot === 0 ? cg.board1 : (mySlot === 1 ? cg.board0 : null);
-  const myPlayer = kingState.players.find(p=>p.id===myId);
-  const oppId = mySlot === 0 ? cg.player1 : cg.player0;
+  const myBoardData   = mySlot === 0 ? cg.board0 : (mySlot === 1 ? cg.board1 : cg.board0);
+  const oppBoardData  = mySlot === 0 ? cg.board1 : (mySlot === 1 ? cg.board0 : cg.board1);
+  const myPlayer  = kingState.players.find(p=>p.id===myId);
+  const oppId     = mySlot === 0 ? cg.player1 : (mySlot === 1 ? cg.player0 : cg.player1);
   const oppPlayer = kingState.players.find(p=>p.id===oppId);
 
   document.getElementById('king-room-label-game').textContent = 'Sala: ' + kingRoomCode;
+
   const spectBanner = document.getElementById('king-spectator-banner');
   if (!isPlaying) {
-    const myQueuePos = kingState.queue.indexOf(kingIsHost ? 'host' : kingMyId);
+    const myQueuePos = kingState.queue.indexOf(myId);
     spectBanner.textContent = myQueuePos > 0
-      ? `⏳ NA FILA — Posição ${myQueuePos + 1} • Assistindo`
+      ? `⏳ FILA — Posição ${myQueuePos + 1} • Assistindo a partida`
       : '👁 ASSISTINDO — Entre na fila para jogar';
     spectBanner.style.display = 'block';
   } else {
     spectBanner.style.display = 'none';
   }
-  if (isPlaying) {
-    document.getElementById('king-my-name').textContent = myPlayer?.name || 'Você';
-    document.getElementById('king-opp-name').textContent = oppPlayer?.name || 'Oponente';
-    document.getElementById('king-my-score').textContent = calcTotalScore(myBoard);
-    document.getElementById('king-opp-score').textContent = calcTotalScore(oppBoard2);
 
-    renderBoard('king-my-board', myBoard, true);
-    renderBoard('king-opp-board', oppBoard2, false);
+  if (isPlaying) {
+    document.getElementById('king-my-name').textContent  = myPlayer?.name || 'Você';
+    document.getElementById('king-opp-name').textContent = oppPlayer?.name || 'Oponente';
+    document.getElementById('king-my-score').textContent  = calcTotalScore(myBoardData);
+    document.getElementById('king-opp-score').textContent = calcTotalScore(oppBoardData);
+    renderBoard('king-my-board',  myBoardData,  true);
+    renderBoard('king-opp-board', oppBoardData, false);
 
     const isMyTurn = cg.turn === mySlot;
     const ts = document.getElementById('king-turn-status');
+    const ss = document.getElementById('king-sub-status');
+
     if (isMyTurn) {
       const hasDie = (kingIsHost && kingHostDie !== null) || (!kingIsHost && kgGuestDie !== null);
       ts.textContent = hasDie ? '▼ Escolha uma coluna' : '▼ Sua vez';
       ts.style.color = '#e8c97a';
-      // show my die
-      const myDie = kingIsHost ? kingHostDie : kgGuestDie;
-      if (myDie !== null) {
-        showRollingDie(myDie, 'king-rolling-die', false);
-        setTimeout(() => {
-          if (kingIsHost) kingHighlightCols();
-          else kingHighlightGuestCols();
-        }, 0);
+      ss.textContent = '';
+      if (hasDie) {
+        const myDie = kingIsHost ? kingHostDie : kgGuestDie;
+        if (myDie !== null) {
+          showRollingDie(myDie, 'king-rolling-die', false);
+        }
       }
     } else {
       ts.textContent = 'Vez de ' + (oppPlayer?.name || 'Oponente');
       ts.style.color = '#888';
-      if (cg.pendingDie) {
+      if (cg.pendingDie && cg.pendingDie.slot !== mySlot) {
         showRollingDie(cg.pendingDie.value, 'king-rolling-die', true);
+        ss.textContent = (oppPlayer?.name || 'Oponente') + ' está escolhendo...';
       }
     }
   } else {
-    // spectator view
+    // Spectator view: show p0 at bottom, p1 at top
     const p0 = kingState.players.find(x=>x.id===cg.player0);
     const p1 = kingState.players.find(x=>x.id===cg.player1);
-    document.getElementById('king-my-name').textContent = p0?.name || '?';
+    document.getElementById('king-my-name').textContent  = p0?.name || '?';
     document.getElementById('king-opp-name').textContent = p1?.name || '?';
-    document.getElementById('king-my-score').textContent = calcTotalScore(cg.board0);
+    document.getElementById('king-my-score').textContent  = calcTotalScore(cg.board0);
     document.getElementById('king-opp-score').textContent = calcTotalScore(cg.board1);
-    renderBoard('king-my-board', cg.board0, true);
+    renderBoard('king-my-board',  cg.board0, true);
     renderBoard('king-opp-board', cg.board1, false);
     document.getElementById('king-turn-status').textContent = '👁 ASSISTINDO';
+    document.getElementById('king-turn-status').style.color = '#666';
+    if (cg.pendingDie) {
+      const rollerPid = cg.pendingDie.slot === 0 ? cg.player0 : cg.player1;
+      const rollerP = kingState.players.find(p=>p.id===rollerPid);
+      showRollingDie(cg.pendingDie.value, 'king-rolling-die', true);
+      document.getElementById('king-sub-status').textContent = (rollerP?.name || '?') + ' está escolhendo...';
+    }
   }
 
   // Queue mini
   const queueMini = document.getElementById('king-queue-mini');
   queueMini.innerHTML = '';
+  const playingIds = [cg.player0, cg.player1];
   kingState.queue.forEach((pid, i) => {
     const p = kingState.players.find(x=>x.id===pid);
     if (!p) return;
-    if (i < 2 && kingState.gameRunning) return; // skip current players
     const isMe = p.id === myId;
+    const isActive = playingIds.includes(pid);
     const el = document.createElement('div');
-    el.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(201,168,76,0.08)';
+    el.className = 'queue-mini-item';
     el.innerHTML = `
-      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:rgba(201,168,76,0.4)">${i+1}.</span>
-      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.65rem;color:${isMe?'#e8c97a':'var(--cream)'}">${p.name}${isMe?' (você)':''}</span>
-      ${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;color:var(--gold)">🏆${p.wins}</span>` : ''}
-      ${p.streak >= 2 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;color:#f97316">🔥${p.streak}</span>` : ''}
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;color:rgba(201,168,76,0.4)">${i+1}.</span>
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:${isMe?'#e8c97a':isActive?'#fef08a':'var(--cream)'}">
+        ${isActive ? '⚔ ' : ''}${p.name}${isMe?' ✦':''}
+      </span>
+      ${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:0.5rem;color:var(--gold)">🏆${p.wins}</span>` : ''}
     `;
     queueMini.appendChild(el);
   });
 
-  // game join/leave buttons
+  // Ranking mini
+  const rankMini = document.getElementById('king-ranking-mini');
+  rankMini.innerHTML = '';
+  const byWins = [...kingState.players].sort((a,b) => b.wins - a.wins || b.streak - a.streak);
+  byWins.forEach((p, i) => {
+    const isMe = p.id === myId;
+    const el = document.createElement('div');
+    el.className = 'queue-mini-item';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)+'';
+    el.innerHTML = `
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:rgba(201,168,76,0.4)">${medal}</span>
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.6rem;color:${isMe?'#e8c97a':'var(--cream)'}">
+        ${p.name}${isMe?' ✦':''}
+      </span>
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.55rem;color:var(--gold)">${p.wins > 0 ? '🏆'+p.wins : ''}</span>
+      <span style="font-family:'Cinzel Decorative',cursive;font-size:0.5rem;color:#f97316">${p.streak>=2?'🔥'+p.streak:''}</span>
+    `;
+    rankMini.appendChild(el);
+  });
+
+  // Join/leave buttons
   const inQueue = kingState.queue.includes(myId);
-  const amPlaying = isPlaying;
   document.getElementById('king-game-join-btn').style.display =
-    (!inQueue && !amPlaying) ? 'block' : 'none';
+    (!inQueue && !isPlaying) ? 'block' : 'none';
   document.getElementById('king-game-leave-btn').style.display =
-    (inQueue && !amPlaying) ? 'block' : 'none';
+    (inQueue && !isPlaying) ? 'block' : 'none';
 }
 
 function kingShowGameOver(data) {
@@ -1961,22 +2169,18 @@ function kingShowGameOver(data) {
   document.getElementById('winner-king-btns').style.display = 'flex';
 
   const myId = kingIsHost ? 'host' : kingMyId;
-  const iWon  = data.winnerId === myId;
-  const iLost = !iWon && (data.winnerId !== null); // if tie, neither wins
-  const tie = data.winnerId === null;
+  const iWon = data.winnerId === myId;
+  const tie  = data.winnerId === null;
 
   document.getElementById('trophy-emoji').textContent = tie ? '🤝' : iWon ? '🏆' : '💀';
   document.getElementById('winner-text').textContent  = tie ? 'EMPATE!' : data.winnerName + ' VENCEU!';
   document.getElementById('winner-scores').textContent =
     `${data.p0name}: ${data.s0}  •  ${data.p1name}: ${data.s1}`;
-
-  const nextMsg = document.getElementById('king-next-match-msg');
-  nextMsg.textContent = 'Próxima partida começa em breve...';
+  document.getElementById('king-next-match-msg').textContent = 'Próxima partida em breve...';
 
   document.getElementById('winner-overlay').classList.add('active');
   if (!tie) playSound(iWon ? 'win' : 'lose');
 
-  // Auto dismiss after 4.5s
   setTimeout(() => {
     document.getElementById('winner-overlay').classList.remove('active');
     showScreen('king-lobby');
@@ -1984,7 +2188,7 @@ function kingShowGameOver(data) {
   }, 4500);
 }
 
-// ── Queue actions (from lobby or game screen) ──
+// ── Queue actions ──
 function kingJoinQueue() {
   const myId = kingIsHost ? 'host' : kingMyId;
   if (kingIsHost) {
@@ -1993,8 +2197,8 @@ function kingJoinQueue() {
     const p = kingState.players.find(x=>x.id==='host');
     if (p) p.status = 'queued';
     kingState.queue.push('host');
-    kingBroadcast({ type:'king-sync', state: kingState });
-    kingMaybeStartGame();
+    kingBroadcastSync();
+    if (!kingState.gameRunning) kingMaybeStartGame();
     renderKingLobby();
   } else {
     if (!kingHostConn || !kingHostConn.open) return;
@@ -2003,12 +2207,11 @@ function kingJoinQueue() {
 }
 
 function kingLeaveQueue() {
-  const myId = kingIsHost ? 'host' : kingMyId;
   if (kingIsHost) {
     kingState.queue = kingState.queue.filter(x=>x!=='host');
     const p = kingState.players.find(x=>x.id==='host');
     if (p && p.status !== 'playing') p.status = 'spectating';
-    kingBroadcast({ type:'king-sync', state: kingState });
+    kingBroadcastSync();
     renderKingLobby();
   } else {
     if (!kingHostConn || !kingHostConn.open) return;
@@ -2037,10 +2240,8 @@ function copyKingCode() {
 }
 
 function backToLobby() {
-  // cleanup 1v1
   if (peer) { try { peer.destroy(); } catch(e){} peer = null; }
   conn = null; gameStarted = false;
-  // cleanup king
   if (kingPeer) { try { kingPeer.destroy(); } catch(e){} kingPeer = null; }
   kingHostConn = null;
   kingPeerConns = {};
@@ -2050,18 +2251,14 @@ function backToLobby() {
   kgGuestMyTurnFlag = false;
   kgGuestDie = null;
   kingHostDie = null;
+  kingHostSlot = -1;
   document.getElementById('winner-overlay').classList.remove('active');
   showScreen('lobby');
 }
 
 function resetGame() {
-  if (kingMode) {
-    document.getElementById('winner-overlay').classList.remove('active');
-    backToLobby();
-  } else {
-    document.getElementById('winner-overlay').classList.remove('active');
-    backToLobby();
-  }
+  document.getElementById('winner-overlay').classList.remove('active');
+  backToLobby();
 }
 
 function requestRematch() {
@@ -2086,9 +2283,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ══════════════════════════════════════════════
-//  EVENT LISTENERS
-// ══════════════════════════════════════════════
+// ── Event listeners ──
 document.getElementById('room-code').addEventListener('input', function() {
   this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
 });
