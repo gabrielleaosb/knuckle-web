@@ -338,7 +338,7 @@
         text-transform: uppercase;
         letter-spacing: 0.2em;
         text-align: center;
-        font-size: 1.1rem;
+        font-size: 1.0rem;
       }
 
       .btn-gold {
@@ -581,6 +581,7 @@
       .turn-area {
         display: flex;
         flex-direction: column;
+        min-height: 120px;
         align-items: center;
         gap: 8px;
         padding: 4px 0;
@@ -1586,7 +1587,7 @@
       let _pendingKingCode = "";
 
       // bot mode state
-      let botMode = false;
+      let botMode = false, botPendingTimeout = null;
       let botDifficulty = "medium";
 
       function startBotGame() {
@@ -1619,7 +1620,7 @@
         const delay = { easy: 600, medium: 950, hard: 1300 }[botDifficulty];
         showRollingDie(dieValue, "rolling-die-container", true);
         document.getElementById("sub-status").textContent = oppName + " está escolhendo...";
-        setTimeout(() => oppPlaced(col, dieValue), delay);
+        botPendingTimeout = setTimeout(() => oppPlaced(col, dieValue), delay);
       }
 
       const AC = new (window.AudioContext || window.webkitAudioContext)();
@@ -3046,6 +3047,7 @@
       }
       function backToLobby() {
         botMode = false;
+        if (botPendingTimeout) { clearTimeout(botPendingTimeout); botPendingTimeout = null; }
         if (peer) {
           try {
             peer.destroy();
