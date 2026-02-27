@@ -205,6 +205,55 @@
         border-color: rgba(201, 168, 76, 0.45);
         box-shadow: 0 0 16px rgba(201, 168, 76, 0.06);
       }
+      /* VS Bot card — active, not coming soon */
+      .mode-card.bot {
+        border-color: rgba(74, 222, 128, 0.25);
+      }
+      .mode-card.bot:hover {
+        border-color: rgba(74, 222, 128, 0.55);
+        box-shadow: 0 0 16px rgba(74, 222, 128, 0.08);
+      }
+      .mode-card.bot .mode-card-title {
+        color: rgba(134, 239, 172, 0.9);
+      }
+      .bot-difficulty-select {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        color: var(--cream);
+        padding: 8px 10px;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        outline: none;
+        width: 100%;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .bot-difficulty-select:focus {
+        border-color: rgba(74, 222, 128, 0.6);
+      }
+      .btn-bot {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        color: #f0fdf4;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 11px 16px;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        transition: box-shadow 0.2s, transform 0.2s;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+      }
+      .btn-bot:hover {
+        box-shadow: 0 0 20px rgba(74, 222, 128, 0.45);
+        transform: translateY(-1px);
+      }
+      .btn-bot:active {
+        transform: translateY(0);
+      }
       /* Coming Soon */
       .mode-card.coming-soon {
         border-color: rgba(201, 168, 76, 0.1);
@@ -1248,14 +1297,17 @@
           <div class="mode-card-desc">Forme duplas e vença em equipe</div>
           <div class="coming-soon-badge">EM BREVE</div>
         </div>
-        <!-- VS BOT COMING SOON -->
-        <div class="mode-card coming-soon">
+        <!-- VS BOT -->
+        <div class="mode-card bot">
           <div class="mode-card-icon">🤖</div>
           <div class="mode-card-title">VS BOT</div>
-          <div class="mode-card-desc">
-            Treine contra inteligência artificial
-          </div>
-          <div class="coming-soon-badge">EM BREVE</div>
+          <div class="mode-card-desc">Treine contra inteligência artificial</div>
+          <select id="bot-difficulty" class="bot-difficulty-select">
+            <option value="easy">🎲 Fácil</option>
+            <option value="medium" selected>⚔ Médio</option>
+            <option value="hard">💀 Difícil</option>
+          </select>
+          <button class="btn-bot" onclick="startBotGame()">✦ JOGAR</button>
         </div>
       </div>
       <div class="ornament" style="max-width: 780px">✦</div>
@@ -1495,6 +1547,7 @@
         document.body.appendChild(s);
       })();
     </script>
+    <script src="knucklebones-bot.js"></script>
     <script>
       const COLS = 3,
         ROWS = 3;
@@ -1525,6 +1578,43 @@
         kgGuestDie = null,
         kgGuestMyTurnFlag = false;
       let _pendingKingCode = "";
+
+      // bot mode state
+      let botMode = false;
+      let botDifficulty = "medium";
+
+      function startBotGame() {
+        myName = document.getElementById("player-name").value.trim();
+        if (!myName) {
+          showToast("Digite seu nome");
+          document.getElementById("player-name").focus();
+          return;
+        }
+        botDifficulty = document.getElementById("bot-difficulty").value;
+        botMode = true;
+        isHost = true;
+        kingMode = false;
+        oppName = { easy: "Bot Fácil 🎲", medium: "Bot Médio ⚔", hard: "Bot Difícil 💀" }[botDifficulty];
+        document.getElementById("opp-name-display").textContent = oppName;
+        document.getElementById("my-name-display").textContent = myName;
+        document.getElementById("room-label").textContent = "VS COMPUTADOR";
+        initBoards();
+        gameStarted = true;
+        myTurn = true;
+        currentDie = null;
+        showScreen("game");
+        renderBoards();
+        updateTurnUI();
+        setTimeout(rollMyDie, 600);
+      }
+
+      function botTakeTurn(dieValue) {
+        const col = botChooseColumn(oppBoard, myBoard, dieValue, botDifficulty);
+        const delay = { easy: 600, medium: 950, hard: 1300 }[botDifficulty];
+        showRollingDie(dieValue, "rolling-die-container", true);
+        document.getElementById("sub-status").textContent = oppName + " está escolhendo...";
+        setTimeout(() => oppPlaced(col, dieValue), delay);
+      }
 
       const AC = new (window.AudioContext || window.webkitAudioContext)();
       function playSound(t) {
@@ -1824,7 +1914,7 @@
           showRollingDie(currentDie, "rolling-die-container", false);
           updateTurnUI();
           highlightColumns("my-board", placeInColumn);
-          send({ type: "rolled", value: currentDie });
+          if (!botMode) send({ type: "rolled", value: currentDie });
         });
       }
       function animateRoll(v, id, cb) {
@@ -1894,10 +1984,18 @@
         clearRollingDie("rolling-die-container");
         playSound("place");
         cancelOppDice(i, v);
-        send({ type: "placed", col: i, value: v });
-        send({ type: "sync", board: myBoard });
+        if (!botMode) {
+          send({ type: "placed", col: i, value: v });
+          send({ type: "sync", board: myBoard });
+        }
         renderBoards();
-        if (!checkWin()) updateTurnUI();
+        if (!checkWin()) {
+          updateTurnUI();
+          if (botMode) {
+            const botDie = Math.ceil(Math.random() * 6);
+            botTakeTurn(botDie);
+          }
+        }
       }
       function oppPlaced(i, v) {
         const col = oppBoard[i],
@@ -2941,6 +3039,7 @@
           .catch(() => prompt("Copie:", kingRoomCode));
       }
       function backToLobby() {
+        botMode = false;
         if (peer) {
           try {
             peer.destroy();
