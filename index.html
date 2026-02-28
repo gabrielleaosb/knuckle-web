@@ -1585,6 +1585,7 @@
         kgGuestDie = null,
         kgGuestMyTurnFlag = false;
       let _pendingKingCode = "";
+      let _kingNextGameTimeout = null, _kingOverlayTimeout = null;
 
       // bot mode state
       let botMode = false, botPendingTimeout = null;
@@ -2432,7 +2433,8 @@
         });
         kingHandleSync(sm);
         kingShowGameOver(gom);
-        setTimeout(() => {
+        _kingNextGameTimeout = setTimeout(() => {
+          if (!kingState) return;
           kingState.players.forEach((p) => {
             p.status = kingState.queue.includes(p.id) ? "queued" : "spectating";
           });
@@ -2991,7 +2993,8 @@
           "Próxima partida em breve...";
         document.getElementById("winner-overlay").classList.add("active");
         if (!tie) playSound(iWon ? "win" : "lose");
-        setTimeout(() => {
+        _kingOverlayTimeout = setTimeout(() => {
+          if (!kingState) return;
           document.getElementById("winner-overlay").classList.remove("active");
           showScreen("king-lobby");
           renderKingLobby();
@@ -3048,6 +3051,8 @@
       function backToLobby() {
         botMode = false;
         if (botPendingTimeout) { clearTimeout(botPendingTimeout); botPendingTimeout = null; }
+        if (_kingNextGameTimeout) { clearTimeout(_kingNextGameTimeout); _kingNextGameTimeout = null; }
+        if (_kingOverlayTimeout)  { clearTimeout(_kingOverlayTimeout);  _kingOverlayTimeout = null; }
         if (peer) {
           try {
             peer.destroy();
