@@ -23,6 +23,11 @@
         --card: #13100a;
         --cream: #e8dfc8;
         --purple: #8b2fc9;
+        --green: #4ade80;
+        --red: #f87171;
+      }
+      html {
+        font-size: 16px;
       }
       body {
         font-family: "Crimson Text", serif;
@@ -53,14 +58,17 @@
         pointer-events: none;
         z-index: 0;
       }
+
+      /* ── SCREENS ── */
       .screen {
         display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        padding: 24px;
-        gap: 24px;
+        min-height: 100dvh;
+        padding: 20px 16px;
+        gap: 20px;
         position: relative;
         z-index: 1;
         animation: fadeIn 0.4s ease;
@@ -71,8 +79,8 @@
       #screen-game,
       #screen-king-game {
         justify-content: flex-start;
-        padding: 16px;
-        gap: 12px;
+        padding: 12px 16px;
+        gap: 10px;
       }
       #screen-king-lobby {
         justify-content: flex-start;
@@ -89,30 +97,27 @@
           transform: translateY(0);
         }
       }
+
+      /* ── TYPOGRAPHY ── */
       .cinzel {
         font-family: "Cinzel Decorative", cursive;
       }
       .title-sub {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.6rem, 2vw, 0.75rem);
         letter-spacing: 0.3em;
         color: rgba(201, 168, 76, 0.75);
         text-align: center;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
       }
       .title-main {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 3.5rem;
+        font-size: clamp(2.2rem, 8vw, 4rem);
         font-weight: 900;
         color: var(--gold);
-        line-height: 1;
+        line-height: 1.05;
         text-align: center;
         text-shadow: 0 0 40px rgba(201, 168, 76, 0.5);
-      }
-      @media (min-width: 480px) {
-        .title-main {
-          font-size: 4.5rem;
-        }
       }
       .ornament {
         display: flex;
@@ -135,54 +140,55 @@
         );
       }
       .hint-text {
-        font-size: 0.85rem;
+        font-size: clamp(0.75rem, 2vw, 0.85rem);
         color: rgba(201, 168, 76, 0.35);
         text-align: center;
         max-width: 360px;
       }
+
+      /* ── PANEL ── */
       .panel {
         border: 1px solid var(--gold);
         box-shadow:
           0 0 12px rgba(201, 168, 76, 0.15),
           inset 0 0 12px rgba(0, 0, 0, 0.4);
         background: rgba(0, 0, 0, 0.4);
-        padding: 28px;
+        padding: clamp(16px, 4vw, 28px);
         width: 100%;
         max-width: 420px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
       }
       .panel-center {
         text-align: center;
-        padding: 40px;
-        gap: 24px;
+        gap: 20px;
       }
+
+      /* ── LOBBY NAME ── */
       .lobby-name-section {
         width: 100%;
-        max-width: 280px;
+        max-width: 320px;
         display: flex;
         flex-direction: column;
         gap: 8px;
       }
 
-      /* ── LOBBY 5-col grid ── */
+      /* ── LOBBY MODES GRID ── */
       .lobby-modes {
         width: 100%;
-        max-width: 720px;
+        max-width: 760px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto auto; 
         gap: 12px;
       }
-      
       .mode-card {
         border: 1px solid rgba(201, 168, 76, 0.3);
         background: rgba(0, 0, 0, 0.35);
-        padding: 22px 14px;
+        padding: clamp(14px, 3vw, 22px) clamp(10px, 2vw, 14px);
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 12px;
         transition:
           border-color 0.2s,
           box-shadow 0.2s;
@@ -205,7 +211,6 @@
         border-color: rgba(201, 168, 76, 0.45);
         box-shadow: 0 0 16px rgba(201, 168, 76, 0.06);
       }
-      /* VS Bot card — active, not coming soon */
       .mode-card.bot {
         border-color: rgba(74, 222, 128, 0.25);
       }
@@ -216,13 +221,24 @@
       .mode-card.bot .mode-card-title {
         color: rgba(134, 239, 172, 0.9);
       }
+      .mode-card.tutorial-card {
+        border-color: rgba(56, 189, 248, 0.3);
+        cursor: pointer;
+      }
+      .mode-card.tutorial-card:hover {
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.1);
+      }
+      .mode-card.tutorial-card .mode-card-title {
+        color: rgba(125, 211, 252, 0.9);
+      }
       .bot-difficulty-select {
         background: rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(74, 222, 128, 0.3);
         color: var(--cream);
         padding: 8px 10px;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.62rem;
+        font-size: clamp(0.55rem, 1.5vw, 0.62rem);
         letter-spacing: 0.08em;
         outline: none;
         width: 100%;
@@ -232,29 +248,6 @@
       .bot-difficulty-select:focus {
         border-color: rgba(74, 222, 128, 0.6);
       }
-      .btn-bot {
-        background: linear-gradient(135deg, #16a34a, #15803d);
-        color: #f0fdf4;
-        font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 11px 16px;
-        border: none;
-        cursor: pointer;
-        letter-spacing: 0.08em;
-        transition: box-shadow 0.2s, transform 0.2s;
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-      }
-      .btn-bot:hover {
-        box-shadow: 0 0 20px rgba(74, 222, 128, 0.45);
-        transform: translateY(-1px);
-      }
-      .btn-bot:active {
-        transform: translateY(0);
-      }
-      /* Coming Soon */
       .mode-card.coming-soon {
         border-color: rgba(201, 168, 76, 0.1);
         opacity: 0.55;
@@ -274,13 +267,13 @@
         white-space: nowrap;
       }
       .mode-card-icon {
-        font-size: 2rem;
+        font-size: clamp(1.5rem, 4vw, 2rem);
         text-align: center;
         line-height: 1;
       }
       .mode-card-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.78rem;
+        font-size: clamp(0.62rem, 1.8vw, 0.78rem);
         letter-spacing: 0.1em;
         color: rgba(201, 168, 76, 1);
         text-align: center;
@@ -296,21 +289,22 @@
       }
       .mode-card-desc {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.62rem;
+        font-size: clamp(0.52rem, 1.5vw, 0.62rem);
         letter-spacing: 0.06em;
         color: rgba(201, 168, 76, 0.5);
         text-align: center;
         line-height: 1.6;
       }
 
+      /* ── INPUTS / BUTTONS ── */
       .field {
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 12px;
       }
       .field-label {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.18em;
         color: rgba(201, 168, 76, 0.75);
       }
@@ -320,7 +314,7 @@
         color: var(--cream);
         padding: 10px 12px;
         font-family: "Crimson Text", serif;
-        font-size: 1rem;
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
         outline: none;
         transition:
           border-color 0.2s,
@@ -338,14 +332,13 @@
         text-transform: uppercase;
         letter-spacing: 0.2em;
         text-align: center;
-        font-size: 1.0rem;
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
       }
-
       .btn-gold {
         background: linear-gradient(135deg, #c9a84c, #a07830);
         color: #0a0806;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         font-weight: 700;
         padding: 11px 16px;
         border: none;
@@ -392,7 +385,7 @@
         background: transparent;
         color: var(--gold);
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         font-weight: 700;
         padding: 10px 16px;
         border: 1px solid var(--gold);
@@ -408,7 +401,7 @@
         box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
       }
       .btn-outline.sm {
-        font-size: 0.68rem;
+        font-size: clamp(0.6rem, 1.6vw, 0.68rem);
         padding: 8px 14px;
         opacity: 0.8;
       }
@@ -420,7 +413,7 @@
         background: linear-gradient(135deg, #8b2fc9, #5a1a8a);
         color: #f5e6ff;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         font-weight: 700;
         padding: 11px 16px;
         border: none;
@@ -461,13 +454,52 @@
       .btn-king.queue-btn,
       .btn-outline.queue-btn {
         width: auto;
-        font-size: 0.68rem;
+        font-size: clamp(0.6rem, 1.6vw, 0.68rem);
         padding: 8px 20px;
       }
+      .btn-sky {
+        background: linear-gradient(135deg, #0ea5e9, #0369a1);
+        color: #f0f9ff;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+        font-weight: 700;
+        padding: 11px 16px;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+        width: 100%;
+      }
+      .btn-sky:hover {
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        transform: translateY(-1px);
+      }
+      .btn-bot {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        color: #f0fdf4;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+        font-weight: 700;
+        padding: 11px 16px;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+        width: 100%;
+      }
+      .btn-bot:hover {
+        box-shadow: 0 0 20px rgba(74, 222, 128, 0.45);
+        transform: translateY(-1px);
+      }
 
+      /* ── WAITING ── */
       .room-code-display {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 3.5rem;
+        font-size: clamp(2.5rem, 8vw, 3.5rem);
         font-weight: 900;
         color: #fef08a;
         letter-spacing: 0.15em;
@@ -475,18 +507,18 @@
       }
       .waiting-label {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.2em;
         color: rgba(201, 168, 76, 0.75);
       }
       .waiting-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 1.8rem;
+        font-size: clamp(1.3rem, 4vw, 1.8rem);
         color: var(--gold);
       }
       .status-msg {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.12em;
         text-align: center;
         min-height: 1.5em;
@@ -521,17 +553,18 @@
         }
       }
 
+      /* ── GAME BOARD ── */
       .game-header {
         width: 100%;
         max-width: 520px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 8px;
+        margin-top: 4px;
       }
       .game-header-label {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.15em;
         color: rgba(201, 168, 76, 0.75);
       }
@@ -556,12 +589,12 @@
       }
       .player-name {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.85rem;
+        font-size: clamp(0.72rem, 2vw, 0.85rem);
         color: var(--gold);
       }
       .score-display {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 1.8rem;
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
         color: var(--gold);
       }
       .board-wrap {
@@ -570,25 +603,25 @@
           0 0 12px rgba(201, 168, 76, 0.15),
           inset 0 0 12px rgba(0, 0, 0, 0.4);
         background: rgba(0, 0, 0, 0.3);
-        padding: 16px;
+        padding: clamp(10px, 3vw, 16px);
         border-radius: 4px;
       }
       .board-grid {
         display: flex;
         justify-content: center;
-        gap: 12px;
+        gap: clamp(6px, 2vw, 12px);
       }
       .turn-area {
         display: flex;
         flex-direction: column;
-        min-height: 120px;
+        min-height: 110px;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         padding: 4px 0;
       }
       .turn-status {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.12em;
         text-align: center;
         min-height: 1.4em;
@@ -596,7 +629,7 @@
       }
       .sub-status {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.1em;
         text-align: center;
         min-height: 1.2em;
@@ -607,17 +640,16 @@
         max-width: 520px;
         text-align: center;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.6rem;
+        font-size: clamp(0.48rem, 1.4vw, 0.6rem);
         letter-spacing: 0.05em;
         color: rgba(201, 168, 76, 0.25);
-        margin-top: 4px;
+        margin-top: 2px;
       }
-
       .board-col {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 6px;
+        gap: clamp(4px, 1.5vw, 6px);
       }
       .board-col.selectable {
         cursor: pointer;
@@ -628,15 +660,33 @@
       }
       .col-score {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.6rem, 1.8vw, 0.75rem);
         color: var(--gold-light);
         text-align: center;
-        min-width: 56px;
+        min-width: var(--die-size, 52px);
         min-height: 18px;
       }
+
+      /* ── DICE ── */
+      :root {
+        --die-size: 52px;
+        --die-font: 1.3rem;
+      }
+      @media (max-width: 480px) {
+        :root {
+          --die-size: 42px;
+          --die-font: 1rem;
+        }
+      }
+      @media (max-width: 380px) {
+        :root {
+          --die-size: 36px;
+          --die-font: 0.9rem;
+        }
+      }
       .die {
-        width: 56px;
-        height: 56px;
+        width: var(--die-size);
+        height: var(--die-size);
         background: linear-gradient(135deg, #f5f0e8 0%, #d4cbb8 100%);
         border-radius: 10px;
         border: 2px solid rgba(0, 0, 0, 0.3);
@@ -647,12 +697,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.4rem;
+        font-size: var(--die-font);
         font-weight: 900;
         color: #1a1a1a;
         transition: all 0.2s;
         cursor: default;
         font-family: "Cinzel Decorative", cursive;
+        position: relative;
       }
       .die.empty {
         background: rgba(0, 0, 0, 0.3);
@@ -668,16 +719,36 @@
       .die.val-low {
         background: linear-gradient(135deg, #e8e0d0, #c8bfaa);
       }
+      /* cancel animation */
+      .die.cancelling {
+        animation: dieCancel 0.45s ease forwards;
+      }
+      @keyframes dieCancel {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+          background: #f87171;
+          box-shadow: 0 0 16px rgba(248, 113, 113, 0.8);
+        }
+        40% {
+          transform: scale(1.25);
+          opacity: 0.9;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
       .rolling-die {
-        width: 56px;
-        height: 56px;
+        width: var(--die-size);
+        height: var(--die-size);
         background: linear-gradient(135deg, #f5f0e8, #d4cbb8);
         border-radius: 10px;
         border: 3px solid var(--gold);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.6rem;
+        font-size: calc(var(--die-font) * 1.1);
         font-weight: 900;
         color: #1a1a1a;
         font-family: "Cinzel Decorative", cursive;
@@ -727,28 +798,32 @@
         }
       }
 
+      /* ── TOAST ── */
       #toast {
         position: fixed;
         top: 20px;
         left: 50%;
-        transform: translateX(-50%) translateY(-100px);
+        transform: translateX(-50%) translateY(-120px);
         background: var(--card);
         border: 1px solid var(--gold);
         padding: 12px 24px;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.1em;
         color: var(--gold-light);
         z-index: 1000;
         transition: transform 0.3s ease;
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         white-space: nowrap;
+        max-width: 90vw;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
       #toast.show {
         transform: translateX(-50%) translateY(0);
       }
 
-      /* FIX: winner overlay fully centered */
+      /* ── WINNER OVERLAY ── */
       #winner-overlay {
         position: fixed;
         inset: 0;
@@ -767,7 +842,7 @@
         animation: fadeIn 0.6s ease;
       }
       .trophy {
-        font-size: 5rem;
+        font-size: clamp(3rem, 10vw, 5rem);
         animation: trophy-anim 1s ease-out;
       }
       @keyframes trophy-anim {
@@ -785,14 +860,13 @@
       }
       .winner-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 1.6rem;
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
         color: #fef08a;
       }
       .winner-scores {
-        font-size: 1.1rem;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         color: #fef9e7;
       }
-      /* FIX: winner actions wrapper — everything centered */
       .winner-actions {
         display: flex;
         flex-direction: column;
@@ -815,13 +889,14 @@
       }
       .rematch-status-text {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         letter-spacing: 0.1em;
         color: #e8c97a;
         min-height: 1.2em;
         text-align: center;
       }
 
+      /* ── PEERJS ERROR ── */
       #peerjs-error {
         display: none;
         position: fixed;
@@ -830,7 +905,7 @@
         right: 0;
         color: #fde68a;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         text-align: center;
         padding: 10px 16px;
         background: rgba(139, 26, 26, 0.95);
@@ -842,7 +917,182 @@
         display: block;
       }
 
-      /* KING */
+      /* ── TUTORIAL OVERLAY ── */
+      #tutorial-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 600;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      #tutorial-overlay.active {
+        display: flex;
+        animation: fadeIn 0.4s ease;
+      }
+      .tutorial-box {
+        border: 1px solid var(--gold);
+        background: rgba(10, 8, 6, 0.97);
+        box-shadow:
+          0 0 40px rgba(201, 168, 76, 0.2),
+          inset 0 0 20px rgba(0, 0, 0, 0.6);
+        max-width: 560px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .tutorial-header {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        background: rgba(10, 8, 6, 0.97);
+        z-index: 1;
+      }
+      .tutorial-title {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        color: var(--gold);
+      }
+      .tutorial-close {
+        background: transparent;
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        color: var(--gold);
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.7rem;
+        padding: 6px 12px;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        transition: background 0.2s;
+        flex-shrink: 0;
+      }
+      .tutorial-close:hover {
+        background: rgba(201, 168, 76, 0.1);
+      }
+      .tutorial-body {
+        padding: 20px 24px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .tutorial-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tutorial-section-title {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.72rem, 2vw, 0.82rem);
+        letter-spacing: 0.15em;
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tutorial-section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(201, 168, 76, 0.4),
+          transparent
+        );
+      }
+      .tutorial-text {
+        font-family: "Crimson Text", serif;
+        font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+        color: rgba(232, 223, 200, 0.85);
+        line-height: 1.7;
+      }
+      .tutorial-example {
+        background: rgba(201, 168, 76, 0.06);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        border-left: 3px solid rgba(201, 168, 76, 0.5);
+        padding: 12px 14px;
+        font-family: "Crimson Text", serif;
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        color: rgba(232, 223, 200, 0.75);
+        line-height: 1.65;
+      }
+      .tutorial-example strong {
+        color: var(--gold-light);
+        font-style: italic;
+      }
+      .tutorial-example.cancel {
+        border-left-color: rgba(248, 113, 113, 0.6);
+        background: rgba(248, 113, 113, 0.04);
+      }
+      .tutorial-example.cancel strong {
+        color: #fca5a5;
+      }
+      .tutorial-example.king {
+        border-left-color: rgba(192, 132, 252, 0.6);
+        background: rgba(192, 132, 252, 0.04);
+      }
+      .tutorial-example.king strong {
+        color: #c084fc;
+      }
+      .tutorial-step {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .tutorial-step-num {
+        font-family: "Cinzel Decorative", cursify, cursive;
+        font-size: 0.7rem;
+        color: #0a0806;
+        background: var(--gold);
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-weight: 900;
+      }
+      .tutorial-step-text {
+        font-family: "Crimson Text", serif;
+        font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+        color: rgba(232, 223, 200, 0.85);
+        line-height: 1.65;
+      }
+      .tutorial-modes-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .tutorial-mode-item {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .tutorial-mode-name {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.6rem, 1.6vw, 0.68rem);
+        letter-spacing: 0.1em;
+        color: var(--gold);
+      }
+      .tutorial-mode-desc {
+        font-family: "Crimson Text", serif;
+        font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+        color: rgba(232, 223, 200, 0.65);
+        line-height: 1.5;
+      }
+
+      /* ── KING ── */
       .king-header {
         width: 100%;
         max-width: 860px;
@@ -851,37 +1101,62 @@
         justify-content: space-between;
         padding: 8px 0;
         border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .king-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 1rem;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
         color: var(--gold);
       }
       .king-room-code {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         color: rgba(201, 168, 76, 0.75);
         letter-spacing: 0.15em;
+      }
+      /* HOST BADGE */
+      .host-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.55rem, 1.5vw, 0.62rem);
+        letter-spacing: 0.1em;
+        color: #fef08a;
+        background: rgba(201, 168, 76, 0.15);
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        padding: 3px 10px;
+        animation: hostPulse 2.5s ease-in-out infinite;
+      }
+      @keyframes hostPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 4px rgba(201, 168, 76, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 10px rgba(201, 168, 76, 0.6);
+        }
       }
       .king-lobby-body {
         width: 100%;
         max-width: 860px;
         display: grid;
-        grid-template-columns: 280px 1fr 280px;
+        grid-template-columns: 260px 1fr 260px;
         gap: 14px;
         align-items: start;
       }
       .king-panel {
         background: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(201, 168, 76, 0.15);
-        padding: 16px;
+        padding: clamp(10px, 2.5vw, 16px);
         display: flex;
         flex-direction: column;
         gap: 8px;
       }
       .king-panel-title {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.68rem;
+        font-size: clamp(0.6rem, 1.6vw, 0.68rem);
         letter-spacing: 0.2em;
         color: rgba(201, 168, 76, 0.75);
         margin-bottom: 4px;
@@ -904,7 +1179,7 @@
       }
       .match-player-name {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         color: var(--cream);
         text-align: center;
         flex: 1;
@@ -922,7 +1197,7 @@
       }
       .match-score-val {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 1.2rem;
+        font-size: clamp(1rem, 3vw, 1.2rem);
         color: var(--gold);
         min-width: 30px;
         text-align: center;
@@ -966,7 +1241,7 @@
       }
       .pc-name {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         color: var(--cream);
         flex: 1;
         white-space: nowrap;
@@ -999,6 +1274,11 @@
         color: #9ca3af;
         border: 1px solid rgba(107, 114, 128, 0.3);
       }
+      .badge-host {
+        background: rgba(201, 168, 76, 0.25);
+        color: #fef08a;
+        border: 1px solid rgba(201, 168, 76, 0.5);
+      }
       .ranking-row {
         display: flex;
         align-items: center;
@@ -1018,7 +1298,7 @@
       }
       .rank-name {
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.8vw, 0.75rem);
         color: var(--cream);
         flex: 1;
         white-space: nowrap;
@@ -1047,11 +1327,24 @@
         max-width: 860px;
         text-align: center;
         font-family: "Cinzel Decorative", cursive;
-        font-size: 0.68rem;
+        font-size: clamp(0.6rem, 1.6vw, 0.68rem);
         letter-spacing: 0.12em;
         color: rgba(107, 114, 128, 0.8);
         padding: 6px;
         border: 1px dashed rgba(107, 114, 128, 0.3);
+      }
+      .host-warning-bar {
+        width: 100%;
+        max-width: 860px;
+        background: rgba(201, 168, 76, 0.08);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+        border-left: 3px solid rgba(201, 168, 76, 0.6);
+        padding: 8px 14px;
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(0.55rem, 1.5vw, 0.62rem);
+        letter-spacing: 0.08em;
+        color: rgba(201, 168, 76, 0.8);
+        text-align: center;
       }
       #screen-king-game {
         align-items: center;
@@ -1060,14 +1353,14 @@
         width: 100%;
         max-width: 860px;
         display: grid;
-        grid-template-columns: 240px 1fr 240px;
+        grid-template-columns: 220px 1fr 220px;
         gap: 12px;
         align-items: start;
       }
       .king-side-panel {
         background: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(201, 168, 76, 0.15);
-        padding: 14px;
+        padding: clamp(10px, 2.5vw, 14px);
         display: flex;
         flex-direction: column;
         gap: 6px;
@@ -1087,6 +1380,8 @@
         padding-top: 8px;
         border-top: 1px solid rgba(201, 168, 76, 0.1);
       }
+
+      /* ── KING JOIN MODAL ── */
       #king-join-modal {
         display: none;
         position: fixed;
@@ -1102,6 +1397,8 @@
         display: flex;
         animation: fadeIn 0.3s ease;
       }
+
+      /* ── SCROLLBAR ── */
       ::-webkit-scrollbar {
         width: 4px;
       }
@@ -1112,16 +1409,11 @@
         background: var(--gold);
       }
 
-      @media (max-width: 960px) {
+      /* ── RESPONSIVE ── */
+      @media (max-width: 840px) {
         .lobby-modes {
-          grid-template-columns: repeat(3, 1fr);
-          max-width: 600px;
-        }
-      }
-      @media (max-width: 820px) {
-        .lobby-modes {
-          grid-template-columns: 1fr;
-          max-width: 360px;
+          grid-template-columns: 1fr 1fr;
+          max-width: 500px;
         }
         .king-lobby-body {
           grid-template-columns: 1fr;
@@ -1132,23 +1424,37 @@
           max-width: 400px;
         }
         .king-header,
-        .king-actions-bar {
+        .king-actions-bar,
+        .host-warning-bar {
           max-width: 400px;
         }
       }
-      @media (max-width: 500px) {
-        .die,
-        .rolling-die {
-          width: 44px;
-          height: 44px;
-          font-size: 1.1rem;
+      @media (max-width: 520px) {
+        .lobby-modes {
+          grid-template-columns: 1fr;
+          max-width: 340px;
         }
-        .col-score {
-          min-width: 44px;
-          font-size: 0.65rem;
+        .tutorial-modes-grid {
+          grid-template-columns: 1fr;
         }
-        .title-main {
-          font-size: 2.8rem;
+      }
+      @media (max-width: 380px) {
+        .board-grid {
+          gap: 4px;
+        }
+        .board-wrap {
+          padding: 8px;
+        }
+      }
+      /* tall phones — game screen should scroll if needed */
+      @media (max-height: 700px) {
+        #screen-game,
+        #screen-king-game {
+          padding-top: 6px;
+          gap: 6px;
+        }
+        .turn-area {
+          min-height: 80px;
         }
       }
     </style>
@@ -1160,12 +1466,11 @@
       página.
     </div>
 
-    <!-- Winner Overlay -->
+    <!-- ══════════════════════════════ WINNER OVERLAY ══════════════════════════════ -->
     <div id="winner-overlay">
       <div class="trophy" id="trophy-emoji">🏆</div>
       <div class="winner-title" id="winner-text"></div>
       <div class="winner-scores" id="winner-scores"></div>
-      <!-- FIX: all buttons in a centered flex column wrapper -->
       <div class="winner-actions">
         <div id="winner-1v1-btns">
           <button
@@ -1198,7 +1503,162 @@
       </div>
     </div>
 
-    <!-- King Join Modal -->
+    <!-- ══════════════════════════════ TUTORIAL OVERLAY ══════════════════════════════ -->
+    <div id="tutorial-overlay">
+      <div class="tutorial-box">
+        <div class="tutorial-header">
+          <div class="tutorial-title">📖 COMO JOGAR</div>
+          <button class="tutorial-close" onclick="closeTutorial()">
+            ✕ FECHAR
+          </button>
+        </div>
+        <div class="tutorial-body">
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">🎯 OBJETIVO</div>
+            <p class="tutorial-text">
+              Tenha mais pontos que seu oponente quando um dos tabuleiros
+              estiver completamente preenchido. O jogo termina imediatamente
+              quando isso acontece.
+            </p>
+          </div>
+
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">
+              🎲 COMO FUNCIONA UMA RODADA
+            </div>
+            <div class="tutorial-step">
+              <div class="tutorial-step-num">1</div>
+              <div class="tutorial-step-text">
+                Um dado é rolado automaticamente para você — o valor é revelado
+                e fica flutuando na tela.
+              </div>
+            </div>
+            <div class="tutorial-step">
+              <div class="tutorial-step-num">2</div>
+              <div class="tutorial-step-text">
+                Escolha em qual das 3 colunas do seu tabuleiro colocar o dado.
+                Clique na coluna desejada.
+              </div>
+            </div>
+            <div class="tutorial-step">
+              <div class="tutorial-step-num">3</div>
+              <div class="tutorial-step-text">
+                O dado é empilhado na coluna — cada coluna comporta até 3 dados.
+                Colunas cheias ficam indisponíveis.
+              </div>
+            </div>
+            <div class="tutorial-step">
+              <div class="tutorial-step-num">4</div>
+              <div class="tutorial-step-text">
+                A vez passa para o oponente, que faz o mesmo processo. O turno
+                alterna até o tabuleiro lotar.
+              </div>
+            </div>
+          </div>
+
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">
+              ✨ MULTIPLICADOR — A REGRA PRINCIPAL
+            </div>
+            <p class="tutorial-text">
+              Dados iguais na <em>mesma coluna</em> multiplicam seu valor.
+              Quanto mais repetições, maior o bônus:
+            </p>
+            <div class="tutorial-example">
+              <strong>1 dado de valor 4</strong> na coluna → vale 4 pontos (4 ×
+              1²)<br />
+              <strong>2 dados de valor 4</strong> na coluna → valem 32 pontos (4
+              × 2²)<br />
+              <strong>3 dados de valor 4</strong> na coluna → valem 48 pontos (4
+              × 3²)<br /><br />
+              <em
+                >Três 6s na mesma coluna? São <strong>54 pontos</strong> só
+                nessa coluna!</em
+              >
+            </div>
+            <p class="tutorial-text">
+              Os pontos de cada coluna são exibidos ao lado dela em tempo real.
+              A pontuação total fica no canto ao lado do seu nome.
+            </p>
+          </div>
+
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">
+              💥 CANCELAMENTO — A TÁTICA DE DEFESA
+            </div>
+            <p class="tutorial-text">
+              Ao colocar um dado em uma coluna, <em>todos</em> os dados com o
+              mesmo valor são removidos da mesma coluna do oponente.
+            </p>
+            <div class="tutorial-example cancel">
+              Seu oponente tem dois <strong>5s</strong> na coluna do meio (vale
+              50 pts).<br />
+              Você coloca um <strong>5</strong> na coluna do meio — os dados do
+              oponente <strong>desaparecem</strong>.<br />
+              Você destruiu 50 pontos do oponente com uma jogada!
+            </div>
+            <p class="tutorial-text">
+              O cancelamento é instantâneo e não exige ação extra. Isso cria um
+              dilema constante: maximizo minha pontuação ou saboto o oponente?
+            </p>
+          </div>
+
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">👑 MODOS DE JOGO</div>
+            <div class="tutorial-modes-grid">
+              <div class="tutorial-mode-item">
+                <div class="tutorial-mode-name">⚔ 1 VS 1 PRIVADO</div>
+                <div class="tutorial-mode-desc">
+                  Crie uma sala, envie o código para um amigo entrar. Revanche
+                  disponível após a partida.
+                </div>
+              </div>
+              <div class="tutorial-mode-item">
+                <div class="tutorial-mode-name">🤖 VS BOT</div>
+                <div class="tutorial-mode-desc">
+                  Treine contra IA em 3 dificuldades. Ideal para aprender as
+                  mecânicas sem pressão.
+                </div>
+              </div>
+              <div
+                class="tutorial-mode-item"
+                style="border-color: rgba(192, 132, 252, 0.2)"
+              >
+                <div
+                  class="tutorial-mode-name"
+                  style="color: rgba(192, 132, 252, 0.85)"
+                >
+                  👑 REI DA MESA
+                </div>
+                <div class="tutorial-mode-desc">
+                  Até 8 jogadores em fila. Vencedor permanece jogando, perdedor
+                  vai para o fim da fila.
+                </div>
+              </div>
+              <div class="tutorial-mode-item" style="opacity: 0.5">
+                <div class="tutorial-mode-name">🚪 ENTRAR NA SALA</div>
+                <div class="tutorial-mode-desc">
+                  Use um código recebido para entrar em qualquer sala ativa —
+                  1v1 ou Rei da Mesa.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">💡 DICAS RÁPIDAS</div>
+            <div class="tutorial-example">
+              • Priorize dados altos (5, 6) para colunas onde já tem o mesmo
+              valor — o multiplicador compensa muito.<br />
+              • Fique de olho nas colunas do oponente. Às vezes cancelar vale
+              mais do que construir.<br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ KING JOIN MODAL ══════════════════════════════ -->
     <div id="king-join-modal">
       <div
         style="
@@ -1240,7 +1700,7 @@
       </div>
     </div>
 
-    <!-- LOBBY -->
+    <!-- ══════════════════════════════ LOBBY ══════════════════════════════ -->
     <div id="screen-lobby" class="screen active">
       <div style="text-align: center">
         <div class="title-sub">⚔ JOGO DE DADOS ⚔</div>
@@ -1258,6 +1718,7 @@
         />
       </div>
       <div class="lobby-modes">
+        <!-- 1v1 -->
         <div class="mode-card">
           <div class="mode-card-icon">⚔</div>
           <div class="mode-card-title">1 VS 1 PRIVADO</div>
@@ -1266,6 +1727,7 @@
           </div>
           <button class="btn-gold" onclick="createRoom()">✦ CRIAR SALA</button>
         </div>
+        <!-- ENTRAR -->
         <div class="mode-card join">
           <div class="mode-card-icon">🚪</div>
           <div class="mode-card-title">ENTRAR NA SALA</div>
@@ -1281,6 +1743,7 @@
           />
           <button class="btn-gold" onclick="joinAnyRoom()">→ ENTRAR</button>
         </div>
+        <!-- KING -->
         <div class="mode-card king">
           <div class="mode-card-icon">👑</div>
           <div class="mode-card-title">REI DA MESA</div>
@@ -1302,7 +1765,9 @@
         <div class="mode-card bot">
           <div class="mode-card-icon">🤖</div>
           <div class="mode-card-title">VS BOT</div>
-          <div class="mode-card-desc">Treine contra inteligência artificial</div>
+          <div class="mode-card-desc">
+            Treine contra inteligência artificial
+          </div>
           <select id="bot-difficulty" class="bot-difficulty-select">
             <option value="easy">🎲 Fácil</option>
             <option value="medium" selected>⚔ Médio</option>
@@ -1310,12 +1775,29 @@
           </select>
           <button class="btn-bot" onclick="startBotGame()">✦ JOGAR</button>
         </div>
+        <!-- TUTORIAL -->
+        <div class="mode-card tutorial-card" onclick="openTutorial()">
+          <div class="mode-card-icon">📖</div>
+          <div class="mode-card-title">COMO JOGAR</div>
+          <div class="mode-card-desc">
+            Aprenda as regras, o multiplicador e o cancelamento
+          </div>
+          <button
+            class="btn-sky"
+            onclick="
+              openTutorial();
+              event.stopPropagation();
+            "
+          >
+            → VER REGRAS
+          </button>
+        </div>
       </div>
       <div class="ornament" style="max-width: 780px">✦</div>
       <p class="hint-text">Jogo P2P — compartilhe o código com seus amigos.</p>
     </div>
 
-    <!-- WAITING -->
+    <!-- ══════════════════════════════ WAITING ══════════════════════════════ -->
     <div id="screen-waiting" class="screen">
       <div class="waiting-title cinzel">SALA CRIADA</div>
       <div class="panel panel-center">
@@ -1338,7 +1820,7 @@
       </button>
     </div>
 
-    <!-- 1v1 GAME -->
+    <!-- ══════════════════════════════ 1V1 GAME ══════════════════════════════ -->
     <div id="screen-game" class="screen">
       <div class="game-header">
         <span class="game-header-label">KNUCKLEBONES</span>
@@ -1347,8 +1829,8 @@
       <div class="board-section">
         <div class="player-row">
           <div class="player-name-wrap">
-            <span class="dot dot-green"></span
-            ><span class="player-name" id="opp-name-display">Oponente</span>
+            <span class="dot dot-green"></span>
+            <span class="player-name" id="opp-name-display">Oponente</span>
           </div>
           <span class="score-display" id="opp-score">0</span>
         </div>
@@ -1367,8 +1849,8 @@
         </div>
         <div class="player-row bottom">
           <div class="player-name-wrap">
-            <span class="dot dot-green"></span
-            ><span class="player-name" id="my-name-display">Você</span>
+            <span class="dot dot-green"></span>
+            <span class="player-name" id="my-name-display">Você</span>
           </div>
           <span class="score-display" id="my-score">0</span>
         </div>
@@ -1376,7 +1858,8 @@
       <button
         class="btn-outline sm"
         style="width: auto; margin-top: 4px"
-        onclick="backToLobby()">
+        onclick="backToLobby()"
+      >
         ← SAIR
       </button>
       <div class="rules-hint">
@@ -1385,10 +1868,17 @@
       </div>
     </div>
 
-    <!-- KING LOBBY -->
+    <!-- ══════════════════════════════ KING LOBBY ══════════════════════════════ -->
     <div id="screen-king-lobby" class="screen">
       <div class="king-header">
-        <div class="king-title">👑 REI DA MESA</div>
+        <div
+          style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"
+        >
+          <div class="king-title">👑 REI DA MESA</div>
+          <div id="king-host-badge" style="display: none" class="host-badge">
+            ⭐ VOCÊ É O HOST — NÃO FECHE ESTA ABA
+          </div>
+        </div>
         <div style="display: flex; align-items: center; gap: 10px">
           <div class="king-room-code" id="king-room-label"></div>
           <button
@@ -1399,6 +1889,14 @@
             📋
           </button>
         </div>
+      </div>
+      <div
+        id="king-host-warning"
+        class="host-warning-bar"
+        style="display: none"
+      >
+        ⚠ Você é o host desta sala. Se fechar esta aba, todos os jogadores serão
+        desconectados.
       </div>
       <div class="king-lobby-body">
         <div class="king-panel">
@@ -1456,7 +1954,7 @@
       </button>
     </div>
 
-    <!-- KING GAME -->
+    <!-- ══════════════════════════════ KING GAME ══════════════════════════════ -->
     <div id="screen-king-game" class="screen">
       <div class="game-header" style="max-width: 860px">
         <span class="game-header-label">👑 REI DA MESA</span>
@@ -1494,8 +1992,8 @@
           <div class="board-section" style="max-width: 340px">
             <div class="player-row">
               <div class="player-name-wrap">
-                <span class="dot dot-green"></span
-                ><span class="player-name" id="king-opp-name">Oponente</span>
+                <span class="dot dot-green"></span>
+                <span class="player-name" id="king-opp-name">Oponente</span>
               </div>
               <span class="score-display" id="king-opp-score">0</span>
             </div>
@@ -1514,8 +2012,8 @@
             </div>
             <div class="player-row bottom">
               <div class="player-name-wrap">
-                <span class="dot dot-green"></span
-                ><span class="player-name" id="king-my-name">Você</span>
+                <span class="dot dot-green"></span>
+                <span class="player-name" id="king-my-name">Você</span>
               </div>
               <span class="score-display" id="king-my-score">0</span>
             </div>
@@ -1538,6 +2036,7 @@
       </div>
     </div>
 
+    <!-- ══════════════════════════════ SCRIPTS ══════════════════════════════ -->
     <script>
       (function () {
         var s = document.createElement("script");
@@ -1558,6 +2057,8 @@
     <script>
       const COLS = 3,
         ROWS = 3;
+      const KING_MAX_QUEUE = 8; // ← limite unificado
+
       let myName = "",
         oppName = "",
         myBoard = [],
@@ -1585,12 +2086,37 @@
         kgGuestDie = null,
         kgGuestMyTurnFlag = false;
       let _pendingKingCode = "";
-      let _kingNextGameTimeout = null, _kingOverlayTimeout = null;
-
-      // bot mode state
-      let botMode = false, botPendingTimeout = null;
+      let _kingNextGameTimeout = null,
+        _kingOverlayTimeout = null;
+      let botMode = false,
+        botPendingTimeout = null;
       let botDifficulty = "medium";
 
+      // ── SAVE NAME ──
+      (function () {
+        const saved = localStorage.getItem("kb_player_name");
+        if (saved) document.getElementById("player-name").value = saved;
+      })();
+      document
+        .getElementById("player-name")
+        .addEventListener("input", function () {
+          localStorage.setItem("kb_player_name", this.value);
+        });
+
+      // ── TUTORIAL ──
+      function openTutorial() {
+        document.getElementById("tutorial-overlay").classList.add("active");
+      }
+      function closeTutorial() {
+        document.getElementById("tutorial-overlay").classList.remove("active");
+      }
+      document
+        .getElementById("tutorial-overlay")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeTutorial();
+        });
+
+      // ── BOT ──
       function startBotGame() {
         myName = document.getElementById("player-name").value.trim();
         if (!myName) {
@@ -1602,7 +2128,11 @@
         botMode = true;
         isHost = true;
         kingMode = false;
-        oppName = { easy: "Bot Fácil 🎲", medium: "Bot Médio ⚔", hard: "Bot Difícil 💀" }[botDifficulty];
+        oppName = {
+          easy: "Bot Fácil 🎲",
+          medium: "Bot Médio ⚔",
+          hard: "Bot Difícil 💀",
+        }[botDifficulty];
         document.getElementById("opp-name-display").textContent = oppName;
         document.getElementById("my-name-display").textContent = myName;
         document.getElementById("room-label").textContent = "VS COMPUTADOR";
@@ -1615,15 +2145,16 @@
         updateTurnUI();
         setTimeout(rollMyDie, 600);
       }
-
       function botTakeTurn(dieValue) {
         const col = botChooseColumn(oppBoard, myBoard, dieValue, botDifficulty);
         const delay = { easy: 600, medium: 950, hard: 1300 }[botDifficulty];
         showRollingDie(dieValue, "rolling-die-container", true);
-        document.getElementById("sub-status").textContent = oppName + " está escolhendo...";
+        document.getElementById("sub-status").textContent =
+          oppName + " está escolhendo...";
         botPendingTimeout = setTimeout(() => oppPlaced(col, dieValue), delay);
       }
 
+      // ── AUDIO ──
       const AC = new (window.AudioContext || window.webkitAudioContext)();
       function playSound(t) {
         if (AC.state === "suspended") AC.resume();
@@ -1724,6 +2255,7 @@
         }
       }
 
+      // ── BOARDS ──
       function initBoards() {
         myBoard = Array.from({ length: COLS }, () => Array(ROWS).fill(null));
         oppBoard = Array.from({ length: COLS }, () => Array(ROWS).fill(null));
@@ -1739,6 +2271,7 @@
         return true;
       }
 
+      // ── CREATE / JOIN ROOMS ──
       function createRoom() {
         if (!checkPeer()) return;
         myName = document.getElementById("player-name").value.trim();
@@ -1762,7 +2295,6 @@
         );
         peer.on("error", (e) => showToast("Erro: " + e.type));
       }
-
       function joinAnyRoom() {
         if (!checkPeer()) return;
         const code = document
@@ -1833,7 +2365,6 @@
           }
         });
       }
-
       function _joinRoom1v1(code) {
         roomCode = code;
         isHost = false;
@@ -1852,7 +2383,6 @@
           backToLobby();
         });
       }
-
       function setupConn() {
         conn.on("open", () => send({ type: "hello", name: myName }));
         conn.on("data", handleMessage);
@@ -1909,7 +2439,9 @@
         currentDie = null;
         document.getElementById("my-name-display").textContent = myName;
         document.getElementById("opp-name-display").textContent = oppName;
-        document.getElementById("room-label").textContent = "Sala: " + roomCode;
+        document.getElementById("room-label").textContent = botMode
+          ? "VS COMPUTADOR"
+          : "Sala: " + roomCode;
         showScreen("game");
         renderBoards();
         updateTurnUI();
@@ -2016,15 +2548,54 @@
         updateTurnUI();
         if (!checkWin()) setTimeout(rollMyDie, 500);
       }
+
+      // ── CANCEL WITH ANIMATION ──
       function cancelOppDice(i, v) {
-        const rem = oppBoard[i].some((d) => d === v);
-        oppBoard[i] = oppBoard[i].map((d) => (d === v ? null : d));
-        compactCol(oppBoard[i]);
-        if (rem) playSound("cancel");
+        const hasAny = oppBoard[i].some((d) => d === v);
+        if (!hasAny) return;
+        playSound("cancel");
+        // animate then remove
+        const colEls = document
+          .getElementById("opp-board")
+          .querySelectorAll(".board-col");
+        if (colEls[i]) {
+          colEls[i].querySelectorAll(".die").forEach((el) => {
+            if (
+              el.textContent == String(v) &&
+              !el.classList.contains("empty")
+            ) {
+              el.classList.add("cancelling");
+            }
+          });
+        }
+        setTimeout(() => {
+          oppBoard[i] = oppBoard[i].map((d) => (d === v ? null : d));
+          compactCol(oppBoard[i]);
+          renderBoards();
+        }, 300);
       }
       function cancelMyDice(i, v) {
-        myBoard[i] = myBoard[i].map((d) => (d === v ? null : d));
-        compactCol(myBoard[i]);
+        const hasAny = myBoard[i].some((d) => d === v);
+        if (!hasAny) return;
+        playSound("cancel");
+        const colEls = document
+          .getElementById("my-board")
+          .querySelectorAll(".board-col");
+        if (colEls[i]) {
+          colEls[i].querySelectorAll(".die").forEach((el) => {
+            if (
+              el.textContent == String(v) &&
+              !el.classList.contains("empty")
+            ) {
+              el.classList.add("cancelling");
+            }
+          });
+        }
+        setTimeout(() => {
+          myBoard[i] = myBoard[i].map((d) => (d === v ? null : d));
+          compactCol(myBoard[i]);
+          renderBoards();
+        }, 300);
       }
       function compactCol(c) {
         const vs = c.filter((v) => v !== null);
@@ -2106,7 +2677,8 @@
           const sc = document.createElement("div");
           sc.className = "col-score";
           const cs = calcColScore(board[c]);
-          sc.textContent = cs > 0 ? cs : "";
+          sc.textContent = cs > 0 ? cs : "0"; // always show score (polished fix)
+          sc.style.opacity = cs > 0 ? "1" : "0.2";
           if (!isMe) {
             col.appendChild(sc);
             for (let r = ROWS - 1; r >= 0; r--)
@@ -2130,7 +2702,7 @@
         return d;
       }
 
-      // ── KING ──
+      // ══════════════════ KING MODE ══════════════════
       function mkKingPeerID(c) {
         return "knuckle-king-" + c.toUpperCase();
       }
@@ -2150,7 +2722,6 @@
         _doJoinKing(_pendingKingCode, wq);
         _pendingKingCode = "";
       }
-
       function createKingRoom() {
         if (!checkPeer()) return;
         kingMyName = document.getElementById("player-name").value.trim();
@@ -2170,6 +2741,7 @@
               wins: 0,
               streak: 0,
               status: "queued",
+              isHost: true,
             },
           ],
           queue: ["host"],
@@ -2181,6 +2753,9 @@
           showScreen("king-lobby");
           document.getElementById("king-room-label").textContent =
             "Sala: " + kingRoomCode;
+          // show host indicators
+          document.getElementById("king-host-badge").style.display = "flex";
+          document.getElementById("king-host-warning").style.display = "block";
           renderKingLobby();
           kingPeer.on("connection", (c) => {
             const pid = c.peer;
@@ -2192,7 +2767,6 @@
         });
         kingPeer.on("error", (e) => showToast("Erro: " + e.type));
       }
-
       function kingHostHandleMessage(peerId, data) {
         switch (data.type) {
           case "king-hello": {
@@ -2203,13 +2777,16 @@
                 wins: 0,
                 streak: 0,
                 status: data.wantsQueue ? "queued" : "spectating",
+                isHost: false,
               };
             kingState.players.push(p);
             if (data.wantsQueue) {
-              if (kingState.queue.length < 8) kingState.queue.push(pid);
+              // use KING_MAX_QUEUE limit
+              if (kingState.queue.length < KING_MAX_QUEUE)
+                kingState.queue.push(pid);
               else {
                 p.status = "spectating";
-                showToast(data.name + " entrou como espectador");
+                showToast(data.name + " entrou como espectador (fila cheia)");
               }
             }
             kingBroadcastSync();
@@ -2220,10 +2797,10 @@
             const pid = data.id,
               p = kingState.players.find((x) => x.id === pid);
             if (!p) return;
-            if (kingState.queue.length >= 8) {
+            if (kingState.queue.length >= KING_MAX_QUEUE) {
               kingSendTo(peerId, {
                 type: "king-toast",
-                msg: "Fila cheia (máx 4)",
+                msg: "Fila cheia (máx " + KING_MAX_QUEUE + ")",
               });
               return;
             }
@@ -2289,7 +2866,6 @@
           }
         }
       }
-
       function kingPeerDisconnected(peerId) {
         const pid = shortIdFromFull(peerId);
         const wp =
@@ -2409,7 +2985,7 @@
           if (kingState.players.find((x) => x.id === p1id))
             kingState.queue.push(p1id);
         }
-        kingState.queue = kingState.queue.slice(0, 4);
+        kingState.queue = kingState.queue.slice(0, KING_MAX_QUEUE); // unified limit
         const wp = kingState.players.find((x) => x.id === wId),
           p0p = kingState.players.find((x) => x.id === p0id),
           p1p = kingState.players.find((x) => x.id === p1id);
@@ -2442,7 +3018,6 @@
           kingMaybeStartGame();
         }, 5000);
       }
-
       function kingHostTakeTurn() {
         if (!kingState.gameRunning || !kingState.currentGame) return;
         const cg = kingState.currentGame;
@@ -2555,7 +3130,6 @@
           "Vez de " + (rP?.name || "Oponente");
         document.getElementById("king-turn-status").style.color = "#888";
       }
-
       function _doJoinKing(code, wq) {
         kingMode = true;
         kingIsHost = false;
@@ -2574,6 +3148,9 @@
             showScreen("king-lobby");
             document.getElementById("king-room-label").textContent =
               "Sala: " + code;
+            // guests don't see host warnings
+            document.getElementById("king-host-badge").style.display = "none";
+            document.getElementById("king-host-warning").style.display = "none";
           });
           kingHostConn.on("data", (d) => kingGuestHandleMessage(d));
           kingHostConn.on("close", () => {
@@ -2606,10 +3183,9 @@
             break;
         }
       }
-
       function kingHandleSync(data) {
         if (data.type === "king-sync") kingState = data.state;
-        if (!kingState || !kingState.players) return; 
+        if (!kingState || !kingState.players) return;
         if (kingState.gameRunning && kingState.currentGame) {
           const onGame = document
             .getElementById("screen-king-game")
@@ -2646,7 +3222,6 @@
         )
           renderKingLobby();
       }
-
       function _partialKingGameUpdate() {
         if (!kingState || !kingState.currentGame) return;
         const cg = kingState.currentGame,
@@ -2668,7 +3243,6 @@
         if (kingIsHost) kingHighlightHostCols();
         else kingHighlightGuestCols();
       }
-
       function kingGuestStartTurn() {
         kgGuestMyTurnFlag = true;
         const cg = kingState.currentGame;
@@ -2769,12 +3343,18 @@
           document.getElementById("king-turn-status").style.color = "#888";
         }
       }
-
       function renderKingLobby() {
-        if (!kingState?.players) return; 
+        if (!kingState?.players) return;
         document.getElementById("king-room-label").textContent =
           "Sala: " + kingRoomCode;
         const myId = kingIsHost ? "host" : kingMyId;
+        // show/hide host elements
+        document.getElementById("king-host-badge").style.display = kingIsHost
+          ? "flex"
+          : "none";
+        document.getElementById("king-host-warning").style.display = kingIsHost
+          ? "block"
+          : "none";
         const mi = document.getElementById("king-current-match-info");
         if (kingState.gameRunning && kingState.currentGame) {
           const cg = kingState.currentGame,
@@ -2795,20 +3375,23 @@
           })
           .forEach((p) => {
             const isMe = p.id === myId,
-              qp = kingState.queue.indexOf(p.id),
-              pl = qp === 0 ? "♛" : qp > 0 ? qp + 1 + "" : "👁";
+              qp = kingState.queue.indexOf(p.id);
+            const pl = qp === 0 ? "♛" : qp > 0 ? qp + 1 + "" : "👁";
             const card = document.createElement("div");
             card.className = "player-card " + p.status;
             let bc = "badge-spectating",
               bt = "ASSISTINDO";
-            if (p.status === "playing") {
+            if (p.isHost) {
+              bc = "badge-host";
+              bt = "HOST";
+            } else if (p.status === "playing") {
               bc = "badge-playing";
               bt = "JOGANDO";
             } else if (p.status === "queued") {
               bc = "badge-queued";
               bt = "FILA";
             }
-            card.innerHTML = `<div class="pc-position ${qp <= 1 && p.status !== "spectating" ? "active-pos" : ""}">${pl}</div><div class="pc-name ${isMe ? "is-me" : ""}">${p.name}${isMe ? " ✦" : ""}</div><div class="pc-badge ${bc}">${bt}</div>`;
+            card.innerHTML = `<div class="pc-position ${qp <= 1 && p.status !== "spectating" ? "active-pos" : ""}">${pl}</div><div class="pc-name ${isMe ? "is-me" : ""}">${p.isHost ? "⭐ " : ""}${p.name}${isMe ? " ✦" : ""}</div><div class="pc-badge ${bc}">${bt}</div>`;
             le.appendChild(card);
           });
         const re = document.getElementById("king-ranking-list");
@@ -2839,7 +3422,7 @@
             const isMe = p.id === myId;
             const el = document.createElement("div");
             el.className = "queue-mini-item";
-            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : "var(--cream)"}"> ${p.status === "playing" ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>`;
+            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : "var(--cream)"}"> ${p.status === "playing" ? "⚔ " : ""}${p.isHost ? "⭐ " : ""}${p.name}${isMe ? " ✦" : ""}</span>`;
             qe.appendChild(el);
           });
         const me = kingState.players.find((x) => x.id === myId),
@@ -2849,7 +3432,6 @@
         document.getElementById("king-leave-queue-btn").style.display =
           inQ && me?.status !== "playing" ? "block" : "none";
       }
-
       function renderKingGame() {
         if (!kingState || !kingState.currentGame) return;
         const cg = kingState.currentGame,
@@ -2857,13 +3439,13 @@
         const mySlot = cg.player0 === myId ? 0 : cg.player1 === myId ? 1 : -1,
           isPlaying = mySlot !== -1;
         const myBD =
-            mySlot === 0 ? cg.board0 : mySlot === 1 ? cg.board1 : cg.board0,
-          oppBD =
-            mySlot === 0 ? cg.board1 : mySlot === 1 ? cg.board0 : cg.board1;
-        const myP = kingState.players.find((p) => p.id === myId),
-          oppId =
-            mySlot === 0 ? cg.player1 : mySlot === 1 ? cg.player0 : cg.player1,
-          oppP = kingState.players.find((p) => p.id === oppId);
+          mySlot === 0 ? cg.board0 : mySlot === 1 ? cg.board1 : cg.board0;
+        const oppBD =
+          mySlot === 0 ? cg.board1 : mySlot === 1 ? cg.board0 : cg.board1;
+        const myP = kingState.players.find((p) => p.id === myId);
+        const oppId =
+          mySlot === 0 ? cg.player1 : mySlot === 1 ? cg.player0 : cg.player1;
+        const oppP = kingState.players.find((p) => p.id === oppId);
         document.getElementById("king-room-label-game").textContent =
           "Sala: " + kingRoomCode;
         const sb = document.getElementById("king-spectator-banner");
@@ -2950,7 +3532,7 @@
               isAct = pl.includes(pid);
             const el = document.createElement("div");
             el.className = "queue-mini-item";
-            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : isAct ? "#fef08a" : "var(--cream)"}"> ${isAct ? "⚔ " : ""}${p.name}${isMe ? " ✦" : ""}</span>${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:.6rem;color:var(--gold)">🏆${p.wins}</span>` : ""}`;
+            el.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.4)">${i + 1}.</span><span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:${isMe ? "#e8c97a" : isAct ? "#fef08a" : "var(--cream)"}"> ${isAct ? "⚔ " : ""}${p.isHost ? "⭐ " : ""}${p.name}${isMe ? " ✦" : ""}</span>${p.wins > 0 ? `<span style="font-family:'Cinzel Decorative',cursive;font-size:.6rem;color:var(--gold)">🏆${p.wins}</span>` : ""}`;
             qm.appendChild(el);
           });
         const rm = document.getElementById("king-ranking-mini");
@@ -2972,7 +3554,6 @@
         document.getElementById("king-game-leave-btn").style.display =
           inQ && !isPlaying ? "block" : "none";
       }
-
       function kingShowGameOver(d) {
         document.getElementById("winner-1v1-btns").style.display = "none";
         document.getElementById("winner-king-btns").style.display = "flex";
@@ -3002,8 +3583,8 @@
       }
       function kingJoinQueue() {
         if (kingIsHost) {
-          if (kingState.queue.length >= 8) {
-            showToast("Fila cheia");
+          if (kingState.queue.length >= KING_MAX_QUEUE) {
+            showToast("Fila cheia (máx " + KING_MAX_QUEUE + ")");
             return;
           }
           if (kingState.queue.includes("host")) return;
@@ -3030,6 +3611,7 @@
         }
       }
 
+      // ── UTILS ──
       function showScreen(n) {
         document
           .querySelectorAll(".screen")
@@ -3050,9 +3632,18 @@
       }
       function backToLobby() {
         botMode = false;
-        if (botPendingTimeout) { clearTimeout(botPendingTimeout); botPendingTimeout = null; }
-        if (_kingNextGameTimeout) { clearTimeout(_kingNextGameTimeout); _kingNextGameTimeout = null; }
-        if (_kingOverlayTimeout)  { clearTimeout(_kingOverlayTimeout);  _kingOverlayTimeout = null; }
+        if (botPendingTimeout) {
+          clearTimeout(botPendingTimeout);
+          botPendingTimeout = null;
+        }
+        if (_kingNextGameTimeout) {
+          clearTimeout(_kingNextGameTimeout);
+          _kingNextGameTimeout = null;
+        }
+        if (_kingOverlayTimeout) {
+          clearTimeout(_kingOverlayTimeout);
+          _kingOverlayTimeout = null;
+        }
         if (peer) {
           try {
             peer.destroy();
@@ -3078,6 +3669,7 @@
         kingHostSlot = -1;
         document.getElementById("winner-overlay").classList.remove("active");
         document.getElementById("king-join-modal").classList.remove("active");
+        document.getElementById("tutorial-overlay").classList.remove("active");
         showScreen("lobby");
       }
       function resetGame() {
@@ -3086,7 +3678,6 @@
       }
       function requestRematch() {
         if (botMode) {
-          // no opponent to ask — just restart immediately
           document.getElementById("winner-overlay").classList.remove("active");
           document.getElementById("rematch-status").textContent = "";
           rematchRequestedByMe = false;
@@ -3119,6 +3710,7 @@
         setTimeout(() => t.classList.remove("show"), 2500);
       }
 
+      // ── INPUT EVENTS ──
       document
         .getElementById("join-code")
         .addEventListener("input", function () {
