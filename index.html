@@ -1652,6 +1652,10 @@
               valor — o multiplicador compensa muito.<br />
               • Fique de olho nas colunas do oponente. Às vezes cancelar vale
               mais do que construir.<br />
+              • Não desperdice uma coluna: ela tem 3 slots, use todos antes de
+              uma nova estratégia.<br />
+              • No Rei da Mesa, jogar conservador pode ser vantajoso — você
+              precisa <em>vencer</em>, não necessariamente pontuar muito.
             </div>
           </div>
         </div>
@@ -2053,10 +2057,6 @@
         document.body.appendChild(s);
       })();
     </script>
-    <script>
-      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
     <script src="knucklebones-bot.js"></script>
     <script>
       const COLS = 3,
@@ -3599,6 +3599,13 @@
           if (!kingState.gameRunning) kingMaybeStartGame();
         } else {
           if (!kingHostConn || !kingHostConn.open) return;
+          // atualiza localmente de imediato, sem esperar sync do host
+          const p = kingState.players.find((x) => x.id === kingMyId);
+          if (p && !kingState.queue.includes(kingMyId)) {
+            p.status = "queued";
+            kingState.queue.push(kingMyId);
+            renderKingLobby();
+          }
           kingHostConn.send({ type: "king-join-queue", id: kingMyId });
         }
       }
@@ -3611,6 +3618,13 @@
           renderKingLobby();
         } else {
           if (!kingHostConn || !kingHostConn.open) return;
+          // atualiza localmente de imediato, sem esperar sync do host
+          const p = kingState.players.find((x) => x.id === kingMyId);
+          if (p && p.status !== "playing") {
+            p.status = "spectating";
+            kingState.queue = kingState.queue.filter((x) => x !== kingMyId);
+            renderKingLobby();
+          }
           kingHostConn.send({ type: "king-leave-queue", id: kingMyId });
         }
       }
