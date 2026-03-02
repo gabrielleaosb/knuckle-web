@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" id="html-root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Knucklebones</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="src/images/KB.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/images/KB.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
@@ -58,6 +58,94 @@
           );
         pointer-events: none;
         z-index: 0;
+      }
+
+      /* ── LANGUAGE SWITCHER ── */
+      #lang-switcher {
+        position: fixed;
+        top: 14px;
+        right: 16px;
+        z-index: 800;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        border: 1px solid rgba(201, 168, 76, 0.35);
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 0 14px rgba(201, 168, 76, 0.08);
+        overflow: hidden;
+      }
+      .lang-btn {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        padding: 7px 11px;
+        background: transparent;
+        border: none;
+        color: rgba(201, 168, 76, 0.45);
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        white-space: nowrap;
+      }
+      .lang-btn:hover {
+        color: rgba(201, 168, 76, 0.8);
+        background: rgba(201, 168, 76, 0.06);
+      }
+      .lang-btn.active {
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 76, 0.18),
+          rgba(201, 168, 76, 0.08)
+        );
+        color: #fef08a;
+        box-shadow: inset 0 0 8px rgba(201, 168, 76, 0.12);
+      }
+      .lang-divider {
+        width: 1px;
+        height: 22px;
+        background: rgba(201, 168, 76, 0.25);
+        flex-shrink: 0;
+      }
+
+      /* ── KO-FI BUTTON ── */
+      #kofi-btn {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        z-index: 800;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 94, 91, 0.35);
+        backdrop-filter: blur(6px);
+        color: rgba(255, 150, 148, 0.8);
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          color 0.2s,
+          transform 0.2s;
+        box-shadow: 0 0 10px rgba(255, 94, 91, 0.06);
+      }
+      #kofi-btn:hover {
+        border-color: rgba(255, 94, 91, 0.65);
+        color: #ffb3b1;
+        box-shadow: 0 0 18px rgba(255, 94, 91, 0.18);
+        transform: translateY(-1px);
+      }
+      .kofi-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        fill: currentColor;
       }
 
       /* ── SCREENS ── */
@@ -729,7 +817,6 @@
       .die.val-low {
         background: linear-gradient(135deg, #e8e0d0, #c8bfaa);
       }
-      /* cancel animation */
       .die.cancelling {
         animation: dieCancel 0.45s ease forwards;
       }
@@ -1056,7 +1143,7 @@
         align-items: flex-start;
       }
       .tutorial-step-num {
-        font-family: "Cinzel Decorative", cursify, cursive;
+        font-family: "Cinzel Decorative", cursive;
         font-size: 0.7rem;
         color: #0a0806;
         background: var(--gold);
@@ -1125,7 +1212,6 @@
         color: rgba(201, 168, 76, 0.75);
         letter-spacing: 0.15em;
       }
-      /* HOST BADGE */
       .host-badge {
         display: inline-flex;
         align-items: center;
@@ -1390,8 +1476,6 @@
         padding-top: 8px;
         border-top: 1px solid rgba(201, 168, 76, 0.1);
       }
-
-      /* ── KING JOIN MODAL ── */
       #king-join-modal {
         display: none;
         position: fixed;
@@ -1407,8 +1491,6 @@
         display: flex;
         animation: fadeIn 0.3s ease;
       }
-
-      /* ── SCROLLBAR ── */
       ::-webkit-scrollbar {
         width: 4px;
       }
@@ -1418,8 +1500,6 @@
       ::-webkit-scrollbar-thumb {
         background: var(--gold);
       }
-
-      /* ── RESPONSIVE ── */
       @media (max-width: 840px) {
         .lobby-modes {
           grid-template-columns: 1fr 1fr;
@@ -1456,7 +1536,6 @@
           padding: 8px;
         }
       }
-      /* tall phones — game screen should scroll if needed */
       @media (max-height: 700px) {
         #screen-game,
         #screen-king-game {
@@ -1470,13 +1549,42 @@
     </style>
   </head>
   <body>
+    <!-- ── LANGUAGE SWITCHER ── -->
+    <div id="lang-switcher">
+      <button class="lang-btn active" id="btn-ptbr" onclick="setLang('pt-BR')">
+        PT-BR
+      </button>
+      <div class="lang-divider"></div>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+
+    <!-- ── KO-FI BUTTON ── -->
+    <a
+      id="kofi-btn"
+      href="https://ko-fi.com/Z8Z41V7SQX"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Support on Ko-fi"
+    >
+      <svg
+        class="kofi-icon"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 2.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"
+        />
+      </svg>
+      <span data-i18n="kofi">APOIAR</span>
+    </a>
+
     <div id="toast"></div>
-    <div id="peerjs-error">
+    <div id="peerjs-error" data-i18n-html="peerjsError">
       ⚠ Erro ao carregar biblioteca P2P. Verifique sua conexão e recarregue a
       página.
     </div>
 
-    <!-- ══════════════════════════════ WINNER OVERLAY ══════════════════════════════ -->
+    <!-- ══ WINNER OVERLAY ══ -->
     <div id="winner-overlay">
       <div class="trophy" id="trophy-emoji">🏆</div>
       <div class="winner-title" id="winner-text"></div>
@@ -1488,7 +1596,7 @@
             style="width: auto"
             onclick="requestRematch()"
           >
-            ⚔ REVANCHE
+            ⚔ <span data-i18n="rematch">REVANCHE</span>
           </button>
           <div id="rematch-status" class="rematch-status-text"></div>
           <button
@@ -1497,7 +1605,7 @@
             style="width: auto; display: none; margin-top: 4px"
             onclick="acceptRematch()"
           >
-            ✓ ACEITAR REVANCHE
+            ✓ <span data-i18n="acceptRematch">ACEITAR REVANCHE</span>
           </button>
         </div>
         <div id="winner-king-btns">
@@ -1508,167 +1616,29 @@
           style="width: auto; margin-top: 4px"
           onclick="resetGame()"
         >
-          ← SAIR
+          ← <span data-i18n="leave">SAIR</span>
         </button>
       </div>
     </div>
 
-    <!-- ══════════════════════════════ TUTORIAL OVERLAY ══════════════════════════════ -->
+    <!-- ══ TUTORIAL OVERLAY ══ -->
     <div id="tutorial-overlay">
       <div class="tutorial-box">
         <div class="tutorial-header">
-          <div class="tutorial-title">📖 COMO JOGAR</div>
+          <div class="tutorial-title">
+            📖 <span data-i18n="howToPlay">COMO JOGAR</span>
+          </div>
           <button class="tutorial-close" onclick="closeTutorial()">
-            ✕ FECHAR
+            ✕ <span data-i18n="close">FECHAR</span>
           </button>
         </div>
-        <div class="tutorial-body">
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">🎯 OBJETIVO</div>
-            <p class="tutorial-text">
-              Tenha mais pontos que seu oponente quando um dos tabuleiros
-              estiver completamente preenchido. O jogo termina imediatamente
-              quando isso acontece.
-            </p>
-          </div>
-
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">
-              🎲 COMO FUNCIONA UMA RODADA
-            </div>
-            <div class="tutorial-step">
-              <div class="tutorial-step-num">1</div>
-              <div class="tutorial-step-text">
-                Um dado é rolado automaticamente para você — o valor é revelado
-                e fica flutuando na tela.
-              </div>
-            </div>
-            <div class="tutorial-step">
-              <div class="tutorial-step-num">2</div>
-              <div class="tutorial-step-text">
-                Escolha em qual das 3 colunas do seu tabuleiro colocar o dado.
-                Clique na coluna desejada.
-              </div>
-            </div>
-            <div class="tutorial-step">
-              <div class="tutorial-step-num">3</div>
-              <div class="tutorial-step-text">
-                O dado é empilhado na coluna — cada coluna comporta até 3 dados.
-                Colunas cheias ficam indisponíveis.
-              </div>
-            </div>
-            <div class="tutorial-step">
-              <div class="tutorial-step-num">4</div>
-              <div class="tutorial-step-text">
-                A vez passa para o oponente, que faz o mesmo processo. O turno
-                alterna até o tabuleiro lotar.
-              </div>
-            </div>
-          </div>
-
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">
-              ✨ MULTIPLICADOR — A REGRA PRINCIPAL
-            </div>
-            <p class="tutorial-text">
-              Dados iguais na <em>mesma coluna</em> multiplicam seu valor.
-              Quanto mais repetições, maior o bônus:
-            </p>
-            <div class="tutorial-example">
-              <strong>1 dado de valor 4</strong> na coluna → vale 4 pontos (4 ×
-              1²)<br />
-              <strong>2 dados de valor 4</strong> na coluna → valem 32 pontos (4
-              × 2²)<br />
-              <strong>3 dados de valor 4</strong> na coluna → valem 48 pontos (4
-              × 3²)<br /><br />
-              <em
-                >Três 6s na mesma coluna? São <strong>54 pontos</strong> só
-                nessa coluna!</em
-              >
-            </div>
-            <p class="tutorial-text">
-              Os pontos de cada coluna são exibidos ao lado dela em tempo real.
-              A pontuação total fica no canto ao lado do seu nome.
-            </p>
-          </div>
-
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">
-              💥 CANCELAMENTO — A TÁTICA DE DEFESA
-            </div>
-            <p class="tutorial-text">
-              Ao colocar um dado em uma coluna, <em>todos</em> os dados com o
-              mesmo valor são removidos da mesma coluna do oponente.
-            </p>
-            <div class="tutorial-example cancel">
-              Seu oponente tem dois <strong>5s</strong> na coluna do meio (vale
-              50 pts).<br />
-              Você coloca um <strong>5</strong> na coluna do meio — os dados do
-              oponente <strong>desaparecem</strong>.<br />
-              Você destruiu 50 pontos do oponente com uma jogada!
-            </div>
-            <p class="tutorial-text">
-              O cancelamento é instantâneo e não exige ação extra. Isso cria um
-              dilema constante: maximizo minha pontuação ou saboto o oponente?
-            </p>
-          </div>
-
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">👑 MODOS DE JOGO</div>
-            <div class="tutorial-modes-grid">
-              <div class="tutorial-mode-item">
-                <div class="tutorial-mode-name">⚔ 1 VS 1 PRIVADO</div>
-                <div class="tutorial-mode-desc">
-                  Crie uma sala, envie o código para um amigo entrar. Revanche
-                  disponível após a partida.
-                </div>
-              </div>
-              <div class="tutorial-mode-item">
-                <div class="tutorial-mode-name">🤖 VS BOT</div>
-                <div class="tutorial-mode-desc">
-                  Treine contra IA em 3 dificuldades. Ideal para aprender as
-                  mecânicas sem pressão.
-                </div>
-              </div>
-              <div
-                class="tutorial-mode-item"
-                style="border-color: rgba(192, 132, 252, 0.2)"
-              >
-                <div
-                  class="tutorial-mode-name"
-                  style="color: rgba(192, 132, 252, 0.85)"
-                >
-                  👑 REI DA MESA
-                </div>
-                <div class="tutorial-mode-desc">
-                  Até 8 jogadores em fila. Vencedor permanece jogando, perdedor
-                  vai para o fim da fila.
-                </div>
-              </div>
-              <div class="tutorial-mode-item" style="opacity: 0.5">
-                <div class="tutorial-mode-name">🚪 ENTRAR NA SALA</div>
-                <div class="tutorial-mode-desc">
-                  Use um código recebido para entrar em qualquer sala ativa —
-                  1v1 ou Rei da Mesa.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="tutorial-section">
-            <div class="tutorial-section-title">💡 DICAS RÁPIDAS</div>
-            <div class="tutorial-example">
-              • Priorize dados altos (5, 6) para colunas onde já tem o mesmo
-              valor — o multiplicador compensa muito.<br />
-              • Fique de olho nas colunas do oponente. Às vezes cancelar vale
-              mais do que construir.<br />
-            </div>
-          </div>
+        <div class="tutorial-body" id="tutorial-body-content">
+          <!-- filled dynamically by JS -->
         </div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════ KING JOIN MODAL ══════════════════════════════ -->
+    <!-- ══ KING JOIN MODAL ══ -->
     <div id="king-join-modal">
       <div
         style="
@@ -1678,7 +1648,7 @@
           text-align: center;
         "
       >
-        👑 ENTRAR NA SALA
+        👑 <span data-i18n="joinRoom">ENTRAR NA SALA</span>
       </div>
       <div
         style="
@@ -1688,6 +1658,7 @@
           text-align: center;
           letter-spacing: 0.1em;
         "
+        data-i18n="howJoin"
       >
         Como deseja participar?
       </div>
@@ -1695,101 +1666,114 @@
         style="display: flex; flex-direction: column; gap: 10px; width: 260px"
       >
         <button class="btn-king" onclick="confirmJoinKing(true)">
-          ♛ JOGAR — ENTRAR NA FILA
+          ♛ <span data-i18n="playJoinQueue">JOGAR — ENTRAR NA FILA</span>
         </button>
         <button class="btn-outline" onclick="confirmJoinKing(false)">
-          👁 SÓ ASSISTIR
+          👁 <span data-i18n="watchOnly">SÓ ASSISTIR</span>
         </button>
         <button
           class="btn-outline sm"
           onclick="closeKingModal()"
           style="opacity: 0.5; margin-top: 4px"
+          data-i18n="cancel"
         >
           CANCELAR
         </button>
       </div>
     </div>
 
-    <!-- ══════════════════════════════ LOBBY ══════════════════════════════ -->
+    <!-- ══════════════ LOBBY ══════════════ -->
     <div id="screen-lobby" class="screen active">
       <div style="text-align: center">
-        <div class="title-sub">⚔ JOGO DE DADOS ⚔</div>
+        <div class="title-sub">
+          ⚔ <span data-i18n="dicegame">JOGO DE DADOS</span> ⚔
+        </div>
         <h1 class="title-main">KNUCKLE<br />BONES</h1>
         <div class="ornament" style="margin-top: 16px">✦</div>
       </div>
       <div class="lobby-name-section">
-        <div class="field-label">SEU NOME</div>
+        <div class="field-label" data-i18n="yourName">SEU NOME</div>
         <input
           id="player-name"
           type="text"
           maxlength="16"
-          placeholder="Como você se chama?"
           class="game-input"
+          data-i18n-placeholder="namePlaceholder"
+          placeholder="Como você se chama?"
         />
       </div>
       <div class="lobby-modes">
         <!-- 1v1 -->
         <div class="mode-card">
           <div class="mode-card-icon">⚔</div>
-          <div class="mode-card-title">1 VS 1 PRIVADO</div>
-          <div class="mode-card-desc">
+          <div class="mode-card-title" data-i18n="mode1v1">1 VS 1 PRIVADO</div>
+          <div class="mode-card-desc" data-i18n="mode1v1Desc">
             Crie uma sala e envie o código para um amigo entrar
           </div>
-          <button class="btn-gold" onclick="createRoom()">✦ CRIAR SALA</button>
+          <button class="btn-gold" onclick="createRoom()">
+            ✦ <span data-i18n="createRoom">CRIAR SALA</span>
+          </button>
         </div>
-        <!-- ENTRAR -->
+        <!-- JOIN -->
         <div class="mode-card join">
           <div class="mode-card-icon">🚪</div>
-          <div class="mode-card-title">ENTRAR NA SALA</div>
-          <div class="mode-card-desc">
+          <div class="mode-card-title" data-i18n="modeJoin">ENTRAR NA SALA</div>
+          <div class="mode-card-desc" data-i18n="modeJoinDesc">
             Cole o código recebido — funciona para qualquer modo
           </div>
           <input
             id="join-code"
             type="text"
             maxlength="8"
-            placeholder="CÓDIGO DA SALA"
             class="game-input code-style"
+            data-i18n-placeholder="roomCodePlaceholder"
+            placeholder="CÓDIGO DA SALA"
           />
-          <button class="btn-gold" onclick="joinAnyRoom()">→ ENTRAR</button>
+          <button class="btn-gold" onclick="joinAnyRoom()">
+            → <span data-i18n="enter">ENTRAR</span>
+          </button>
         </div>
         <!-- KING -->
         <div class="mode-card king">
           <div class="mode-card-icon">👑</div>
-          <div class="mode-card-title">REI DA MESA</div>
-          <div class="mode-card-desc">
+          <div class="mode-card-title" data-i18n="modeKing">REI DA MESA</div>
+          <div class="mode-card-desc" data-i18n="modeKingDesc">
             Até 8 jogadores. Vencedor fica, perdedor vai para o fim da fila
           </div>
           <button class="btn-king" onclick="createKingRoom()">
-            ♛ CRIAR SALA
+            ♛ <span data-i18n="createRoom">CRIAR SALA</span>
           </button>
         </div>
         <!-- 2v2 COMING SOON -->
         <div class="mode-card coming-soon">
           <div class="mode-card-icon">🛡</div>
-          <div class="mode-card-title">2 VS 2</div>
-          <div class="mode-card-desc">Forme duplas e vença em equipe</div>
-          <div class="coming-soon-badge">EM BREVE</div>
+          <div class="mode-card-title" data-i18n="mode2v2">2 VS 2</div>
+          <div class="mode-card-desc" data-i18n="mode2v2Desc">
+            Forme duplas e vença em equipe
+          </div>
+          <div class="coming-soon-badge" data-i18n="comingSoon">EM BREVE</div>
         </div>
-        <!-- VS BOT -->
+        <!-- BOT -->
         <div class="mode-card bot">
           <div class="mode-card-icon">🤖</div>
-          <div class="mode-card-title">VS BOT</div>
-          <div class="mode-card-desc">
+          <div class="mode-card-title" data-i18n="modeBot">VS BOT</div>
+          <div class="mode-card-desc" data-i18n="modeBotDesc">
             Treine contra inteligência artificial
           </div>
           <select id="bot-difficulty" class="bot-difficulty-select">
-            <option value="easy">🎲 Fácil</option>
-            <option value="medium" selected>⚔ Médio</option>
-            <option value="hard">💀 Difícil</option>
+            <option value="easy" data-i18n="easy">🎲 Fácil</option>
+            <option value="medium" selected data-i18n="medium">⚔ Médio</option>
+            <option value="hard" data-i18n="hard">💀 Difícil</option>
           </select>
-          <button class="btn-bot" onclick="startBotGame()">✦ JOGAR</button>
+          <button class="btn-bot" onclick="startBotGame()">
+            ✦ <span data-i18n="play">JOGAR</span>
+          </button>
         </div>
         <!-- TUTORIAL -->
         <div class="mode-card tutorial-card" onclick="openTutorial()">
           <div class="mode-card-icon">📖</div>
-          <div class="mode-card-title">COMO JOGAR</div>
-          <div class="mode-card-desc">
+          <div class="mode-card-title" data-i18n="howToPlay">COMO JOGAR</div>
+          <div class="mode-card-desc" data-i18n="howToPlayDesc">
             Aprenda as regras, o multiplicador e o cancelamento
           </div>
           <button
@@ -1799,26 +1783,33 @@
               event.stopPropagation();
             "
           >
-            → VER REGRAS
+            → <span data-i18n="seeRules">VER REGRAS</span>
           </button>
         </div>
       </div>
       <div class="ornament" style="max-width: 780px">✦</div>
-      <p class="hint-text">Jogo P2P — compartilhe o código com seus amigos.</p>
+      <p class="hint-text" data-i18n="p2pHint">
+        Jogo P2P — compartilhe o código com seus amigos.
+      </p>
     </div>
 
-    <!-- ══════════════════════════════ WAITING ══════════════════════════════ -->
+    <!-- ══════════════ WAITING ══════════════ -->
     <div id="screen-waiting" class="screen">
-      <div class="waiting-title cinzel">SALA CRIADA</div>
+      <div class="waiting-title cinzel" data-i18n="roomCreated">
+        SALA CRIADA
+      </div>
       <div class="panel panel-center">
-        <div class="waiting-label">CÓDIGO DA SALA</div>
+        <div class="waiting-label" data-i18n="roomCode">CÓDIGO DA SALA</div>
         <div class="room-code-display" id="display-room-code"></div>
         <button class="btn-outline" onclick="copyCode()">
-          📋 COPIAR CÓDIGO
+          📋 <span data-i18n="copyCode">COPIAR CÓDIGO</span>
         </button>
         <div class="ornament">✦</div>
         <div class="status-msg" style="color: rgba(201, 168, 76, 0.7)">
-          <span class="dot dot-yellow"></span>Aguardando oponente entrar...
+          <span class="dot dot-yellow"></span
+          ><span data-i18n="waitingOpponent"
+            >Aguardando oponente entrar...</span
+          >
         </div>
       </div>
       <button
@@ -1826,11 +1817,11 @@
         style="width: auto"
         onclick="backToLobby()"
       >
-        ← VOLTAR
+        ← <span data-i18n="back">VOLTAR</span>
       </button>
     </div>
 
-    <!-- ══════════════════════════════ 1V1 GAME ══════════════════════════════ -->
+    <!-- ══════════════ 1V1 GAME ══════════════ -->
     <div id="screen-game" class="screen">
       <div class="game-header">
         <span class="game-header-label">KNUCKLEBONES</span>
@@ -1840,7 +1831,9 @@
         <div class="player-row">
           <div class="player-name-wrap">
             <span class="dot dot-green" id="opp-dot"></span>
-            <span class="player-name" id="opp-name-display">Oponente</span>
+            <span class="player-name" id="opp-name-display" data-i18n="opponent"
+              >Oponente</span
+            >
           </div>
           <span class="score-display" id="opp-score">0</span>
         </div>
@@ -1860,7 +1853,9 @@
         <div class="player-row bottom">
           <div class="player-name-wrap">
             <span class="dot dot-green" id="my-dot"></span>
-            <span class="player-name" id="my-name-display">Você</span>
+            <span class="player-name" id="my-name-display" data-i18n="you"
+              >Você</span
+            >
           </div>
           <span class="score-display" id="my-score">0</span>
         </div>
@@ -1870,23 +1865,28 @@
         style="width: auto; margin-top: 4px"
         onclick="backToLobby()"
       >
-        ← SAIR
+        ← <span data-i18n="leave">SAIR</span>
       </button>
-      <div class="rules-hint">
+      <div class="rules-hint" data-i18n="rulesHint">
         DADOS IGUAIS NA MESMA COLUNA MULTIPLICAM • MESMO NÚM. CANCELA DO
         OPONENTE
       </div>
     </div>
 
-    <!-- ══════════════════════════════ KING LOBBY ══════════════════════════════ -->
+    <!-- ══════════════ KING LOBBY ══════════════ -->
     <div id="screen-king-lobby" class="screen">
       <div class="king-header">
         <div
           style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"
         >
-          <div class="king-title">👑 REI DA MESA</div>
+          <div class="king-title">
+            👑 <span data-i18n="modeKing">REI DA MESA</span>
+          </div>
           <div id="king-host-badge" style="display: none" class="host-badge">
-            ⭐ VOCÊ É O HOST — NÃO FECHE ESTA ABA
+            ⭐
+            <span data-i18n="hostWarningShort"
+              >VOCÊ É O HOST — NÃO FECHE ESTA ABA</span
+            >
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px">
@@ -1904,18 +1904,23 @@
         id="king-host-warning"
         class="host-warning-bar"
         style="display: none"
+        data-i18n="hostWarningFull"
       >
         ⚠ Você é o host desta sala. Se fechar esta aba, todos os jogadores serão
         desconectados.
       </div>
       <div class="king-lobby-body">
         <div class="king-panel">
-          <div class="king-panel-title">⚔ JOGADORES</div>
+          <div class="king-panel-title">
+            ⚔ <span data-i18n="players">JOGADORES</span>
+          </div>
           <div id="king-player-list"></div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px">
           <div class="king-panel">
-            <div class="king-panel-title">PARTIDA ATUAL</div>
+            <div class="king-panel-title" data-i18n="currentMatch">
+              PARTIDA ATUAL
+            </div>
             <div class="current-match-info" id="king-current-match-info">
               <span
                 style="
@@ -1923,17 +1928,22 @@
                   font-size: 0.75rem;
                   color: rgba(201, 168, 76, 0.3);
                 "
+                data-i18n="waiting"
                 >Aguardando...</span
               >
             </div>
           </div>
           <div class="king-panel">
-            <div class="king-panel-title">⏳ FILA DE ESPERA</div>
+            <div class="king-panel-title">
+              ⏳ <span data-i18n="waitQueue">FILA DE ESPERA</span>
+            </div>
             <div id="king-queue-display"></div>
           </div>
         </div>
         <div class="king-panel">
-          <div class="king-panel-title">🏆 RANKING</div>
+          <div class="king-panel-title">
+            🏆 <span data-i18n="ranking">RANKING</span>
+          </div>
           <div id="king-ranking-list"></div>
         </div>
       </div>
@@ -1944,7 +1954,7 @@
           onclick="kingJoinQueue()"
           style="display: none"
         >
-          ♛ ENTRAR NA FILA
+          ♛ <span data-i18n="joinQueue">ENTRAR NA FILA</span>
         </button>
         <button
           class="btn-outline sm queue-btn"
@@ -1952,7 +1962,7 @@
           onclick="kingLeaveQueue()"
           style="display: none"
         >
-          ✕ SAIR DA FILA
+          ✕ <span data-i18n="leaveQueue">SAIR DA FILA</span>
         </button>
       </div>
       <button
@@ -1960,14 +1970,16 @@
         style="width: auto"
         onclick="backToLobby()"
       >
-        ← SAIR DA SALA
+        ← <span data-i18n="leaveRoom">SAIR DA SALA</span>
       </button>
     </div>
 
-    <!-- ══════════════════════════════ KING GAME ══════════════════════════════ -->
+    <!-- ══════════════ KING GAME ══════════════ -->
     <div id="screen-king-game" class="screen">
       <div class="game-header" style="max-width: 860px">
-        <span class="game-header-label">👑 REI DA MESA</span>
+        <span class="game-header-label"
+          >👑 <span data-i18n="modeKing">REI DA MESA</span></span
+        >
         <span class="game-header-label" id="king-room-label-game"></span>
       </div>
       <div
@@ -1977,7 +1989,9 @@
       ></div>
       <div class="king-game-body">
         <div class="king-side-panel">
-          <div class="king-panel-title">⏳ FILA DE ESPERA</div>
+          <div class="king-panel-title">
+            ⏳ <span data-i18n="waitQueue">FILA DE ESPERA</span>
+          </div>
           <div id="king-queue-mini"></div>
           <div class="king-queue-actions">
             <button
@@ -1986,7 +2000,7 @@
               onclick="kingJoinQueue()"
               style="display: none"
             >
-              ♛ ENTRAR NA FILA
+              ♛ <span data-i18n="joinQueue">ENTRAR NA FILA</span>
             </button>
             <button
               class="btn-outline sm queue-btn"
@@ -1994,7 +2008,7 @@
               onclick="kingLeaveQueue()"
               style="display: none"
             >
-              ✕ SAIR DA FILA
+              ✕ <span data-i18n="leaveQueue">SAIR DA FILA</span>
             </button>
           </div>
         </div>
@@ -2002,8 +2016,13 @@
           <div class="board-section" style="max-width: 340px">
             <div class="player-row">
               <div class="player-name-wrap">
-                <span class="dot dot-green"></span>
-                <span class="player-name" id="king-opp-name">Oponente</span>
+                <span class="dot dot-green"></span
+                ><span
+                  class="player-name"
+                  id="king-opp-name"
+                  data-i18n="opponent"
+                  >Oponente</span
+                >
               </div>
               <span class="score-display" id="king-opp-score">0</span>
             </div>
@@ -2022,8 +2041,10 @@
             </div>
             <div class="player-row bottom">
               <div class="player-name-wrap">
-                <span class="dot dot-green"></span>
-                <span class="player-name" id="king-my-name">Você</span>
+                <span class="dot dot-green"></span
+                ><span class="player-name" id="king-my-name" data-i18n="you"
+                  >Você</span
+                >
               </div>
               <span class="score-display" id="king-my-score">0</span>
             </div>
@@ -2033,20 +2054,417 @@
             onclick="backToLobby()"
             style="width: auto; margin-top: 4px"
           >
-            ← SAIR
+            ← <span data-i18n="leave">SAIR</span>
           </button>
-          <div class="rules-hint" style="max-width: 340px">
+          <div
+            class="rules-hint"
+            style="max-width: 340px"
+            data-i18n="kingRulesHint"
+          >
             VENCEDOR FICA • PERDEDOR VAI PARA O FIM DA FILA
           </div>
         </div>
         <div class="king-side-panel">
-          <div class="king-panel-title">🏆 RANKING</div>
+          <div class="king-panel-title">
+            🏆 <span data-i18n="ranking">RANKING</span>
+          </div>
           <div id="king-ranking-mini"></div>
         </div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════ SCRIPTS ══════════════════════════════ -->
+    <!-- ══════════════ SCRIPTS ══════════════ -->
+    <script>
+      // ════════════════════════════════════════════════
+      // i18n SYSTEM
+      // ════════════════════════════════════════════════
+      const I18N = {
+        "pt-BR": {
+          // ui labels
+          kofi: "APOIAR",
+          yourName: "SEU NOME",
+          namePlaceholder: "Como você se chama?",
+          roomCodePlaceholder: "CÓDIGO DA SALA",
+          dicegame: "JOGO DE DADOS",
+          howToPlay: "COMO JOGAR",
+          howToPlayDesc: "Aprenda as regras, o multiplicador e o cancelamento",
+          seeRules: "VER REGRAS",
+          close: "FECHAR",
+          // modes
+          mode1v1: "1 VS 1 PRIVADO",
+          mode1v1Desc: "Crie uma sala e envie o código para um amigo entrar",
+          modeJoin: "ENTRAR NA SALA",
+          modeJoinDesc: "Cole o código recebido — funciona para qualquer modo",
+          modeKing: "REI DA MESA",
+          modeKingDesc:
+            "Até 8 jogadores. Vencedor fica, perdedor vai para o fim da fila",
+          mode2v2: "2 VS 2",
+          mode2v2Desc: "Forme duplas e vença em equipe",
+          comingSoon: "EM BREVE",
+          modeBot: "VS BOT",
+          modeBotDesc: "Treine contra inteligência artificial",
+          easy: "🎲 Fácil",
+          medium: "⚔ Médio",
+          hard: "💀 Difícil",
+          play: "JOGAR",
+          // buttons
+          createRoom: "CRIAR SALA",
+          enter: "ENTRAR",
+          copyCode: "COPIAR CÓDIGO",
+          back: "VOLTAR",
+          leave: "SAIR",
+          cancel: "CANCELAR",
+          leaveRoom: "SAIR DA SALA",
+          joinRoom: "ENTRAR NA SALA",
+          howJoin: "Como deseja participar?",
+          playJoinQueue: "JOGAR — ENTRAR NA FILA",
+          watchOnly: "SÓ ASSISTIR",
+          rematch: "REVANCHE",
+          acceptRematch: "ACEITAR REVANCHE",
+          joinQueue: "ENTRAR NA FILA",
+          leaveQueue: "SAIR DA FILA",
+          // game states
+          roomCreated: "SALA CRIADA",
+          roomCode: "CÓDIGO DA SALA",
+          waitingOpponent: "Aguardando oponente entrar...",
+          opponent: "Oponente",
+          you: "Você",
+          yourTurn: "▼ Sua vez",
+          chooseCol: "▼ Escolha uma coluna",
+          opponentTurn: "Vez de ",
+          opponentChoosing: " está escolhendo...",
+          fullCol: "Coluna cheia!",
+          vsComputer: "VS COMPUTADOR",
+          // king
+          players: "JOGADORES",
+          currentMatch: "PARTIDA ATUAL",
+          waiting: "Aguardando...",
+          waitingPlayers: "Aguardando jogadores...",
+          waitQueue: "FILA DE ESPERA",
+          emptyQueue: "Fila vazia",
+          ranking: "RANKING",
+          hostWarningShort: "VOCÊ É O HOST — NÃO FECHE ESTA ABA",
+          hostWarningFull:
+            "⚠ Você é o host desta sala. Se fechar esta aba, todos os jogadores serão desconectados.",
+          nextMatch: "Próxima partida em breve...",
+          watching: "👁 ASSISTINDO",
+          spectatingQueue: "⏳ FILA — Posição ",
+          spectatingWatching: " • Assistindo",
+          watchingJoinHint: "👁 ASSISTINDO — Entre na fila para jogar",
+          queueFull: "Fila cheia (máx ",
+          watching2: "Assistindo",
+          rolling: " rolou ",
+          // badges
+          badgePlaying: "JOGANDO",
+          badgeQueue: "FILA",
+          badgeSpectating: "ASSISTINDO",
+          badgeHost: "HOST",
+          // game over
+          won: " VENCEU!",
+          tie: "EMPATE!",
+          // rules hints
+          rulesHint:
+            "DADOS IGUAIS NA MESMA COLUNA MULTIPLICAM • MESMO NÚM. CANCELA DO OPONENTE",
+          kingRulesHint: "VENCEDOR FICA • PERDEDOR VAI PARA O FIM DA FILA",
+          p2pHint: "Jogo P2P — compartilhe o código com seus amigos.",
+          // errors
+          peerjsError:
+            "⚠ Erro ao carregar biblioteca P2P. Verifique sua conexão e recarregue a página.",
+          typeName: "Digite seu nome",
+          typeCode: "Digite o código",
+          codeCopied: "Código copiado!",
+          checking: "Verificando sala...",
+          roomNotFound: "Sala não encontrada",
+          hostDisconnected: "Host desconectou",
+          oppDisconnected: "Oponente desconectou",
+          returningMenu: "Voltando ao menu em ",
+          waitingFor: "Aguardando ",
+          p2pLoading: "Biblioteca P2P carregando...",
+          roomLabel: "Sala: ",
+          // tutorial keys handled by renderTutorial()
+        },
+        en: {
+          kofi: "SUPPORT",
+          yourName: "YOUR NAME",
+          namePlaceholder: "What's your name?",
+          roomCodePlaceholder: "ROOM CODE",
+          dicegame: "DICE GAME",
+          howToPlay: "HOW TO PLAY",
+          howToPlayDesc: "Learn the rules, multiplier and cancellation",
+          seeRules: "SEE RULES",
+          close: "CLOSE",
+          mode1v1: "1 VS 1 PRIVATE",
+          mode1v1Desc: "Create a room and share the code with a friend",
+          modeJoin: "JOIN ROOM",
+          modeJoinDesc: "Paste the code you received — works for any mode",
+          modeKing: "KING OF THE TABLE",
+          modeKingDesc:
+            "Up to 8 players. Winner stays, loser goes to the back of the queue",
+          mode2v2: "2 VS 2",
+          mode2v2Desc: "Form teams and win together",
+          comingSoon: "COMING SOON",
+          modeBot: "VS BOT",
+          modeBotDesc: "Train against artificial intelligence",
+          easy: "🎲 Easy",
+          medium: "⚔ Medium",
+          hard: "💀 Hard",
+          play: "PLAY",
+          createRoom: "CREATE ROOM",
+          enter: "JOIN",
+          copyCode: "COPY CODE",
+          back: "BACK",
+          leave: "LEAVE",
+          cancel: "CANCEL",
+          leaveRoom: "LEAVE ROOM",
+          joinRoom: "JOIN ROOM",
+          howJoin: "How do you want to join?",
+          playJoinQueue: "PLAY — JOIN QUEUE",
+          watchOnly: "SPECTATE ONLY",
+          rematch: "REMATCH",
+          acceptRematch: "ACCEPT REMATCH",
+          joinQueue: "JOIN QUEUE",
+          leaveQueue: "LEAVE QUEUE",
+          roomCreated: "ROOM CREATED",
+          roomCode: "ROOM CODE",
+          waitingOpponent: "Waiting for opponent...",
+          opponent: "Opponent",
+          you: "You",
+          yourTurn: "▼ Your turn",
+          chooseCol: "▼ Choose a column",
+          opponentTurn: "Turn: ",
+          opponentChoosing: " is choosing...",
+          fullCol: "Column full!",
+          vsComputer: "VS COMPUTER",
+          players: "PLAYERS",
+          currentMatch: "CURRENT MATCH",
+          waiting: "Waiting...",
+          waitingPlayers: "Waiting for players...",
+          waitQueue: "QUEUE",
+          emptyQueue: "Queue is empty",
+          ranking: "RANKING",
+          hostWarningShort: "YOU'RE THE HOST — DON'T CLOSE THIS TAB",
+          hostWarningFull:
+            "⚠ You are the host of this room. If you close this tab, all players will be disconnected.",
+          nextMatch: "Next match coming soon...",
+          watching: "👁 SPECTATING",
+          spectatingQueue: "⏳ QUEUE — Position ",
+          spectatingWatching: " • Spectating",
+          watchingJoinHint: "👁 SPECTATING — Join the queue to play",
+          queueFull: "Queue full (max ",
+          watching2: "Spectating",
+          rolling: " rolled ",
+          badgePlaying: "PLAYING",
+          badgeQueue: "QUEUE",
+          badgeSpectating: "WATCHING",
+          badgeHost: "HOST",
+          won: " WON!",
+          tie: "DRAW!",
+          rulesHint:
+            "SAME DICE IN A COLUMN MULTIPLY • SAME NUMBER CANCELS OPPONENT'S",
+          kingRulesHint: "WINNER STAYS • LOSER GOES TO BACK OF QUEUE",
+          p2pHint: "P2P game — share the code with your friends.",
+          peerjsError:
+            "⚠ Error loading P2P library. Check your connection and reload the page.",
+          typeName: "Enter your name",
+          typeCode: "Enter the code",
+          codeCopied: "Code copied!",
+          checking: "Checking room...",
+          roomNotFound: "Room not found",
+          hostDisconnected: "Host disconnected",
+          oppDisconnected: "Opponent disconnected",
+          returningMenu: "Returning to menu in ",
+          waitingFor: "Waiting for ",
+          p2pLoading: "P2P library loading...",
+          roomLabel: "Room: ",
+        },
+      };
+
+      let currentLang = "pt-BR";
+
+      function t(key) {
+        return (
+          (I18N[currentLang] && I18N[currentLang][key]) ||
+          (I18N["pt-BR"] && I18N["pt-BR"][key]) ||
+          key
+        );
+      }
+
+      function applyTranslations() {
+        // data-i18n: set textContent
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          el.textContent = t(key);
+        });
+        // data-i18n-html: set innerHTML
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-html");
+          el.innerHTML = t(key);
+        });
+        // data-i18n-placeholder
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-placeholder");
+          el.placeholder = t(key);
+        });
+        // update bot difficulty options
+        const sel = document.getElementById("bot-difficulty");
+        if (sel) {
+          Array.from(sel.options).forEach((opt) => {
+            const key = opt.getAttribute("data-i18n");
+            if (key) opt.textContent = t(key);
+          });
+        }
+        // update html lang attr
+        document.getElementById("html-root").lang = currentLang;
+        // update lang switcher active state
+        document
+          .getElementById("btn-ptbr")
+          .classList.toggle("active", currentLang === "pt-BR");
+        document
+          .getElementById("btn-en")
+          .classList.toggle("active", currentLang === "en");
+        // re-render tutorial
+        renderTutorial();
+      }
+
+      function setLang(lang) {
+        currentLang = lang;
+        // update URL without reload (may fail in sandboxed iframes — safe to ignore)
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", lang === "pt-BR" ? "pt-br" : "en");
+          history.replaceState({}, "", url.toString());
+        } catch (e) {}
+        applyTranslations();
+      }
+
+      // ── Read lang from URL on load ──
+      (function () {
+        const url = new URL(window.location.href);
+        // Support path-based: /en or /pt-br
+        const path = window.location.pathname.replace(/\/$/, "");
+        if (path.endsWith("/en") || url.searchParams.get("lang") === "en") {
+          currentLang = "en";
+        } else if (
+          path.endsWith("/pt-br") ||
+          url.searchParams.get("lang") === "pt-br"
+        ) {
+          currentLang = "pt-BR";
+        } else {
+          // auto-detect browser language
+          const nav = navigator.language || "";
+          if (nav.toLowerCase().startsWith("pt")) currentLang = "pt-BR";
+          else if (nav.toLowerCase().startsWith("en")) currentLang = "en";
+        }
+      })();
+
+      // ── TUTORIAL content (i18n aware) ──
+      function renderTutorial() {
+        const body = document.getElementById("tutorial-body-content");
+        if (!body) return;
+        if (currentLang === "en") {
+          body.innerHTML = `
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">🎯 OBJECTIVE</div>
+            <p class="tutorial-text">Have more points than your opponent when one of the boards is completely filled. The game ends immediately when this happens.</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">🎲 HOW A ROUND WORKS</div>
+            <div class="tutorial-step"><div class="tutorial-step-num">1</div><div class="tutorial-step-text">A die is automatically rolled for you — the value is revealed and floats on screen.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">2</div><div class="tutorial-step-text">Choose which of the 3 columns on your board to place the die. Click the desired column.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">3</div><div class="tutorial-step-text">The die is stacked in the column — each column holds up to 3 dice. Full columns are unavailable.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">4</div><div class="tutorial-step-text">The turn passes to the opponent, who does the same. Turns alternate until the board fills up.</div></div>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">✨ MULTIPLIER — THE MAIN RULE</div>
+            <p class="tutorial-text">Equal dice in the <em>same column</em> multiply their value. The more repetitions, the bigger the bonus:</p>
+            <div class="tutorial-example">
+              <strong>1 die of value 4</strong> in the column → worth 4 points (4 × 1²)<br/>
+              <strong>2 dice of value 4</strong> in the column → worth 32 points (4 × 2²)<br/>
+              <strong>3 dice of value 4</strong> in the column → worth 48 points (4 × 3²)<br/><br/>
+              <em>Three 6s in the same column? That's <strong>54 points</strong> from just that column!</em>
+            </div>
+            <p class="tutorial-text">Each column's points are displayed next to it in real time. The total score is shown next to your name.</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">💥 CANCELLATION — THE DEFENSIVE TACTIC</div>
+            <p class="tutorial-text">When placing a die in a column, <em>all</em> dice with the same value are removed from the same column on the opponent's board.</p>
+            <div class="tutorial-example cancel">
+              Your opponent has two <strong>5s</strong> in the middle column (worth 50 pts).<br/>
+              You place a <strong>5</strong> in the middle column — the opponent's dice <strong>disappear</strong>.<br/>
+              You just destroyed 50 points with one move!
+            </div>
+            <p class="tutorial-text">Cancellation is instant and requires no extra action. This creates a constant dilemma: do I maximize my score or sabotage the opponent?</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">👑 GAME MODES</div>
+            <div class="tutorial-modes-grid">
+              <div class="tutorial-mode-item"><div class="tutorial-mode-name">⚔ 1 VS 1 PRIVATE</div><div class="tutorial-mode-desc">Create a room, share the code with a friend. Rematch available after the game.</div></div>
+              <div class="tutorial-mode-item"><div class="tutorial-mode-name">🤖 VS BOT</div><div class="tutorial-mode-desc">Train against AI in 3 difficulties. Great for learning mechanics without pressure.</div></div>
+              <div class="tutorial-mode-item" style="border-color:rgba(192,132,252,.2)"><div class="tutorial-mode-name" style="color:rgba(192,132,252,.85)">👑 KING OF THE TABLE</div><div class="tutorial-mode-desc">Up to 8 players in queue. Winner stays, loser goes to the back of the queue.</div></div>
+              <div class="tutorial-mode-item" style="opacity:.5"><div class="tutorial-mode-name">🚪 JOIN ROOM</div><div class="tutorial-mode-desc">Use a received code to enter any active room — 1v1 or King of the Table.</div></div>
+            </div>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">💡 QUICK TIPS</div>
+            <div class="tutorial-example">
+              • Prioritize high dice (5, 6) for columns where you already have the same value — the multiplier is very rewarding.<br/>
+              • Keep an eye on the opponent's columns. Sometimes canceling is worth more than building.<br/>
+            </div>
+          </div>`;
+        } else {
+          body.innerHTML = `
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">🎯 OBJETIVO</div>
+            <p class="tutorial-text">Tenha mais pontos que seu oponente quando um dos tabuleiros estiver completamente preenchido. O jogo termina imediatamente quando isso acontece.</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">🎲 COMO FUNCIONA UMA RODADA</div>
+            <div class="tutorial-step"><div class="tutorial-step-num">1</div><div class="tutorial-step-text">Um dado é rolado automaticamente para você — o valor é revelado e fica flutuando na tela.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">2</div><div class="tutorial-step-text">Escolha em qual das 3 colunas do seu tabuleiro colocar o dado. Clique na coluna desejada.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">3</div><div class="tutorial-step-text">O dado é empilhado na coluna — cada coluna comporta até 3 dados. Colunas cheias ficam indisponíveis.</div></div>
+            <div class="tutorial-step"><div class="tutorial-step-num">4</div><div class="tutorial-step-text">A vez passa para o oponente, que faz o mesmo processo. O turno alterna até o tabuleiro lotar.</div></div>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">✨ MULTIPLICADOR — A REGRA PRINCIPAL</div>
+            <p class="tutorial-text">Dados iguais na <em>mesma coluna</em> multiplicam seu valor. Quanto mais repetições, maior o bônus:</p>
+            <div class="tutorial-example">
+              <strong>1 dado de valor 4</strong> na coluna → vale 4 pontos (4 × 1²)<br/>
+              <strong>2 dados de valor 4</strong> na coluna → valem 32 pontos (4 × 2²)<br/>
+              <strong>3 dados de valor 4</strong> na coluna → valem 48 pontos (4 × 3²)<br/><br/>
+              <em>Três 6s na mesma coluna? São <strong>54 pontos</strong> só nessa coluna!</em>
+            </div>
+            <p class="tutorial-text">Os pontos de cada coluna são exibidos ao lado dela em tempo real. A pontuação total fica no canto ao lado do seu nome.</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">💥 CANCELAMENTO — A TÁTICA DE DEFESA</div>
+            <p class="tutorial-text">Ao colocar um dado em uma coluna, <em>todos</em> os dados com o mesmo valor são removidos da mesma coluna do oponente.</p>
+            <div class="tutorial-example cancel">
+              Seu oponente tem dois <strong>5s</strong> na coluna do meio (vale 50 pts).<br/>
+              Você coloca um <strong>5</strong> na coluna do meio — os dados do oponente <strong>desaparecem</strong>.<br/>
+              Você destruiu 50 pontos do oponente com uma jogada!
+            </div>
+            <p class="tutorial-text">O cancelamento é instantâneo e não exige ação extra. Isso cria um dilema constante: maximizo minha pontuação ou saboto o oponente?</p>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">👑 MODOS DE JOGO</div>
+            <div class="tutorial-modes-grid">
+              <div class="tutorial-mode-item"><div class="tutorial-mode-name">⚔ 1 VS 1 PRIVADO</div><div class="tutorial-mode-desc">Crie uma sala, envie o código para um amigo entrar. Revanche disponível após a partida.</div></div>
+              <div class="tutorial-mode-item"><div class="tutorial-mode-name">🤖 VS BOT</div><div class="tutorial-mode-desc">Treine contra IA em 3 dificuldades. Ideal para aprender as mecânicas sem pressão.</div></div>
+              <div class="tutorial-mode-item" style="border-color:rgba(192,132,252,.2)"><div class="tutorial-mode-name" style="color:rgba(192,132,252,.85)">👑 REI DA MESA</div><div class="tutorial-mode-desc">Até 8 jogadores em fila. Vencedor permanece jogando, perdedor vai para o fim da fila.</div></div>
+              <div class="tutorial-mode-item" style="opacity:.5"><div class="tutorial-mode-name">🚪 ENTRAR NA SALA</div><div class="tutorial-mode-desc">Use um código recebido para entrar em qualquer sala ativa — 1v1 ou Rei da Mesa.</div></div>
+            </div>
+          </div>
+          <div class="tutorial-section">
+            <div class="tutorial-section-title">💡 DICAS RÁPIDAS</div>
+            <div class="tutorial-example">
+              • Priorize dados altos (5, 6) para colunas onde já tem o mesmo valor — o multiplicador compensa muito.<br/>
+              • Fique de olho nas colunas do oponente. Às vezes cancelar vale mais do que construir.<br/>
+            </div>
+          </div>`;
+        }
+      }
+    </script>
+
     <script>
       (function () {
         var s = document.createElement("script");
@@ -2067,7 +2485,7 @@
     <script>
       const COLS = 3,
         ROWS = 3;
-      const KING_MAX_QUEUE = 8; // ← limite unificado
+      const KING_MAX_QUEUE = 8;
 
       let myName = "",
         oppName = "",
@@ -2130,7 +2548,7 @@
       function startBotGame() {
         myName = document.getElementById("player-name").value.trim();
         if (!myName) {
-          showToast("Digite seu nome");
+          showToast(t("typeName"));
           document.getElementById("player-name").focus();
           return;
         }
@@ -2138,24 +2556,24 @@
         botMode = true;
         isHost = true;
         kingMode = false;
-        oppName = {
-          easy: "Bot Fácil 🎲",
-          medium: "Bot Médio ⚔",
-          hard: "Bot Difícil 💀",
-        }[botDifficulty];
+        const botNames = {
+          easy: currentLang === "en" ? "Easy Bot 🎲" : "Bot Fácil 🎲",
+          medium: currentLang === "en" ? "Medium Bot ⚔" : "Bot Médio ⚔",
+          hard: currentLang === "en" ? "Hard Bot 💀" : "Bot Difícil 💀",
+        };
+        oppName = botNames[botDifficulty];
         document.getElementById("opp-name-display").textContent = oppName;
         document.getElementById("my-name-display").textContent = myName;
-        document.getElementById("room-label").textContent = "VS COMPUTADOR";
+        document.getElementById("room-label").textContent = t("vsComputer");
         initBoards();
         gameStarted = true;
         myTurn = true;
         currentDie = null;
         showScreen("game");
-        // replace the opponent's green dot with a bot emoji
         const oppDot = document.getElementById("opp-dot");
-        if (oppDot) {
-          oppDot.outerHTML = '<span class="bot-indicator" id="opp-dot">🤖</span>';
-        }
+        if (oppDot)
+          oppDot.outerHTML =
+            '<span class="bot-indicator" id="opp-dot">🤖</span>';
         renderBoards();
         updateTurnUI();
         setTimeout(rollMyDie, 600);
@@ -2165,15 +2583,15 @@
         const delay = { easy: 600, medium: 950, hard: 1300 }[botDifficulty];
         showRollingDie(dieValue, "rolling-die-container", true);
         document.getElementById("sub-status").textContent =
-          oppName + " está escolhendo...";
+          oppName + t("opponentChoosing");
         botPendingTimeout = setTimeout(() => oppPlaced(col, dieValue), delay);
       }
 
       // ── AUDIO ──
       const AC = new (window.AudioContext || window.webkitAudioContext)();
-      function playSound(t) {
+      function playSound(tp) {
         if (AC.state === "suspended") AC.resume();
-        if (t === "roll") {
+        if (tp === "roll") {
           for (let i = 0; i < 4; i++) {
             const o = AC.createOscillator(),
               g = AC.createGain();
@@ -2193,7 +2611,7 @@
             o.stop(AC.currentTime + i * 0.07 + 0.07);
           }
         }
-        if (t === "place") {
+        if (tp === "place") {
           const o = AC.createOscillator(),
             g = AC.createGain();
           o.connect(g);
@@ -2206,7 +2624,7 @@
           o.start(AC.currentTime);
           o.stop(AC.currentTime + 0.13);
         }
-        if (t === "cancel") {
+        if (tp === "cancel") {
           const b = AC.sampleRate * 0.12,
             buf = AC.createBuffer(1, b, AC.sampleRate),
             d = buf.getChannelData(0);
@@ -2226,7 +2644,7 @@
           g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + 0.12);
           s.start(AC.currentTime);
         }
-        if (t === "win") {
+        if (tp === "win") {
           [330, 392, 494, 659].forEach((f, i) => {
             const o = AC.createOscillator(),
               g = AC.createGain();
@@ -2247,7 +2665,7 @@
             o.stop(AC.currentTime + i * 0.12 + 0.32);
           });
         }
-        if (t === "lose") {
+        if (tp === "lose") {
           [330, 277, 220].forEach((f, i) => {
             const o = AC.createOscillator(),
               g = AC.createGain();
@@ -2280,7 +2698,7 @@
       }
       function checkPeer() {
         if (typeof Peer === "undefined") {
-          showToast("Biblioteca P2P carregando...");
+          showToast(t("p2pLoading"));
           return false;
         }
         return true;
@@ -2291,7 +2709,7 @@
         if (!checkPeer()) return;
         myName = document.getElementById("player-name").value.trim();
         if (!myName) {
-          showToast("Digite seu nome");
+          showToast(t("typeName"));
           document.getElementById("player-name").focus();
           return;
         }
@@ -2300,7 +2718,8 @@
         kingMode = false;
         showScreen("waiting");
         document.getElementById("display-room-code").textContent = roomCode;
-        document.getElementById("room-label").textContent = "Sala: " + roomCode;
+        document.getElementById("room-label").textContent =
+          t("roomLabel") + roomCode;
         peer = new Peer(getPeerID(roomCode), { debug: 0 });
         peer.on("open", () =>
           peer.on("connection", (c) => {
@@ -2318,16 +2737,16 @@
           .toUpperCase();
         myName = document.getElementById("player-name").value.trim();
         if (!myName) {
-          showToast("Digite seu nome");
+          showToast(t("typeName"));
           document.getElementById("player-name").focus();
           return;
         }
         if (!code || code.length < 3) {
-          showToast("Digite o código");
+          showToast(t("typeCode"));
           return;
         }
         _pendingKingCode = code;
-        showToast("Verificando sala...");
+        showToast(t("checking"));
         const testPeer = new Peer(undefined, { debug: 0 });
         let resolved = false;
         testPeer.on("open", () => {
@@ -2387,14 +2806,15 @@
         showScreen("waiting");
         document.getElementById("display-room-code").textContent = code;
         document.getElementById("display-room-code").style.fontSize = "2rem";
-        document.getElementById("room-label").textContent = "Sala: " + code;
+        document.getElementById("room-label").textContent =
+          t("roomLabel") + code;
         peer = new Peer(undefined, { debug: 0 });
         peer.on("open", () => {
           conn = peer.connect(getPeerID(code));
           setupConn();
         });
         peer.on("error", () => {
-          showToast("Sala não encontrada");
+          showToast(t("roomNotFound"));
           backToLobby();
         });
       }
@@ -2403,30 +2823,30 @@
         conn.on("data", handleMessage);
         conn.on("close", () => {
           if (!gameStarted) return;
-
-          // turn off the opponent's dot
           const oppDot = document.getElementById("opp-dot");
           if (oppDot) {
             oppDot.classList.remove("dot-green");
             oppDot.classList.add("dot-grey");
           }
-
-          // countdown and auto-exit
           let secs = 5;
-          document.getElementById("turn-status").textContent = "Oponente desconectou";
+          document.getElementById("turn-status").textContent =
+            t("oppDisconnected");
           document.getElementById("turn-status").style.color = "#f87171";
-          document.getElementById("sub-status").textContent = `Voltando ao menu em ${secs}s...`;
+          document.getElementById("sub-status").textContent =
+            t("returningMenu") + secs + "s...";
           removeHighlights("my-board");
-
           const countdown = setInterval(() => {
             secs--;
-            if (!gameStarted) { clearInterval(countdown); return; } // already left
+            if (!gameStarted) {
+              clearInterval(countdown);
+              return;
+            }
             if (secs <= 0) {
               clearInterval(countdown);
               backToLobby();
-            } else {
-              document.getElementById("sub-status").textContent = `Voltando ao menu em ${secs}s...`;
-            }
+            } else
+              document.getElementById("sub-status").textContent =
+                t("returningMenu") + secs + "s...";
           }, 1000);
         });
       }
@@ -2461,7 +2881,8 @@
           case "rematch-request":
             document.getElementById("rematch-btn-opp").style.display = "block";
             document.getElementById("rematch-status").textContent =
-              oppName + " quer revanche!";
+              oppName +
+              (currentLang === "en" ? " wants a rematch!" : " quer revanche!");
             break;
           case "rematch-accept":
             document
@@ -2480,8 +2901,8 @@
         document.getElementById("my-name-display").textContent = myName;
         document.getElementById("opp-name-display").textContent = oppName;
         document.getElementById("room-label").textContent = botMode
-          ? "VS COMPUTADOR"
-          : "Sala: " + roomCode;
+          ? t("vsComputer")
+          : t("roomLabel") + roomCode;
         showScreen("game");
         renderBoards();
         updateTurnUI();
@@ -2503,11 +2924,11 @@
         c.innerHTML = `<div class="rolling-die is-rolling">?</div>`;
         playSound("roll");
         let n = 0;
-        const t = setInterval(() => {
+        const ti = setInterval(() => {
           const el = c.querySelector(".rolling-die");
           if (el) el.textContent = Math.ceil(Math.random() * 6);
           if (++n > 8) {
-            clearInterval(t);
+            clearInterval(ti);
             cb();
           }
         }, 60);
@@ -2524,7 +2945,7 @@
       function oppRolled(v) {
         showRollingDie(v, "rolling-die-container", true);
         document.getElementById("sub-status").textContent =
-          oppName + " está escolhendo...";
+          oppName + t("opponentChoosing");
       }
       function highlightColumns(bid, fn) {
         const b = bid === "my-board" ? myBoard : null;
@@ -2553,7 +2974,7 @@
         const col = myBoard[i],
           r = col.findIndex((x) => x === null);
         if (r === -1) {
-          showToast("Coluna cheia!");
+          showToast(t("fullCol"));
           return;
         }
         col[r] = currentDie;
@@ -2588,26 +3009,17 @@
         updateTurnUI();
         if (!checkWin()) setTimeout(rollMyDie, 500);
       }
-
-      // ── CANCEL WITH ANIMATION ──
       function cancelOppDice(i, v) {
-        const hasAny = oppBoard[i].some((d) => d === v);
-        if (!hasAny) return;
+        if (!oppBoard[i].some((d) => d === v)) return;
         playSound("cancel");
-        // animate then remove
         const colEls = document
           .getElementById("opp-board")
           .querySelectorAll(".board-col");
-        if (colEls[i]) {
+        if (colEls[i])
           colEls[i].querySelectorAll(".die").forEach((el) => {
-            if (
-              el.textContent == String(v) &&
-              !el.classList.contains("empty")
-            ) {
+            if (el.textContent == String(v) && !el.classList.contains("empty"))
               el.classList.add("cancelling");
-            }
           });
-        }
         setTimeout(() => {
           oppBoard[i] = oppBoard[i].map((d) => (d === v ? null : d));
           compactCol(oppBoard[i]);
@@ -2615,22 +3027,16 @@
         }, 300);
       }
       function cancelMyDice(i, v) {
-        const hasAny = myBoard[i].some((d) => d === v);
-        if (!hasAny) return;
+        if (!myBoard[i].some((d) => d === v)) return;
         playSound("cancel");
         const colEls = document
           .getElementById("my-board")
           .querySelectorAll(".board-col");
-        if (colEls[i]) {
+        if (colEls[i])
           colEls[i].querySelectorAll(".die").forEach((el) => {
-            if (
-              el.textContent == String(v) &&
-              !el.classList.contains("empty")
-            ) {
+            if (el.textContent == String(v) && !el.classList.contains("empty"))
               el.classList.add("cancelling");
-            }
           });
-        }
         setTimeout(() => {
           myBoard[i] = myBoard[i].map((d) => (d === v ? null : d));
           compactCol(myBoard[i]);
@@ -2665,12 +3071,8 @@
         const ms = calcTotalScore(myBoard),
           os = calcTotalScore(oppBoard);
         const w =
-            ms > os
-              ? myName + " VENCEU!"
-              : os > ms
-                ? oppName + " VENCEU!"
-                : "EMPATE!",
-          e = ms > os ? "🏆" : os > ms ? "💀" : "🤝";
+          ms > os ? myName + t("won") : os > ms ? oppName + t("won") : t("tie");
+        const e = ms > os ? "🏆" : os > ms ? "💀" : "🤝";
         setTimeout(() => {
           document.getElementById("rematch-btn-opp").style.display = "none";
           document.getElementById("rematch-status").textContent = "";
@@ -2694,11 +3096,10 @@
         const el = document.getElementById("turn-status");
         document.getElementById("sub-status").textContent = "";
         if (myTurn) {
-          el.textContent =
-            currentDie !== null ? "▼ Escolha uma coluna" : "▼ Sua vez";
+          el.textContent = currentDie !== null ? t("chooseCol") : t("yourTurn");
           el.style.color = "#e8c97a";
         } else {
-          el.textContent = "Vez de " + oppName;
+          el.textContent = t("opponentTurn") + oppName;
           el.style.color = "#888";
         }
       }
@@ -2717,7 +3118,7 @@
           const sc = document.createElement("div");
           sc.className = "col-score";
           const cs = calcColScore(board[c]);
-          sc.textContent = cs > 0 ? cs : "0"; // always show score (polished fix)
+          sc.textContent = cs > 0 ? cs : "0";
           sc.style.opacity = cs > 0 ? "1" : "0.2";
           if (!isMe) {
             col.appendChild(sc);
@@ -2742,7 +3143,7 @@
         return d;
       }
 
-      // ══════════════════ KING MODE ══════════════════
+      // ════ KING MODE ════
       function mkKingPeerID(c) {
         return "knuckle-king-" + c.toUpperCase();
       }
@@ -2766,7 +3167,7 @@
         if (!checkPeer()) return;
         kingMyName = document.getElementById("player-name").value.trim();
         if (!kingMyName) {
-          showToast("Digite seu nome");
+          showToast(t("typeName"));
           return;
         }
         kingMode = true;
@@ -2792,8 +3193,7 @@
         kingPeer.on("open", () => {
           showScreen("king-lobby");
           document.getElementById("king-room-label").textContent =
-            "Sala: " + kingRoomCode;
-          // show host indicators
+            t("roomLabel") + kingRoomCode;
           document.getElementById("king-host-badge").style.display = "flex";
           document.getElementById("king-host-warning").style.display = "block";
           renderKingLobby();
@@ -2821,12 +3221,16 @@
               };
             kingState.players.push(p);
             if (data.wantsQueue) {
-              // use KING_MAX_QUEUE limit
               if (kingState.queue.length < KING_MAX_QUEUE)
                 kingState.queue.push(pid);
               else {
                 p.status = "spectating";
-                showToast(data.name + " entrou como espectador (fila cheia)");
+                showToast(
+                  data.name +
+                    (currentLang === "en"
+                      ? " joined as spectator (queue full)"
+                      : " entrou como espectador (fila cheia)"),
+                );
               }
             }
             kingBroadcastSync();
@@ -2840,7 +3244,7 @@
             if (kingState.queue.length >= KING_MAX_QUEUE) {
               kingSendTo(peerId, {
                 type: "king-toast",
-                msg: "Fila cheia (máx " + KING_MAX_QUEUE + ")",
+                msg: t("queueFull") + KING_MAX_QUEUE + ")",
               });
               return;
             }
@@ -3025,7 +3429,7 @@
           if (kingState.players.find((x) => x.id === p1id))
             kingState.queue.push(p1id);
         }
-        kingState.queue = kingState.queue.slice(0, KING_MAX_QUEUE); // unified limit
+        kingState.queue = kingState.queue.slice(0, KING_MAX_QUEUE);
         const wp = kingState.players.find((x) => x.id === wId),
           p0p = kingState.players.find((x) => x.id === p0id),
           p1p = kingState.players.find((x) => x.id === p1id);
@@ -3070,11 +3474,11 @@
         cont.innerHTML = `<div class="rolling-die is-rolling">?</div>`;
         playSound("roll");
         let n = 0;
-        const t = setInterval(() => {
+        const ti = setInterval(() => {
           const el = cont.querySelector(".rolling-die");
           if (el) el.textContent = Math.ceil(Math.random() * 6);
           if (++n > 8) {
-            clearInterval(t);
+            clearInterval(ti);
             kingHostDie = fv;
             cg.pendingDie = { slot: kingHostSlot, value: kingHostDie };
             Object.values(kingPeerConns).forEach((c) => {
@@ -3087,7 +3491,7 @@
             });
             showRollingDie(kingHostDie, "king-rolling-die", false);
             document.getElementById("king-turn-status").textContent =
-              "▼ Escolha uma coluna";
+              t("chooseCol");
             document.getElementById("king-turn-status").style.color = "#e8c97a";
             kingHighlightHostCols();
           }
@@ -3107,7 +3511,7 @@
         const col = board[i],
           row = col.findIndex((r) => r === null);
         if (row === -1) {
-          showToast("Coluna cheia!");
+          showToast(t("fullCol"));
           return;
         }
         document
@@ -3165,9 +3569,9 @@
         const rPid = slot === 0 ? cg.player0 : cg.player1,
           rP = kingState.players.find((p) => p.id === rPid);
         document.getElementById("king-sub-status").textContent =
-          (rP?.name || "Oponente") + " está escolhendo...";
+          (rP?.name || t("opponent")) + t("opponentChoosing");
         document.getElementById("king-turn-status").textContent =
-          "Vez de " + (rP?.name || "Oponente");
+          t("opponentTurn") + (rP?.name || t("opponent"));
         document.getElementById("king-turn-status").style.color = "#888";
       }
       function _doJoinKing(code, wq) {
@@ -3187,19 +3591,18 @@
             });
             showScreen("king-lobby");
             document.getElementById("king-room-label").textContent =
-              "Sala: " + code;
-            // guests don't see host warnings
+              t("roomLabel") + code;
             document.getElementById("king-host-badge").style.display = "none";
             document.getElementById("king-host-warning").style.display = "none";
           });
           kingHostConn.on("data", (d) => kingGuestHandleMessage(d));
           kingHostConn.on("close", () => {
-            showToast("Host desconectou");
+            showToast(t("hostDisconnected"));
             backToLobby();
           });
         });
         kingPeer.on("error", () => {
-          showToast("Sala não encontrada");
+          showToast(t("roomNotFound"));
           backToLobby();
         });
       }
@@ -3277,7 +3680,7 @@
         document.getElementById("king-opp-score").textContent =
           calcTotalScore(oppBD);
         document.getElementById("king-opp-name").textContent =
-          oppP?.name || "Oponente";
+          oppP?.name || t("opponent");
         renderBoard("king-opp-board", oppBD, false);
         renderBoard("king-my-board", myBD, true);
         if (kingIsHost) kingHighlightHostCols();
@@ -3293,11 +3696,11 @@
         cont.innerHTML = `<div class="rolling-die is-rolling">?</div>`;
         playSound("roll");
         let n = 0;
-        const t = setInterval(() => {
+        const ti = setInterval(() => {
           const el = cont.querySelector(".rolling-die");
           if (el) el.textContent = Math.ceil(Math.random() * 6);
           if (++n > 8) {
-            clearInterval(t);
+            clearInterval(ti);
             kgGuestDie = fv;
             cg.pendingDie = { slot: kgGuestMySlot, value: kgGuestDie };
             kingHostConn.send({
@@ -3307,7 +3710,7 @@
             });
             showRollingDie(kgGuestDie, "king-rolling-die", false);
             document.getElementById("king-turn-status").textContent =
-              "▼ Escolha uma coluna";
+              t("chooseCol");
             document.getElementById("king-turn-status").style.color = "#e8c97a";
             document.getElementById("king-sub-status").textContent = "";
             kingHighlightGuestCols();
@@ -3320,7 +3723,7 @@
         if (!cg) return;
         const board = kgGuestMySlot === 0 ? cg.board0 : cg.board1;
         if (board[i].every((r) => r !== null)) {
-          showToast("Coluna cheia!");
+          showToast(t("fullCol"));
           return;
         }
         kgGuestMyTurnFlag = false;
@@ -3374,21 +3777,20 @@
           rP = kingState.players.find((p) => p.id === rPid);
         if (mySlot === -1)
           document.getElementById("king-sub-status").textContent =
-            (rP?.name || "?") + " rolou " + d.value;
+            (rP?.name || "?") + t("rolling") + d.value;
         else {
           document.getElementById("king-sub-status").textContent =
-            (rP?.name || "Oponente") + " está escolhendo...";
+            (rP?.name || t("opponent")) + t("opponentChoosing");
           document.getElementById("king-turn-status").textContent =
-            "Vez de " + (rP?.name || "Oponente");
+            t("opponentTurn") + (rP?.name || t("opponent"));
           document.getElementById("king-turn-status").style.color = "#888";
         }
       }
       function renderKingLobby() {
         if (!kingState?.players) return;
         document.getElementById("king-room-label").textContent =
-          "Sala: " + kingRoomCode;
+          t("roomLabel") + kingRoomCode;
         const myId = kingIsHost ? "host" : kingMyId;
-        // show/hide host elements
         document.getElementById("king-host-badge").style.display = kingIsHost
           ? "flex"
           : "none";
@@ -3402,7 +3804,7 @@
             p1 = kingState.players.find((x) => x.id === cg.player1);
           mi.innerHTML = `<div class="match-vs-row"><span class="match-player-name">${p0?.name || "?"}</span><span class="match-vs">VS</span><span class="match-player-name">${p1?.name || "?"}</span></div><div class="match-score-row"><span class="match-score-val">${calcTotalScore(cg.board0)}</span><span class="match-score-sep">•</span><span class="match-score-val">${calcTotalScore(cg.board1)}</span></div>`;
         } else
-          mi.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.3)">Aguardando jogadores...</span>`;
+          mi.innerHTML = `<span style="font-family:'Cinzel Decorative',cursive;font-size:.75rem;color:rgba(201,168,76,.3)">${t("waitingPlayers")}</span>`;
         const le = document.getElementById("king-player-list");
         le.innerHTML = "";
         [...kingState.players]
@@ -3420,16 +3822,16 @@
             const card = document.createElement("div");
             card.className = "player-card " + p.status;
             let bc = "badge-spectating",
-              bt = "ASSISTINDO";
+              bt = t("badgeSpectating");
             if (p.isHost) {
               bc = "badge-host";
-              bt = "HOST";
+              bt = t("badgeHost");
             } else if (p.status === "playing") {
               bc = "badge-playing";
-              bt = "JOGANDO";
+              bt = t("badgePlaying");
             } else if (p.status === "queued") {
               bc = "badge-queued";
-              bt = "FILA";
+              bt = t("badgeQueue");
             }
             card.innerHTML = `<div class="pc-position ${qp <= 1 && p.status !== "spectating" ? "active-pos" : ""}">${pl}</div><div class="pc-name ${isMe ? "is-me" : ""}">${p.isHost ? "⭐ " : ""}${p.name}${isMe ? " ✦" : ""}</div><div class="pc-badge ${bc}">${bt}</div>`;
             le.appendChild(card);
@@ -3450,7 +3852,7 @@
         const qe = document.getElementById("king-queue-display");
         qe.innerHTML = "";
         if (!kingState.queue.length)
-          qe.innerHTML = `<div style="font-family:'Cinzel Decorative',cursive;font-size:.68rem;color:rgba(201,168,76,.25)">Fila vazia</div>`;
+          qe.innerHTML = `<div style="font-family:'Cinzel Decorative',cursive;font-size:.68rem;color:rgba(201,168,76,.25)">${t("emptyQueue")}</div>`;
         kingState.queue
           .filter((pid) => {
             const p = kingState.players.find((x) => x.id === pid);
@@ -3487,21 +3889,21 @@
           mySlot === 0 ? cg.player1 : mySlot === 1 ? cg.player0 : cg.player1;
         const oppP = kingState.players.find((p) => p.id === oppId);
         document.getElementById("king-room-label-game").textContent =
-          "Sala: " + kingRoomCode;
+          t("roomLabel") + kingRoomCode;
         const sb = document.getElementById("king-spectator-banner");
         if (!isPlaying) {
           const qp = kingState.queue.indexOf(myId);
           sb.textContent =
             qp > 0
-              ? `⏳ FILA — Posição ${qp + -1} • Assistindo`
-              : "👁 ASSISTINDO — Entre na fila para jogar";
+              ? t("spectatingQueue") + (qp - 1 + 1) + t("spectatingWatching")
+              : t("watchingJoinHint");
           sb.style.display = "block";
         } else sb.style.display = "none";
         if (isPlaying) {
           document.getElementById("king-my-name").textContent =
-            myP?.name || "Você";
+            myP?.name || t("you");
           document.getElementById("king-opp-name").textContent =
-            oppP?.name || "Oponente";
+            oppP?.name || t("opponent");
           document.getElementById("king-my-score").textContent =
             calcTotalScore(myBD);
           document.getElementById("king-opp-score").textContent =
@@ -3513,8 +3915,7 @@
             ss = document.getElementById("king-sub-status");
           if (isMyTurn) {
             const myDie = kingIsHost ? kingHostDie : kgGuestDie;
-            ts.textContent =
-              myDie !== null ? "▼ Escolha uma coluna" : "▼ Sua vez";
+            ts.textContent = myDie !== null ? t("chooseCol") : t("yourTurn");
             ts.style.color = "#e8c97a";
             ss.textContent = "";
             if (myDie !== null) {
@@ -3523,12 +3924,12 @@
               else kingHighlightGuestCols();
             }
           } else {
-            ts.textContent = "Vez de " + (oppP?.name || "Oponente");
+            ts.textContent = t("opponentTurn") + (oppP?.name || t("opponent"));
             ts.style.color = "#888";
             if (cg.pendingDie && cg.pendingDie.slot !== mySlot) {
               showRollingDie(cg.pendingDie.value, "king-rolling-die", true);
               ss.textContent =
-                (oppP?.name || "Oponente") + " está escolhendo...";
+                (oppP?.name || t("opponent")) + t("opponentChoosing");
             }
           }
         } else {
@@ -3545,7 +3946,7 @@
           renderBoard("king-my-board", cg.board0, true);
           renderBoard("king-opp-board", cg.board1, false);
           document.getElementById("king-turn-status").textContent =
-            "👁 ASSISTINDO";
+            t("watching");
           document.getElementById("king-turn-status").style.color = "#666";
           if (cg.pendingDie) {
             const rp = kingState.players.find(
@@ -3554,7 +3955,7 @@
             );
             showRollingDie(cg.pendingDie.value, "king-rolling-die", true);
             document.getElementById("king-sub-status").textContent =
-              (rp?.name || "?") + " está escolhendo...";
+              (rp?.name || "?") + t("opponentChoosing");
           }
         }
         const qm = document.getElementById("king-queue-mini");
@@ -3606,12 +4007,12 @@
             ? "🏆"
             : "💀";
         document.getElementById("winner-text").textContent = tie
-          ? "EMPATE!"
-          : d.winnerName + " VENCEU!";
+          ? t("tie")
+          : d.winnerName + t("won");
         document.getElementById("winner-scores").textContent =
           `${d.p0name}: ${d.s0}  •  ${d.p1name}: ${d.s1}`;
         document.getElementById("king-next-match-msg").textContent =
-          "Próxima partida em breve...";
+          t("nextMatch");
         document.getElementById("winner-overlay").classList.add("active");
         if (!tie) playSound(iWon ? "win" : "lose");
         _kingOverlayTimeout = setTimeout(() => {
@@ -3624,7 +4025,7 @@
       function kingJoinQueue() {
         if (kingIsHost) {
           if (kingState.queue.length >= KING_MAX_QUEUE) {
-            showToast("Fila cheia (máx " + KING_MAX_QUEUE + ")");
+            showToast(t("queueFull") + KING_MAX_QUEUE + ")");
             return;
           }
           if (kingState.queue.includes("host")) return;
@@ -3635,7 +4036,6 @@
           if (!kingState.gameRunning) kingMaybeStartGame();
         } else {
           if (!kingHostConn || !kingHostConn.open) return;
-          // atualiza localmente de imediato, sem esperar sync do host
           const p = kingState.players.find((x) => x.id === kingMyId);
           if (p && !kingState.queue.includes(kingMyId)) {
             p.status = "queued";
@@ -3654,7 +4054,6 @@
           renderKingLobby();
         } else {
           if (!kingHostConn || !kingHostConn.open) return;
-          // atualiza localmente de imediato, sem esperar sync do host
           const p = kingState.players.find((x) => x.id === kingMyId);
           if (p && p.status !== "playing") {
             p.status = "spectating";
@@ -3675,14 +4074,14 @@
       function copyCode() {
         navigator.clipboard
           .writeText(roomCode)
-          .then(() => showToast("Código copiado!"))
-          .catch(() => prompt("Copie:", roomCode));
+          .then(() => showToast(t("codeCopied")))
+          .catch(() => prompt("Copy:", roomCode));
       }
       function copyKingCode() {
         navigator.clipboard
           .writeText(kingRoomCode)
-          .then(() => showToast("Código copiado!"))
-          .catch(() => prompt("Copie:", kingRoomCode));
+          .then(() => showToast(t("codeCopied")))
+          .catch(() => prompt("Copy:", kingRoomCode));
       }
       function backToLobby() {
         botMode = false;
@@ -3753,7 +4152,7 @@
         }
         rematchRequestedByMe = true;
         document.getElementById("rematch-status").textContent =
-          "Aguardando " + oppName + "...";
+          t("waitingFor") + oppName + "...";
         send({ type: "rematch-request" });
       }
       function acceptRematch() {
@@ -3765,10 +4164,10 @@
         startGame(false);
       }
       function showToast(msg) {
-        const t = document.getElementById("toast");
-        t.textContent = msg;
-        t.classList.add("show");
-        setTimeout(() => t.classList.remove("show"), 2500);
+        const t2 = document.getElementById("toast");
+        t2.textContent = msg;
+        t2.classList.add("show");
+        setTimeout(() => t2.classList.remove("show"), 2500);
       }
 
       // ── INPUT EVENTS ──
@@ -3785,6 +4184,9 @@
         .addEventListener("keydown", (e) => {
           if (e.key === "Enter") document.getElementById("join-code").focus();
         });
+
+      // ── INIT TRANSLATIONS on load ──
+      applyTranslations();
     </script>
   </body>
 </html>
