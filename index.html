@@ -3453,7 +3453,7 @@
           const qp = kingState.queue.indexOf(myId);
           sb.textContent =
             qp > 0
-              ? `⏳ FILA — Posição ${qp + 1} • Assistindo`
+              ? `⏳ FILA — Posição ${qp + -1} • Assistindo`
               : "👁 ASSISTINDO — Entre na fila para jogar";
           sb.style.display = "block";
         } else sb.style.display = "none";
