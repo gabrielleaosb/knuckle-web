@@ -544,6 +544,15 @@
         box-shadow: 0 0 6px #fbbf24;
         animation: blink 1s infinite;
       }
+      .dot-grey {
+        background: #4b5563;
+        box-shadow: none;
+      }
+      .bot-indicator {
+        font-size: 0.85rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
       @keyframes blink {
         0%,
         100% {
@@ -1830,7 +1839,7 @@
       <div class="board-section">
         <div class="player-row">
           <div class="player-name-wrap">
-            <span class="dot dot-green"></span>
+            <span class="dot dot-green" id="opp-dot"></span>
             <span class="player-name" id="opp-name-display">Oponente</span>
           </div>
           <span class="score-display" id="opp-score">0</span>
@@ -1850,7 +1859,7 @@
         </div>
         <div class="player-row bottom">
           <div class="player-name-wrap">
-            <span class="dot dot-green"></span>
+            <span class="dot dot-green" id="my-dot"></span>
             <span class="player-name" id="my-name-display">Você</span>
           </div>
           <span class="score-display" id="my-score">0</span>
@@ -2142,6 +2151,11 @@
         myTurn = true;
         currentDie = null;
         showScreen("game");
+        // replace the opponent's green dot with a bot emoji
+        const oppDot = document.getElementById("opp-dot");
+        if (oppDot) {
+          oppDot.outerHTML = '<span class="bot-indicator" id="opp-dot">🤖</span>';
+        }
         renderBoards();
         updateTurnUI();
         setTimeout(rollMyDie, 600);
@@ -2388,7 +2402,32 @@
         conn.on("open", () => send({ type: "hello", name: myName }));
         conn.on("data", handleMessage);
         conn.on("close", () => {
-          if (gameStarted) showToast("Oponente desconectou");
+          if (!gameStarted) return;
+
+          // turn off the opponent's dot
+          const oppDot = document.getElementById("opp-dot");
+          if (oppDot) {
+            oppDot.classList.remove("dot-green");
+            oppDot.classList.add("dot-grey");
+          }
+
+          // countdown and auto-exit
+          let secs = 5;
+          document.getElementById("turn-status").textContent = "Oponente desconectou";
+          document.getElementById("turn-status").style.color = "#f87171";
+          document.getElementById("sub-status").textContent = `Voltando ao menu em ${secs}s...`;
+          removeHighlights("my-board");
+
+          const countdown = setInterval(() => {
+            secs--;
+            if (!gameStarted) { clearInterval(countdown); return; } // already left
+            if (secs <= 0) {
+              clearInterval(countdown);
+              backToLobby();
+            } else {
+              document.getElementById("sub-status").textContent = `Voltando ao menu em ${secs}s...`;
+            }
+          }, 1000);
         });
       }
       function send(o) {
@@ -3650,6 +3689,13 @@
         if (botPendingTimeout) {
           clearTimeout(botPendingTimeout);
           botPendingTimeout = null;
+        }
+        const oppDot = document.getElementById("opp-dot");
+        if (oppDot && !oppDot.classList.contains("dot")) {
+          oppDot.outerHTML = '<span class="dot dot-green" id="opp-dot"></span>';
+        } else if (oppDot) {
+          oppDot.classList.remove("dot-grey");
+          oppDot.classList.add("dot-green");
         }
         if (_kingNextGameTimeout) {
           clearTimeout(_kingNextGameTimeout);
