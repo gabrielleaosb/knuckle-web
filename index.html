@@ -1877,7 +1877,7 @@
     <div id="screen-king-lobby" class="screen">
       <div class="king-header">
         <div
-          style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"
+          style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px"
         >
           <div class="king-title">
             👑 <span data-i18n="modeKing">REI DA MESA</span>
@@ -2197,7 +2197,7 @@
           mode1v1Desc: "Create a room and share the code with a friend",
           modeJoin: "JOIN ROOM",
           modeJoinDesc: "Paste the code you received — works for any mode",
-          modeKing: "KING OF THE TABLE",
+          modeKing: "KING OF THE HILL",
           modeKingDesc:
             "Up to 8 players. Winner stays, loser goes to the back of the queue",
           mode2v2: "2 VS 2",
@@ -2316,14 +2316,18 @@
         // update html lang attr
         document.getElementById("html-root").lang = currentLang;
         // update lang switcher active state
-        document
-          .getElementById("btn-ptbr")
-          .classList.toggle("active", currentLang === "pt-BR");
-        document
-          .getElementById("btn-en")
-          .classList.toggle("active", currentLang === "en");
+        document.getElementById("btn-ptbr").classList.toggle("active", currentLang === "pt-BR");
+        document.getElementById("btn-en").classList.toggle("active", currentLang === "en");
         // re-render tutorial
         renderTutorial();
+        // re-render king screens so dynamic t() strings update
+        if (typeof kingState !== "undefined" && kingState) {
+          if (document.getElementById("screen-king-lobby").classList.contains("active")) {
+            renderKingLobby();
+          } else if (document.getElementById("screen-king-game").classList.contains("active")) {
+            renderKingGame();
+          }
+        }
       }
 
       function setLang(lang) {
@@ -2400,8 +2404,8 @@
             <div class="tutorial-modes-grid">
               <div class="tutorial-mode-item"><div class="tutorial-mode-name">⚔ 1 VS 1 PRIVATE</div><div class="tutorial-mode-desc">Create a room, share the code with a friend. Rematch available after the game.</div></div>
               <div class="tutorial-mode-item"><div class="tutorial-mode-name">🤖 VS BOT</div><div class="tutorial-mode-desc">Train against AI in 3 difficulties. Great for learning mechanics without pressure.</div></div>
-              <div class="tutorial-mode-item" style="border-color:rgba(192,132,252,.2)"><div class="tutorial-mode-name" style="color:rgba(192,132,252,.85)">👑 KING OF THE TABLE</div><div class="tutorial-mode-desc">Up to 8 players in queue. Winner stays, loser goes to the back of the queue.</div></div>
-              <div class="tutorial-mode-item" style="opacity:.5"><div class="tutorial-mode-name">🚪 JOIN ROOM</div><div class="tutorial-mode-desc">Use a received code to enter any active room — 1v1 or King of the Table.</div></div>
+              <div class="tutorial-mode-item" style="border-color:rgba(192,132,252,.2)"><div class="tutorial-mode-name" style="color:rgba(192,132,252,.85)">👑 KING OF HILL</div><div class="tutorial-mode-desc">Up to 8 players in queue. Winner stays, loser goes to the back of the queue.</div></div>
+              <div class="tutorial-mode-item" style="opacity:.5"><div class="tutorial-mode-name">🚪 JOIN ROOM</div><div class="tutorial-mode-desc">Use a received code to enter any active room — 1v1 or King of the Hill.</div></div>
             </div>
           </div>
           <div class="tutorial-section">
