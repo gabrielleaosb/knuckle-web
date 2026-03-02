@@ -2975,12 +2975,8 @@
       }
       function placeInColumn(i) {
         if (!myTurn || currentDie === null) return;
-        const col = myBoard[i],
-          r = col.findIndex((x) => x === null);
-        if (r === -1) {
-          showToast(t("fullCol"));
-          return;
-        }
+        const col = myBoard[i], r = col.findIndex((x) => x === null);
+        if (r === -1) { showToast(t("fullCol")); return; }
         col[r] = currentDie;
         const v = currentDie;
         currentDie = null;
@@ -2988,37 +2984,40 @@
         removeHighlights("my-board");
         clearRollingDie("rolling-die-container");
         playSound("place");
-        cancelOppDice(i, v);
         if (!botMode) {
           send({ type: "placed", col: i, value: v });
           send({ type: "sync", board: myBoard });
         }
-        renderBoards();
-        if (!checkWin()) {
-          updateTurnUI();
-          if (botMode) {
-            const botDie = Math.ceil(Math.random() * 6);
-            botTakeTurn(botDie);
+        cancelOppDice(i, v, () => {
+          renderBoards();
+          if (!checkWin()) {
+            updateTurnUI();
+            if (botMode) {
+              const botDie = Math.ceil(Math.random() * 6);
+              botTakeTurn(botDie);
+            }
           }
-        }
+        });
       }
       function oppPlaced(i, v) {
-        const col = oppBoard[i],
-          r = col.findIndex((x) => x === null);
+        const col = oppBoard[i], r = col.findIndex((x) => x === null);
         if (r !== -1) col[r] = v;
-        cancelMyDice(i, v);
         clearRollingDie("rolling-die-container");
-        renderBoards();
-        myTurn = true;
-        updateTurnUI();
-        if (!checkWin()) setTimeout(rollMyDie, 500);
+        cancelMyDice(i, v, () => {
+          renderBoards();
+          myTurn = true;
+          updateTurnUI();
+          if (!checkWin()) setTimeout(rollMyDie, 500);
+        });
       }
-      function cancelOppDice(i, v) {
-        if (!oppBoard[i].some((d) => d === v)) return;
+      function cancelOppDice(i, v, onDone) {
+        if (!oppBoard[i].some((d) => d === v)) {
+          renderBoards();
+          onDone();
+          return;
+        }
         playSound("cancel");
-        const colEls = document
-          .getElementById("opp-board")
-          .querySelectorAll(".board-col");
+        const colEls = document.getElementById("opp-board").querySelectorAll(".board-col");
         if (colEls[i])
           colEls[i].querySelectorAll(".die").forEach((el) => {
             if (el.textContent == String(v) && !el.classList.contains("empty"))
@@ -3027,15 +3026,17 @@
         setTimeout(() => {
           oppBoard[i] = oppBoard[i].map((d) => (d === v ? null : d));
           compactCol(oppBoard[i]);
-          renderBoards();
+          onDone();
         }, 300);
       }
-      function cancelMyDice(i, v) {
-        if (!myBoard[i].some((d) => d === v)) return;
+      function cancelMyDice(i, v, onDone) {
+        if (!myBoard[i].some((d) => d === v)) {
+          renderBoards();
+          onDone();
+          return;
+        }
         playSound("cancel");
-        const colEls = document
-          .getElementById("my-board")
-          .querySelectorAll(".board-col");
+        const colEls = document.getElementById("my-board").querySelectorAll(".board-col");
         if (colEls[i])
           colEls[i].querySelectorAll(".die").forEach((el) => {
             if (el.textContent == String(v) && !el.classList.contains("empty"))
@@ -3044,7 +3045,7 @@
         setTimeout(() => {
           myBoard[i] = myBoard[i].map((d) => (d === v ? null : d));
           compactCol(myBoard[i]);
-          renderBoards();
+          onDone();
         }, 300);
       }
       function compactCol(c) {
