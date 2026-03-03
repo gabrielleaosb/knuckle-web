@@ -95,6 +95,11 @@
         backdrop-filter: blur(6px);
         box-shadow: 0 0 14px rgba(201, 168, 76, 0.08);
         overflow: hidden;
+        transition: opacity 0.2s;
+      }
+      #lang-switcher.hidden {
+        opacity: 0;
+        pointer-events: none;
       }
       .lang-btn {
         font-family: "Cinzel Decorative", cursive;
@@ -1895,7 +1900,7 @@
         <div class="player-row">
           <div class="player-name-wrap">
             <span class="dot dot-green" id="opp-dot"></span>
-            <span class="player-name" id="opp-name-display" data-i18n="opponent"
+            <span class="player-name" id="opp-name-display"
               >Oponente</span
             >
           </div>
@@ -1917,7 +1922,7 @@
         <div class="player-row bottom">
           <div class="player-name-wrap">
             <span class="dot dot-green" id="my-dot"></span>
-            <span class="player-name" id="my-name-display" data-i18n="you"
+            <span class="player-name" id="my-name-display"
               >Você</span
             >
           </div>
@@ -2730,6 +2735,7 @@
         myTurn = true;
         currentDie = null;
         showScreen("game");
+        document.getElementById("lang-switcher").classList.add("hidden");
         const oppDot = document.getElementById("opp-dot");
         if (oppDot)
           oppDot.outerHTML = '<span class="bot-indicator" id="opp-dot">🤖</span>';
@@ -3078,6 +3084,7 @@
           ? t("vsComputer")
           : t("roomLabel") + roomCode;
         showScreen("game");
+        document.getElementById("lang-switcher").classList.add("hidden");
         renderBoards();
         updateTurnUI();
         if (myTurn) setTimeout(rollMyDie, 600);
@@ -4328,6 +4335,7 @@
         document.getElementById("king-join-modal").classList.remove("active");
         document.getElementById("tutorial-overlay").classList.remove("active");
         showScreen("lobby");
+        document.getElementById("lang-switcher").classList.remove("hidden");
       }
       function resetGame() {
         document.getElementById("winner-overlay").classList.remove("active");
