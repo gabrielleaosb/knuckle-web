@@ -1962,6 +1962,13 @@
           >
             📋
           </button>
+          <button
+            class="btn-outline sm"
+            style="width: auto"
+            onclick="copyKingShareLink()"
+          >
+            🔗
+          </button>
         </div>
       </div>
       <div
@@ -4248,6 +4255,17 @@
             .writeText(url.toString())
             .then(() => showToast(t("copyLink")))
             .catch(() => prompt("Copie o link:", url.toString()));
+        } catch (e) {}
+      }
+      function copyKingShareLink() {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("join", kingRoomCode);
+          url.searchParams.delete("lang");
+          navigator.clipboard
+            .writeText(url.toString())
+            .then(() => showToast(t("copyLink")))
+            .catch(() => prompt("Copy:", url.toString()));
         } catch (e) {}
       }
       function copyKingCode() {
