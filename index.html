@@ -3063,6 +3063,12 @@
       }
       function startGame(g) {
         initBoards();
+        // restore opp dot in case it was greyed out from a previous disconnect
+        const oppDot = document.getElementById("opp-dot");
+        if (oppDot) {
+          oppDot.classList.remove("dot-grey");
+          oppDot.classList.add("dot-green");
+        }
         gameStarted = true;
         myTurn = g;
         currentDie = null;
