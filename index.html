@@ -2414,34 +2414,40 @@
       }
 
       // ── Handle ?join=CODE link sharing ──
+      let _pendingJoinCode = null;
       (function () {
         const url = new URL(window.location.href);
         const joinCode = url.searchParams.get("join");
         if (!joinCode) return;
 
+        _pendingJoinCode = joinCode.toUpperCase();
+
         const codeInput = document.getElementById("join-code");
-        if (codeInput) codeInput.value = joinCode.toUpperCase();
+        if (codeInput) codeInput.value = _pendingJoinCode;
+
+        // clean URL immediately so reload doesn't re-trigger
+        try {
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete("join");
+          history.replaceState({}, "", cleanUrl.toString());
+        } catch (e) {}
 
         window.addEventListener("DOMContentLoaded", () => {
           const modal = document.getElementById("join-link-modal");
           const nameInput = document.getElementById("join-link-name");
           const label = document.getElementById("join-link-room-label");
 
-          if (label) label.textContent = "SALA: " + joinCode.toUpperCase();
-
+          if (label) label.textContent = (currentLang === "en" ? "ROOM: " : "SALA: ") + _pendingJoinCode;
           const saved = localStorage.getItem("kb_player_name");
           if (nameInput) nameInput.value = saved || "";
-
           if (modal) modal.classList.add("active");
         });
       })();
 
       function updateJoinLinkModalLang() {
-        // called by applyTranslations to keep the modal in sync
         const label = document.getElementById("join-link-room-label");
-        const code = new URL(window.location.href).searchParams.get("join");
-        if (label && code) {
-          label.textContent = (currentLang === "en" ? "ROOM: " : "SALA: ") + code.toUpperCase();
+        if (label && _pendingJoinCode) {
+          label.textContent = (currentLang === "en" ? "ROOM: " : "SALA: ") + _pendingJoinCode;
         }
       }
 
@@ -2458,9 +2464,9 @@
 
         document.getElementById("join-link-modal").classList.remove("active");
 
-        const code = new URL(window.location.href).searchParams.get("join");
-        if (code) {
-          document.getElementById("join-code").value = code.toUpperCase();
+        if (_pendingJoinCode) {
+          document.getElementById("join-code").value = _pendingJoinCode;
+          _pendingJoinCode = null;
           joinAnyRoom();
         }
       }
