@@ -1497,6 +1497,21 @@
         padding-top: 8px;
         border-top: 1px solid rgba(201, 168, 76, 0.1);
       }
+      #join-link-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        z-index: 600;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+      #join-link-modal.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+      }
       #king-join-modal {
         display: none;
         position: fixed;
@@ -1656,6 +1671,31 @@
         <div class="tutorial-body" id="tutorial-body-content">
           <!-- filled dynamically by JS -->
         </div>
+      </div>
+    </div>
+
+    <!-- Join via Link Modal -->
+    <div id="join-link-modal">
+      <div style="font-family:'Cinzel Decorative',cursive;font-size:1.1rem;color:var(--gold);text-align:center"
+          data-i18n="joinViaLink">ENTRAR NA SALA</div>
+      <div style="font-family:'Cinzel Decorative',cursive;font-size:0.75rem;color:rgba(201,168,76,0.5);text-align:center;letter-spacing:0.1em"
+          id="join-link-room-label"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;width:280px">
+        <div style="font-family:'Cinzel Decorative',cursive;font-size:0.65rem;letter-spacing:0.12em;color:rgba(201,168,76,0.6);text-align:center"
+            data-i18n="yourNameLabel">SEU NOME</div>
+        <input
+          id="join-link-name"
+          type="text"
+          maxlength="16"
+          class="game-input"
+          style="text-align:center"
+        />
+        <button class="btn-gold" onclick="confirmJoinLink()">
+          → <span data-i18n="enter">ENTRAR</span>
+        </button>
+        <button class="btn-outline sm" onclick="cancelJoinLink()" style="opacity:0.5;margin-top:4px">
+          <span data-i18n="cancel">CANCELAR</span>
+        </button>
       </div>
     </div>
 
@@ -1824,6 +1864,9 @@
         <div class="room-code-display" id="display-room-code"></div>
         <button class="btn-outline" onclick="copyCode()">
           📋 <span data-i18n="copyCode">COPIAR CÓDIGO</span>
+        </button>
+        <button class="btn-outline" onclick="copyShareLink()">
+        🔗 <span data-i18n="copyLinkBtn">COPIAR LINK</span>
         </button>
         <div class="ornament">✦</div>
         <div class="status-msg" style="color: rgba(201, 168, 76, 0.7)">
@@ -2192,6 +2235,10 @@
           peerjsError:
             "⚠ Erro ao carregar biblioteca P2P. Verifique sua conexão e recarregue a página.",
           typeName: "Digite seu nome",
+          copyLink: "Link copiado!",
+          copyLinkBtn: "COPIAR LINK",
+          joinViaLink: "ENTRAR NA SALA",
+          yourNameLabel: "SEU NOME",
           typeCode: "Digite o código",
           codeCopied: "Código copiado!",
           checking: "Verificando sala...",
@@ -2287,6 +2334,10 @@
           peerjsError:
             "⚠ Error loading P2P library. Check your connection and reload the page.",
           typeName: "Enter your name",
+          copyLink: "Link copied!",
+          copyLinkBtn: "COPY LINK",
+          joinViaLink: "JOIN ROOM",
+          yourNameLabel: "YOUR NAME",
           typeCode: "Enter the code",
           codeCopied: "Code copied!",
           checking: "Checking room...",
@@ -2347,17 +2398,81 @@
             renderKingGame();
           }
         }
+        updateJoinLinkModalLang();
       }
 
       function setLang(lang) {
         currentLang = lang;
-        // update URL without reload (may fail in sandboxed iframes — safe to ignore)
+        // remember the user's explicit choice across sessions
+        try { localStorage.setItem("kb_lang", lang); } catch(e) {}
         try {
           const url = new URL(window.location.href);
           url.searchParams.set("lang", lang === "pt-BR" ? "pt-br" : "en");
           history.replaceState({}, "", url.toString());
         } catch (e) {}
         applyTranslations();
+      }
+
+      // ── Handle ?join=CODE link sharing ──
+      (function () {
+        const url = new URL(window.location.href);
+        const joinCode = url.searchParams.get("join");
+        if (!joinCode) return;
+
+        const codeInput = document.getElementById("join-code");
+        if (codeInput) codeInput.value = joinCode.toUpperCase();
+
+        window.addEventListener("DOMContentLoaded", () => {
+          const modal = document.getElementById("join-link-modal");
+          const nameInput = document.getElementById("join-link-name");
+          const label = document.getElementById("join-link-room-label");
+
+          if (label) label.textContent = "SALA: " + joinCode.toUpperCase();
+
+          const saved = localStorage.getItem("kb_player_name");
+          if (nameInput) nameInput.value = saved || "";
+
+          if (modal) modal.classList.add("active");
+        });
+      })();
+
+      function updateJoinLinkModalLang() {
+        // called by applyTranslations to keep the modal in sync
+        const label = document.getElementById("join-link-room-label");
+        const code = new URL(window.location.href).searchParams.get("join");
+        if (label && code) {
+          label.textContent = (currentLang === "en" ? "ROOM: " : "SALA: ") + code.toUpperCase();
+        }
+      }
+
+      function confirmJoinLink() {
+        const nameInput = document.getElementById("join-link-name");
+        const name = nameInput ? nameInput.value.trim() : "";
+        if (!name) {
+          nameInput.focus();
+          showToast(t("typeName"));
+          return;
+        }
+        document.getElementById("player-name").value = name;
+        localStorage.setItem("kb_player_name", name);
+
+        document.getElementById("join-link-modal").classList.remove("active");
+
+        const code = new URL(window.location.href).searchParams.get("join");
+        if (code) {
+          document.getElementById("join-code").value = code.toUpperCase();
+          joinAnyRoom();
+        }
+      }
+
+      function cancelJoinLink() {
+        document.getElementById("join-link-modal").classList.remove("active");
+        // clean up the URL without reloading
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("join");
+          history.replaceState({}, "", url.toString());
+        } catch (e) {}
       }
 
       // ── Read lang from URL on load ──
@@ -2373,10 +2488,16 @@
         ) {
           currentLang = "pt-BR";
         } else {
-          // auto-detect browser language
-          const nav = navigator.language || "";
-          if (nav.toLowerCase().startsWith("pt")) currentLang = "pt-BR";
-          else if (nav.toLowerCase().startsWith("en")) currentLang = "en";
+          // check if user has a saved preference first
+          const saved = localStorage.getItem("kb_lang");
+          if (saved === "pt-BR" || saved === "en") {
+            currentLang = saved;
+          } else {
+            // fall back to browser language
+            const nav = navigator.language || "";
+            if (nav.toLowerCase().startsWith("pt")) currentLang = "pt-BR";
+            else if (nav.toLowerCase().startsWith("en")) currentLang = "en";
+          }
         }
       })();
 
@@ -2743,6 +2864,15 @@
         kingMode = false;
         showScreen("waiting");
         document.getElementById("display-room-code").textContent = roomCode;
+
+        // generate shareable link and show it
+        try {
+          const shareUrl = new URL(window.location.href);
+          shareUrl.searchParams.set("join", roomCode);
+          url.searchParams.delete("lang");
+          document.getElementById("display-room-code").title = shareUrl.toString();
+        } catch (e) {}
+
         document.getElementById("room-label").textContent =
           t("roomLabel") + roomCode;
         peer = new Peer(getPeerID(roomCode), { debug: 0 });
@@ -4102,6 +4232,17 @@
           .writeText(roomCode)
           .then(() => showToast(t("codeCopied")))
           .catch(() => prompt("Copy:", roomCode));
+      }
+      function copyShareLink() {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("join", roomCode);
+          url.searchParams.delete("lang");
+          navigator.clipboard
+            .writeText(url.toString())
+            .then(() => showToast(t("copyLink")))
+            .catch(() => prompt("Copie o link:", url.toString()));
+        } catch (e) {}
       }
       function copyKingCode() {
         navigator.clipboard
