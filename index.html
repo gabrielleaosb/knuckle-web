@@ -3314,9 +3314,7 @@
       }
       function placeInColumn(i) {
         if (!myTurn || currentDie === null) return;
-        const col = myBoard[i];
-        let r = -1;
-        for (let k = ROWS - 1; k >= 0; k--) { if (col[k] === null) { r = k; break; } }
+        const col = myBoard[i], r = col.findIndex((x) => x === null);
         if (r === -1) { showToast(t("fullCol")); return; }
         col[r] = currentDie;
         const v = currentDie;
@@ -3385,18 +3383,13 @@
           });
         setTimeout(() => {
           myBoard[i] = myBoard[i].map((d) => (d === v ? null : d));
-          compactColBottom(myBoard[i]);
+          compactCol(myBoard[i]);
           onDone();
         }, 300);
       }
       function compactCol(c) {
         const vs = c.filter((v) => v !== null);
         for (let i = 0; i < ROWS; i++) c[i] = vs[i] ?? null;
-      }
-      function compactColBottom(c) {
-        const vs = c.filter((v) => v !== null);
-        for (let i = 0; i < ROWS; i++) c[i] = null;
-        for (let i = 0; i < vs.length; i++) c[ROWS - vs.length + i] = vs[i];
       }
       function calcColScore(c) {
         const f = c.filter((v) => v !== null);
@@ -3476,7 +3469,7 @@
             for (let r = ROWS - 1; r >= 0; r--)
               col.appendChild(makeDie(board[c][r]));
           } else {
-            for (let r = ROWS - 1; r >= 0; r--)
+            for (let r = 0; r < ROWS; r++)
               col.appendChild(makeDie(board[c][r]));
             col.appendChild(sc);
           }
