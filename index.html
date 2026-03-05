@@ -2894,7 +2894,7 @@
         document.getElementById("room-label").textContent = t("vsComputer");
         initBoards();
         gameStarted = true;
-        myTurn = true;
+        myTurn = Math.random() < 0.5;
         currentDie = null;
         showScreen("game");
         document.getElementById("lang-switcher").classList.add("hidden");
@@ -2903,7 +2903,12 @@
           oppDot.outerHTML = '<span class="bot-indicator" id="opp-dot">🤖</span>';
         renderBoards();
         updateTurnUI();
-        setTimeout(rollMyDie, 600);
+        if (myTurn) {
+          setTimeout(rollMyDie, 600);
+        } else {
+          const botDie = Math.ceil(Math.random() * 6);
+          setTimeout(() => botTakeTurn(botDie), 600);
+        }
       }
       function botTakeTurn(dieValue) {
         const col = botChooseColumn(oppBoard, myBoard, dieValue, botDifficulty);
